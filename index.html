@@ -34,14 +34,19 @@ tailwind.config = {
   .lw-b1{animation:lw-bounce 1s 0s infinite;}
   .lw-b2{animation:lw-bounce 1s .2s infinite;}
   .lw-b3{animation:lw-bounce 1s .4s infinite;}
-  @keyframes doc-scroll{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
-  .doc-autoscroll{}
   .custom-scrollbar::-webkit-scrollbar{width:4px;}
   .custom-scrollbar::-webkit-scrollbar-track{background:#f9f9f9;}
   .custom-scrollbar::-webkit-scrollbar-thumb{background:#d1d1d1;border-radius:10px;}
+  @keyframes toast-in{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
+  @keyframes toast-out{from{transform:translateY(0);opacity:1}to{transform:translateY(-20px);opacity:0}}
+  .toast-enter{animation:toast-in .4s ease-out forwards;}
+  .toast-exit{animation:toast-out .4s ease-in forwards;}
 </style>
 </head>
 <body class="antialiased">
+
+<!-- ===================== TOAST NOTIFICATION ===================== -->
+<div id="toast-container" class="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] flex flex-col items-center gap-3" style="display:none"></div>
 
 <!-- ===================== WELCOME PAGE ===================== -->
 <div id="page-welcome" class="page active">
@@ -259,10 +264,7 @@ tailwind.config = {
 <!-- ===================== WORKSPACES PAGE ===================== -->
 <div id="page-workspaces" class="page">
   <aside class="hidden md:flex flex-col fixed left-0 top-0 h-full p-4 w-64 border-r border-neutral-100 bg-white z-30">
-    <div class="flex items-center gap-3 px-4 py-6">
-      <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">school</span></div>
-      <div><h1 class="text-lg font-black tracking-tighter text-black cursor-pointer" onclick="navigate('welcome')">teachfast.ai</h1><p class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">The Digital Curator</p></div>
-    </div>
+    <div class="flex items-center gap-3 px-4 py-6"><div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">school</span></div><div><h1 class="text-lg font-black tracking-tighter text-black cursor-pointer" onclick="navigate('welcome')">teachfast.ai</h1><p class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">The Digital Curator</p></div></div>
     <nav class="flex-1 flex flex-col gap-1 mt-4">
       <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('dashboard')"><span class="material-symbols-outlined">home</span><span class="text-sm">Home</span></a>
       <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('library')"><span class="material-symbols-outlined">bookmarks</span><span class="text-sm">Library</span></a>
@@ -271,26 +273,13 @@ tailwind.config = {
     </nav>
     <div class="mt-auto space-y-4 pt-4 border-t border-neutral-50">
       <button class="w-full bg-primary text-on-primary py-3 rounded-full font-bold text-xs flex items-center justify-center gap-2 hover:bg-secondary transition-all active:scale-95"><span class="material-symbols-outlined text-sm">add</span>New Project</button>
-      <div class="flex items-center gap-3 px-4 py-3 hover:bg-neutral-50 rounded-xl cursor-pointer transition-colors">
-        <div class="w-9 h-9 rounded-full overflow-hidden bg-surface-container flex-shrink-0"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ4LfJ4TlxLkiHmsEhckEISvQE2RvPXvcEzVGwQCLvtgpxcqeZblCCTCVtBDBBm1_9HPr9Aa1MjQkcZN20si8PBp-pkE1mI60GhoNfXy-nGZO7NWZuq486Zpxp7V74yXAM20zNqO9k2-2t_AwzpThoHLUHMevuMIuOxnV861yJCKtwGtUWHR9ThnxGU6in19L2fI1_GKqrYPOilY--X43fsi9oNMD09eqNL4E8ayuntFKWhZFNuztJUI-gYNjnwiFlNE_Jf4wVil1F"/></div>
-        <div class="flex-1 overflow-hidden"><p class="text-sm font-bold text-black truncate">Alexander Chen</p><p class="text-[10px] text-neutral-500 font-medium">Administrator</p></div>
-        <span class="material-symbols-outlined text-neutral-300 text-xl">unfold_more</span>
-      </div>
+      <div class="flex items-center gap-3 px-4 py-3 hover:bg-neutral-50 rounded-xl cursor-pointer transition-colors"><div class="w-9 h-9 rounded-full overflow-hidden bg-surface-container flex-shrink-0"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ4LfJ4TlxLkiHmsEhckEISvQE2RvPXvcEzVGwQCLvtgpxcqeZblCCTCVtBDBBm1_9HPr9Aa1MjQkcZN20si8PBp-pkE1mI60GhoNfXy-nGZO7NWZuq486Zpxp7V74yXAM20zNqO9k2-2t_AwzpThoHLUHMevuMIuOxnV861yJCKtwGtUWHR9ThnxGU6in19L2fI1_GKqrYPOilY--X43fsi9oNMD09eqNL4E8ayuntFKWhZFNuztJUI-gYNjnwiFlNE_Jf4wVil1F"/></div><div class="flex-1 overflow-hidden"><p class="text-sm font-bold text-black truncate">Alexander Chen</p><p class="text-[10px] text-neutral-500 font-medium">Administrator</p></div><span class="material-symbols-outlined text-neutral-300 text-xl">unfold_more</span></div>
     </div>
   </aside>
   <main class="md:ml-64 p-8 md:p-12 min-h-screen relative">
     <div class="absolute top-8 right-8 md:top-12 md:right-12 z-10"><button class="text-neutral-300 hover:text-black transition-colors p-2"><span class="material-symbols-outlined text-xl">notifications</span></button></div>
     <div class="max-w-6xl mx-auto">
-      <section class="mb-16">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-secondary mb-2 block">Management Hub</span>
-            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter text-primary">Workspaces</h1>
-            <p class="mt-4 text-on-surface-variant text-lg max-w-xl font-light leading-relaxed">Manage your company learning environments. Curate documents, assign roles, and track intellectual growth across departments.</p>
-          </div>
-          <div><button onclick="navigate('create-workspace')" class="bg-primary text-white px-8 py-4 rounded-full font-bold text-sm flex items-center gap-3 hover:bg-secondary transition-all shadow-xl shadow-black/5 active:scale-95"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">add_circle</span>Create New Workspace</button></div>
-        </div>
-      </section>
+      <section class="mb-16"><div class="flex flex-col md:flex-row md:items-end justify-between gap-6"><div><span class="text-[10px] uppercase tracking-[0.2em] font-bold text-secondary mb-2 block">Management Hub</span><h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter text-primary">Workspaces</h1><p class="mt-4 text-on-surface-variant text-lg max-w-xl font-light leading-relaxed">Manage your company learning environments.</p></div><div><button onclick="navigate('create-workspace')" class="bg-primary text-white px-8 py-4 rounded-full font-bold text-sm flex items-center gap-3 hover:bg-secondary transition-all shadow-xl shadow-black/5 active:scale-95"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">add_circle</span>Create New Workspace</button></div></div></section>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
         <div class="bg-surface-container-low p-6 rounded-2xl"><p class="text-[10px] uppercase font-bold text-secondary tracking-widest mb-1">Total Members</p><p class="text-2xl font-black">1,248</p></div>
         <div class="bg-surface-container-low p-6 rounded-2xl"><p class="text-[10px] uppercase font-bold text-secondary tracking-widest mb-1">Active Courses</p><p class="text-2xl font-black">42</p></div>
@@ -299,274 +288,61 @@ tailwind.config = {
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="group bg-surface-container-lowest rounded-lg overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1">
-          <div class="h-32 bg-surface-container-high relative"><img alt="Engineering" class="w-full h-full object-cover opacity-20 grayscale transition-all group-hover:grayscale-0 group-hover:opacity-40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIBc-H_w6KM3equB7ZLJP0mgrDTIWmf5AnGYiHUSqstQDCiEIAbY6pvqiaaIxvuH_2JOIDAp6ZX_DRu5OHAz0vMh9jZSwh45omjfP0sX3LUBEU9XHcDhIxOG9QXJ8UIVs-mXrWPPGzw5nzRH1Rq7PnE-IVdHvy8Ytn0m9y_af_sZWLR7nZz0F-XuOT-eW0braGUBoVzKOYJ8Ec-a8egewmkWtgGXdOru7K5e82p7AnJocuM_p7ziohQY9hXX2SWKnijDXQeJv8Aa9m"/><div class="absolute inset-0 p-6 flex items-end"><span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm">Core Team</span></div></div>
-          <div class="p-8 flex-1 flex flex-col">
-            <div class="flex justify-between items-start mb-4"><h3 class="text-2xl font-bold tracking-tight">Engineering Team</h3><span class="material-symbols-outlined text-neutral-300">more_vert</span></div>
-            <div class="flex gap-6 mb-8 text-on-surface-variant text-xs"><div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">groups</span>42 members</div><div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">description</span>128 docs</div></div>
-            <div class="mt-auto pt-6 border-t border-neutral-50 flex items-center justify-between">
-              <div class="flex -space-x-2"><img alt="u" class="w-8 h-8 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADVO4eb8AIe4fXQNKEbFQscuYmuBCxDCBUxs9c0W00c72C9ueJjz9bKv5bIeCHApKpgBahF5zXnPq7_RUKprAD4C1ZbIZMpAp7Ohk9expaKKaBBTgVAfn0Q93JnWA5QlHmUrdb09gwggjjLwVziBx97WZ8gA87adGhj0FoWUmv4j1em29JYFKJBKJVJKDO6aLcWkVq5S4WNn_i1SgiKsGcyuxF5zDrIytMCSvycXEyU0R4VOUjENxBHTm3qWUZmI5qQbVAmQiMgJdW"/><img alt="u" class="w-8 h-8 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8p8c21FI0lMIeMVemqoOSPeY51EdEwJQ6xMqnL25otpfXwMt_srdqfYotdgN7D2eauGk80ogIXEufWWkQ0_cUH1j160GROLKEZYaT4G2A4xaNybrQ_igi8HIop0GICbeuZ-PG4WdoLbPDp27V6ihpK38AGumao8_DFZHRXE-Fn7cYjFqf2aagxzCgEZFKLofMLbugu4PY8bHwIi7H58zr8TdwU6lfnc8owUeCoPMHr8Rm13W9hmAuSpN8qBdVO-c6mPlnbEe5N9r4"/><div class="w-8 h-8 rounded-full border-2 border-white bg-neutral-100 flex items-center justify-center text-[10px] font-bold">+12</div></div>
-              <button onclick="navigate('manage-workspace')" class="bg-primary text-white text-xs font-bold px-6 py-2.5 rounded-full hover:bg-secondary transition-colors">Manage</button>
-            </div>
-          </div>
-        </div>
-        <div class="group bg-surface-container-lowest rounded-lg overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1">
-          <div class="h-32 bg-surface-container-high relative"><img alt="Marketing" class="w-full h-full object-cover opacity-20 grayscale transition-all group-hover:grayscale-0 group-hover:opacity-40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt34Wp7WSIMiS6YOTIf4kTy-9wCkqD3ZMd26B1hLUvUKgvnZ2tzGe8p48ewr4JWDKOt2ObUN-9P3y4NJsT5AqB743N_VWWSMWoXRdpvdHleRuuKECcHw5BXUF0Y4Uf-ZgaNYZnZFYH7MfhUaCu6dCJ2bp_DoN2hNkIo9BJmtu7UQ8Qc3JMkJ-StyErN-vxPkqe3gXUs1W6r0E4EOOlAowBZQsmMAU3O31GfUjk9NpL8dJqiCSX0sOumk696nsQ_gUPSfirn0yeVfmj"/><div class="absolute inset-0 p-6 flex items-end"><span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm">Creative</span></div></div>
-          <div class="p-8 flex-1 flex flex-col">
-            <div class="flex justify-between items-start mb-4"><h3 class="text-2xl font-bold tracking-tight">Marketing Dept</h3><span class="material-symbols-outlined text-neutral-300">more_vert</span></div>
-            <div class="flex gap-6 mb-8 text-on-surface-variant text-xs"><div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">groups</span>18 members</div><div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">description</span>45 docs</div></div>
-            <div class="mt-auto pt-6 border-t border-neutral-50 flex items-center justify-between">
-              <div class="flex -space-x-2"><img alt="u" class="w-8 h-8 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABt8LT9awDD6wlmRGKfim9l1yYZmUmxOiZ8k3TApEMsqS7L1gFojFZfit8aNAdvCoWkZUBxbrDHapU_Q7l5Dr-ZQM9MKOdO4s1oBmwlLRQawnbgI5AbX2iErdEKNuNdnnUyi89RI5tloFfChTynXecEWQ-HZ8ZBHRAUpLuL_qgNp-94ZbVwlEIFafUg1A0VfGPup0reN2EAoWGOhwjDzGa1D0HkoEwr6io6ZV56peeomr_6Z4ffbe5cfuhvoXjbPNz9ngBE9Yldits"/><div class="w-8 h-8 rounded-full border-2 border-white bg-neutral-100 flex items-center justify-center text-[10px] font-bold">+5</div></div>
-              <button onclick="navigate('manage-workspace')" class="bg-primary text-white text-xs font-bold px-6 py-2.5 rounded-full hover:bg-secondary transition-colors">Manage</button>
-            </div>
-          </div>
-        </div>
-        <div class="group bg-surface-container-lowest rounded-lg overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1">
-          <div class="h-32 bg-surface-container-high relative"><img alt="Design" class="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-40 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvhwzqUWB8iOFVgURJ9wFb5qvSnP0yhTMfhNctuI3jVedKpFiihS2DVU9g1U6o3K_ptUUZxNKu3eXQfbtanJ1BSeDqC_hEun-Yt8oJ2mLEtWkbvDLjbfTReIWHu9nG5RHse_EFaQ8O3lPg5n5t7GWmJ4OJh5qKlcpHpXWrk8v4gahsIkgpjqNFNfJmELBhTubVFUbAXWr-yxByRHxXOMCH3EzwkA4XE7--u8TZP2hMd7TMetMKBPBai4X63H8Nr7X5-GvazKdH_PPu"/><div class="absolute inset-0 p-6 flex items-end"><span class="bg-black text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm">Design Lab</span></div></div>
-          <div class="p-8 flex-1 flex flex-col">
-            <div class="flex justify-between items-start mb-4"><h3 class="text-2xl font-bold tracking-tight">Product Design</h3><span class="material-symbols-outlined text-neutral-300" style="font-variation-settings:'FILL' 1">star</span></div>
-            <div class="flex gap-6 mb-8 text-on-surface-variant text-xs"><div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">groups</span>12 members</div><div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">description</span>2.4k docs</div></div>
-            <div class="mt-auto pt-6 border-t border-neutral-50 flex items-center justify-between">
-              <div class="flex -space-x-2"><div class="w-8 h-8 rounded-full border-2 border-white bg-neutral-100 flex items-center justify-center text-[10px] font-bold">+8</div></div>
-              <button onclick="navigate('manage-workspace')" class="bg-primary text-white text-xs font-bold px-6 py-2.5 rounded-full hover:bg-secondary transition-colors">Manage</button>
-            </div>
-          </div>
+          <div class="h-32 bg-surface-container-high relative"><img alt="Engineering" class="w-full h-full object-cover opacity-20 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIBc-H_w6KM3equB7ZLJP0mgrDTIWmf5AnGYiHUSqstQDCiEIAbY6pvqiaaIxvuH_2JOIDAp6ZX_DRu5OHAz0vMh9jZSwh45omjfP0sX3LUBEU9XHcDhIxOG9QXJ8UIVs-mXrWPPGzw5nzRH1Rq7PnE-IVdHvy8Ytn0m9y_af_sZWLR7nZz0F-XuOT-eW0braGUBoVzKOYJ8Ec-a8egewmkWtgGXdOru7K5e82p7AnJocuM_p7ziohQY9hXX2SWKnijDXQeJv8Aa9m"/><div class="absolute inset-0 p-6 flex items-end"><span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm">Core Team</span></div></div>
+          <div class="p-8 flex-1 flex flex-col"><div class="flex justify-between items-start mb-4"><h3 class="text-2xl font-bold tracking-tight">Engineering Team</h3></div><div class="flex gap-6 mb-8 text-on-surface-variant text-xs"><div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">groups</span>42 members</div><div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">description</span>128 docs</div></div><div class="mt-auto pt-6 border-t border-neutral-50 flex items-center justify-between"><div class="flex -space-x-2"><div class="w-8 h-8 rounded-full border-2 border-white bg-neutral-100 flex items-center justify-center text-[10px] font-bold">+12</div></div><button onclick="navigate('manage-workspace')" class="bg-primary text-white text-xs font-bold px-6 py-2.5 rounded-full hover:bg-secondary transition-colors">Manage</button></div></div>
         </div>
         <div class="group border-2 border-dashed border-neutral-200 rounded-lg p-8 flex flex-col items-center justify-center text-center transition-all hover:bg-white hover:border-primary cursor-pointer">
-          <div class="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center mb-4 transition-transform group-hover:scale-110"><span class="material-symbols-outlined text-3xl text-neutral-400 group-hover:text-primary">add_business</span></div>
+          <div class="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center mb-4"><span class="material-symbols-outlined text-3xl text-neutral-400">add_business</span></div>
           <h4 class="font-bold text-lg mb-2">New Environment</h4>
-          <p class="text-xs text-on-surface-variant max-w-[180px] mb-6">Create a dedicated space for a new department or initiative.</p>
-          <button class="text-primary font-bold text-xs underline underline-offset-4 decoration-2">Get Started</button>
+          <p class="text-xs text-on-surface-variant max-w-[180px] mb-6">Create a dedicated space for a new department.</p>
         </div>
       </div>
     </div>
   </main>
 </div>
 
-<!-- ===================== MANAGE WORKSPACE PAGE ===================== -->
-<div id="page-manage-workspace" class="page">
-  <aside class="hidden md:flex flex-col fixed left-0 top-0 h-full p-4 w-64 border-r border-neutral-100 bg-white z-30">
-    <div class="flex items-center gap-3 px-4 py-6">
-      <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">school</span></div>
-      <div><h1 class="text-lg font-black tracking-tighter text-black cursor-pointer" onclick="navigate('welcome')">teachfast.ai</h1><p class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">The Digital Curator</p></div>
-    </div>
-    <nav class="flex-1 flex flex-col gap-1 mt-4">
-      <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('dashboard')"><span class="material-symbols-outlined">home</span><span class="text-sm">Home</span></a>
-      <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('library')"><span class="material-symbols-outlined">bookmarks</span><span class="text-sm">Library</span></a>
-      <a class="flex items-center gap-3 px-4 py-3 text-black font-bold bg-neutral-100 rounded-full cursor-pointer" onclick="navigate('workspaces')"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">grid_view</span><span class="text-sm">Workspaces</span></a>
-      <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('settings')"><span class="material-symbols-outlined">settings</span><span class="text-sm">Settings</span></a>
-    </nav>
-    <div class="mt-auto space-y-4 pt-4 border-t border-neutral-50">
-      <button class="w-full bg-primary text-on-primary py-3 rounded-full font-bold text-xs flex items-center justify-center gap-2 hover:bg-secondary transition-all active:scale-95"><span class="material-symbols-outlined text-sm">add</span>New Project</button>
-      <div class="flex items-center gap-3 px-4 py-3 hover:bg-neutral-50 rounded-xl cursor-pointer transition-colors">
-        <div class="w-9 h-9 rounded-full overflow-hidden bg-surface-container flex-shrink-0"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ4LfJ4TlxLkiHmsEhckEISvQE2RvPXvcEzVGwQCLvtgpxcqeZblCCTCVtBDBBm1_9HPr9Aa1MjQkcZN20si8PBp-pkE1mI60GhoNfXy-nGZO7NWZuq486Zpxp7V74yXAM20zNqO9k2-2t_AwzpThoHLUHMevuMIuOxnV861yJCKtwGtUWHR9ThnxGU6in19L2fI1_GKqrYPOilY--X43fsi9oNMD09eqNL4E8ayuntFKWhZFNuztJUI-gYNjnwiFlNE_Jf4wVil1F"/></div>
-        <div class="flex-1 overflow-hidden"><p class="text-sm font-bold text-black truncate">Alexander Chen</p><p class="text-[10px] text-neutral-500 font-medium">Administrator</p></div>
-        <span class="material-symbols-outlined text-neutral-300 text-xl">unfold_more</span>
-      </div>
-    </div>
-  </aside>
-  <main class="md:ml-64 flex-1 flex flex-col bg-surface min-h-screen">
-    <header class="flex justify-between items-center w-full px-12 py-6 z-40 bg-white/80 backdrop-blur-xl sticky top-0">
-      <div class="flex items-center gap-8">
-        <button onclick="navigate('workspaces')" class="material-symbols-outlined text-neutral-400 hover:text-black transition-colors mr-2">arrow_back</button>
-        <nav class="flex gap-8">
-          <a class="text-black border-b-2 border-black pb-2 text-sm font-medium" href="#">Overview</a>
-          <a class="text-neutral-400 hover:text-black transition-colors text-sm font-medium" href="#">Analytics</a>
-          <a class="text-neutral-400 hover:text-black transition-colors text-sm font-medium" href="#">Activity</a>
-        </nav>
-      </div>
-      <div class="flex items-center gap-6">
-        <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-neutral-400 text-lg">search</span><input class="bg-surface-container-high border-none rounded-full pl-10 pr-4 py-2 w-64 focus:ring-1 focus:ring-primary text-xs" placeholder="Search resources..." type="text"/></div>
-        <div class="flex gap-4"><button class="material-symbols-outlined text-neutral-500 hover:text-black transition-colors">notifications</button><button class="material-symbols-outlined text-neutral-500 hover:text-black transition-colors">apps</button></div>
-        <div class="w-10 h-10 rounded-full overflow-hidden"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ4LfJ4TlxLkiHmsEhckEISvQE2RvPXvcEzVGwQCLvtgpxcqeZblCCTCVtBDBBm1_9HPr9Aa1MjQkcZN20si8PBp-pkE1mI60GhoNfXy-nGZO7NWZuq486Zpxp7V74yXAM20zNqO9k2-2t_AwzpThoHLUHMevuMIuOxnV861yJCKtwGtUWHR9ThnxGU6in19L2fI1_GKqrYPOilY--X43fsi9oNMD09eqNL4E8ayuntFKWhZFNuztJUI-gYNjnwiFlNE_Jf4wVil1F"/></div>
-      </div>
-    </header>
-    <div class="p-12 space-y-16">
-      <section class="max-w-4xl mx-auto text-center space-y-12">
-        <div class="space-y-4">
-          <h1 class="text-5xl font-black tracking-tighter text-primary leading-tight">Fast-track your learning.</h1>
-          <p class="text-on-surface-variant max-w-lg mx-auto leading-relaxed">The Digital Curator transforms your lecture notes and PDFs into structured study guides in seconds.</p>
-        </div>
-        <div class="bg-surface-container-low rounded-lg p-1 space-y-1 shadow-sm">
-          <div class="bg-white rounded-lg p-12 border-2 border-dashed border-neutral-200 hover:border-primary transition-colors cursor-pointer group flex flex-col items-center gap-6">
-            <div class="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all"><span class="material-symbols-outlined text-3xl">upload_file</span></div>
-            <div class="space-y-2"><p class="font-bold text-xl">Upload your documents</p><p class="text-sm text-on-surface-variant">Drag and drop or click to browse files (PDF, DOCX, TXT)</p></div>
-          </div>
-          <div class="grid grid-cols-2 gap-1">
-            <button class="bg-white p-6 flex items-center justify-center gap-3 hover:bg-neutral-50 transition-colors font-medium text-sm"><span class="material-symbols-outlined">link</span>Import via Link</button>
-            <button class="bg-white p-6 flex items-center justify-center gap-3 hover:bg-neutral-50 transition-colors font-medium text-sm"><span class="material-symbols-outlined">content_paste</span>Paste Content</button>
-          </div>
-        </div>
-      </section>
-      <div class="grid grid-cols-12 gap-12">
-        <div class="col-span-12 lg:col-span-8 space-y-8">
-          <div class="flex justify-between items-end"><h2 class="text-2xl font-black tracking-tight">Recent Documents</h2><a class="text-sm font-bold underline underline-offset-4" href="#">View All</a></div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-surface-container-lowest rounded-lg p-8 space-y-6 hover:bg-surface-container-low transition-colors group">
-              <div class="flex justify-between items-start"><div class="bg-primary-container p-3 rounded-lg text-white"><span class="material-symbols-outlined">science</span></div><span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">Biology</span></div>
-              <div class="space-y-2"><h3 class="font-bold text-lg leading-snug">Cellular Respiration and ATP Synthesis</h3><p class="text-xs text-on-surface-variant font-medium">Last updated 2 hours ago</p></div>
-              <div class="space-y-3"><div class="flex justify-between items-center text-[10px] font-bold text-on-surface-variant"><span>ANALYZING CONTENT</span><span>85%</span></div><div class="h-1 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary w-[85%]"></div></div></div>
-              <button class="w-full bg-primary text-white py-3 rounded-full text-sm font-bold flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-transform">Continue <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
-            </div>
-            <div class="bg-surface-container-lowest rounded-lg p-8 space-y-6 hover:bg-surface-container-low transition-colors group">
-              <div class="flex justify-between items-start"><div class="bg-neutral-200 p-3 rounded-lg text-black"><span class="material-symbols-outlined">history_edu</span></div><span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">History</span></div>
-              <div class="space-y-2"><h3 class="font-bold text-lg leading-snug">The Industrial Revolution: Part II</h3><p class="text-xs text-on-surface-variant font-medium">Last updated 1 day ago</p></div>
-              <div class="space-y-3"><div class="flex justify-between items-center text-[10px] font-bold text-on-surface-variant"><span>COMPLETED</span><span>100%</span></div><div class="h-1 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary w-full"></div></div></div>
-              <button class="w-full bg-surface text-black py-3 border border-neutral-200 rounded-full text-sm font-bold flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-transform">Review Study Guide <span class="material-symbols-outlined text-sm">visibility</span></button>
-            </div>
-          </div>
-        </div>
-        <div class="col-span-12 lg:col-span-4 space-y-8">
-          <div class="flex justify-between items-end"><h2 class="text-2xl font-black tracking-tight">Members</h2><button class="material-symbols-outlined text-on-surface-variant hover:text-black">person_add</button></div>
-          <div class="bg-surface-container-low rounded-lg p-6 space-y-6">
-            <div class="flex items-center gap-4"><img alt="u" class="w-10 h-10 rounded-full grayscale object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDwDJwT516I9yJKSXmRVrE5g0nP6YcR5wnpNmctLwqlPBTWzDOfUpWFuSZPAAIrFGX6nvB2esvFp6RC-joAXOVW2D7w6QbWa2i4_Pi0qKz4kJfijXK2xTB0CcTfnbE7wRYCkJ8QRbIUGXJT9GWBEk3zBC1d7b5VtECTV7TdLy1MLfXstLwwUcrBffZ9zxU2Vdk2EJqOBw3S7gtIhlWkdQWJ1bIyYevhHyR-H-6oRVLv_nZYen7jdKNiXCR4YJwcKUl-x30elwOzQ"/><div class="flex-1 min-w-0"><p class="text-sm font-bold truncate">Alex Rivard</p><p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Workspace Admin</p></div><span class="w-2 h-2 rounded-full bg-green-500"></span></div>
-            <div class="flex items-center gap-4"><img alt="u" class="w-10 h-10 rounded-full grayscale object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoqOHw0Pc1tbBYLiMIAfPzQCVsZkeMl0lL9bvMmha0OhUJt8CQeG7fTKg3LND7QcPQPGFqo2N-H64jpzbrcGJ5ZAkpJrSudzLNl0wug6dRreNvdzaLRFs_fXKQhln3m0AgxX-e8VWxItT3-t5rZ4I58V0iwfmO1zsbkfJK2h-uiU7LFN4jRT0H0-AIi30XFYRAmSR5S2KPyWJiIIY5xGM-VPUHWvC70EQhoHqv7gAsNLa_m5T1T32G7kZJ-tVcd3RMohnkvckrUQ"/><div class="flex-1 min-w-0"><p class="text-sm font-bold truncate">Sarah Jenkins</p><p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Lead Curator</p></div><span class="w-2 h-2 rounded-full bg-neutral-300"></span></div>
-            <div class="flex items-center gap-4"><img alt="u" class="w-10 h-10 rounded-full grayscale object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt4S4NYUaSzZL0JHVfsSWWEAscojokK6Ge1JD0sWtz4NSL-FZRbzdl0luUSuuJTE2YUugFHr9wTkZRtlBh3eD480E-7O93ms27IjCTtX77VvMrG5_wwLHC55Abge1XrUfdtfKVBlNp585SFRvILxcVn_ozKAJbM9yt0YGezASOxGAvyHhHN-1L2tKvq3KALnmtyO_QnCDMF0LAYsV5oQVgJKXBqQigOA7_uWO4FBvQxgRthGPUObf82RSoH4JR-Fzcik-p8DK0ig"/><div class="flex-1 min-w-0"><p class="text-sm font-bold truncate">Marcus Chen</p><p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Research Associate</p></div><span class="w-2 h-2 rounded-full bg-green-500"></span></div>
-            <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center font-bold text-xs">EL</div><div class="flex-1 min-w-0"><p class="text-sm font-bold truncate">Elena Lopez</p><p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Guest Member</p></div><span class="w-2 h-2 rounded-full bg-neutral-300"></span></div>
-            <button class="w-full py-4 border-t border-neutral-200 mt-4 text-xs font-bold text-on-surface-variant hover:text-black transition-colors">Manage All Team Members</button>
-          </div>
-          <div class="bg-primary text-white rounded-lg p-8 space-y-6">
-            <div class="flex justify-between items-center"><span class="text-[10px] font-bold tracking-widest uppercase opacity-70">Workspace Usage</span><span class="material-symbols-outlined text-lg">bolt</span></div>
-            <div class="space-y-1"><p class="text-3xl font-black">74%</p><p class="text-[10px] opacity-60">1.2GB of 1.5GB STORAGE USED</p></div>
-            <div class="h-1 bg-white/20 rounded-full"><div class="h-full bg-white w-3/4"></div></div>
-            <button class="text-xs font-bold underline underline-offset-4 w-full text-left">Upgrade Storage Plan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
+<!-- ===================== MANAGE WORKSPACE, CREATE WORKSPACE, SETTINGS (simplified) ===================== -->
+<div id="page-manage-workspace" class="page"><main class="md:ml-64 flex-1 flex flex-col bg-surface min-h-screen items-center justify-center"><div class="text-center space-y-4"><span class="material-symbols-outlined text-6xl text-neutral-300">engineering</span><h2 class="text-3xl font-bold">Manage Workspace</h2><p class="text-on-surface-variant">Workspace management view.</p><button onclick="navigate('workspaces')" class="mt-4 px-6 py-3 bg-primary text-white rounded-full font-bold">Back to Workspaces</button></div></main></div>
 
-<!-- ===================== CREATE WORKSPACE PAGE ===================== -->
 <div id="page-create-workspace" class="page">
   <aside class="hidden md:flex flex-col fixed left-0 top-0 h-full p-4 w-64 border-r border-neutral-100 bg-white z-30">
-    <div class="flex items-center gap-3 px-4 py-6">
-      <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">school</span></div>
-      <div><h1 class="text-lg font-black tracking-tighter text-black cursor-pointer" onclick="navigate('welcome')">teachfast.ai</h1><p class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">The Digital Curator</p></div>
-    </div>
+    <div class="flex items-center gap-3 px-4 py-6"><div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">school</span></div><div><h1 class="text-lg font-black tracking-tighter text-black cursor-pointer" onclick="navigate('welcome')">teachfast.ai</h1><p class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">The Digital Curator</p></div></div>
     <nav class="flex-1 flex flex-col gap-1 mt-4">
       <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('dashboard')"><span class="material-symbols-outlined">home</span><span class="text-sm">Home</span></a>
       <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('library')"><span class="material-symbols-outlined">bookmarks</span><span class="text-sm">Library</span></a>
       <a class="flex items-center gap-3 px-4 py-3 text-black font-bold bg-neutral-100 rounded-full cursor-pointer" onclick="navigate('workspaces')"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">grid_view</span><span class="text-sm">Workspaces</span></a>
       <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('settings')"><span class="material-symbols-outlined">settings</span><span class="text-sm">Settings</span></a>
     </nav>
-    <div class="mt-auto space-y-4 pt-4 border-t border-neutral-50">
-      <button class="w-full bg-primary text-on-primary py-3 rounded-full font-bold text-xs flex items-center justify-center gap-2 hover:bg-secondary transition-all active:scale-95"><span class="material-symbols-outlined text-sm">add</span>New Project</button>
-      <div class="flex items-center gap-3 px-4 py-3 hover:bg-neutral-50 rounded-xl cursor-pointer transition-colors">
-        <div class="w-9 h-9 rounded-full overflow-hidden bg-surface-container flex-shrink-0"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ4LfJ4TlxLkiHmsEhckEISvQE2RvPXvcEzVGwQCLvtgpxcqeZblCCTCVtBDBBm1_9HPr9Aa1MjQkcZN20si8PBp-pkE1mI60GhoNfXy-nGZO7NWZuq486Zpxp7V74yXAM20zNqO9k2-2t_AwzpThoHLUHMevuMIuOxnV861yJCKtwGtUWHR9ThnxGU6in19L2fI1_GKqrYPOilY--X43fsi9oNMD09eqNL4E8ayuntFKWhZFNuztJUI-gYNjnwiFlNE_Jf4wVil1F"/></div>
-        <div class="flex-1 overflow-hidden"><p class="text-sm font-bold text-black truncate">Alexander Chen</p><p class="text-[10px] text-neutral-500 font-medium">Administrator</p></div>
-        <span class="material-symbols-outlined text-neutral-300 text-xl">unfold_more</span>
+  </aside>
+  <main class="md:ml-64 flex-1 flex flex-col justify-center items-center p-8 md:p-24 bg-surface min-h-screen">
+    <div class="w-full max-w-xl space-y-12">
+      <div class="flex items-center gap-2 text-on-surface-variant"><span class="text-xs font-bold tracking-widest uppercase" id="cw-step-label">Adım 1 / 3</span></div>
+      <div id="cw-form-step-0">
+        <div class="space-y-4 mb-12"><h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary leading-tight">Workspace'inize bir isim verin</h1><p class="text-lg text-on-surface-variant leading-relaxed max-w-md">Çalışma alanınızın adını belirleyerek kürasyon sürecine başlayın.</p></div>
+        <div class="relative group mb-12"><input id="cw-name-input" class="w-full bg-transparent border-b-2 border-surface-container-highest focus:border-primary outline-none py-4 text-2xl font-medium placeholder:text-neutral-300" placeholder="Örn: AP Chemistry - Fall 2024" type="text"/></div>
+      </div>
+      <div id="cw-form-step-1" style="display:none">
+        <div class="space-y-4 mb-12"><h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary leading-tight">Alanınızı tanımlayın</h1></div>
+        <div class="space-y-8 mb-12"><div><label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-3 block">Açıklama</label><textarea class="w-full bg-surface-container-low border-none rounded-2xl px-5 py-4 text-base placeholder:text-neutral-300 focus:ring-1 focus:ring-primary resize-none h-28" placeholder="Bu workspace ne için kullanılacak?"></textarea></div><div><label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4 block">Kategori</label><div class="flex flex-wrap gap-3"><button onclick="selectCwCat(this)" class="cw-cat px-5 py-2.5 rounded-full text-sm font-medium bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high">Satış Eğitimi</button><button onclick="selectCwCat(this)" class="cw-cat px-5 py-2.5 rounded-full text-sm font-medium bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high">Çağrı Merkezi</button><button onclick="selectCwCat(this)" class="cw-cat px-5 py-2.5 rounded-full text-sm font-medium bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high">Oryantasyon</button></div></div></div>
+      </div>
+      <div id="cw-form-step-2" style="display:none">
+        <div class="space-y-4 mb-12"><h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary leading-tight">Ekibinizi davet edin</h1></div>
+        <div class="space-y-6 mb-12"><input class="w-full bg-surface-container-low border-none rounded-2xl px-5 py-4 text-base placeholder:text-neutral-300 focus:ring-1 focus:ring-primary" placeholder="E-posta adresi ekleyin..." type="email"/></div>
+      </div>
+      <div class="flex items-center justify-between pt-8">
+        <button onclick="cwBack()" class="px-8 py-3 text-secondary font-semibold hover:text-primary" id="cw-back-btn">İptal</button>
+        <button onclick="cwNext()" class="bg-primary text-on-primary px-10 py-4 rounded-full font-bold shadow-xl hover:bg-secondary active:scale-95 flex items-center gap-2 group" id="cw-next-btn"><span>Sonraki</span><span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span></button>
       </div>
     </div>
-  </aside>
-  <main class="md:ml-64 flex-1 flex flex-col md:flex-row min-h-screen">
-    <section class="flex-1 flex flex-col justify-center items-center p-8 md:p-24 bg-surface">
-      <div class="w-full max-w-xl space-y-12">
-        <div class="flex items-center gap-2 text-on-surface-variant">
-          <span class="text-xs font-bold tracking-widest uppercase" id="cw-step-label">Adım 1 / 3</span>
-          <div class="h-px w-8 bg-outline-variant/30"></div>
-        </div>
-        <!-- Step 1: Name -->
-        <div id="cw-form-step-0">
-          <div class="space-y-4 mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary leading-tight">Workspace'inize bir isim verin</h1>
-            <p class="text-lg text-on-surface-variant leading-relaxed max-w-md">Çalışma alanınızın adını belirleyerek kürasyon sürecine başlayın. Bu alan ders materyallerinizin ana merkezi olacak.</p>
-          </div>
-          <div class="relative group mb-12">
-            <input id="cw-name-input" class="w-full bg-transparent border-b-2 border-surface-container-highest focus:border-primary outline-none py-4 text-2xl font-medium placeholder:text-neutral-300 transition-all duration-300" placeholder="Örn: AP Chemistry - Fall 2024" type="text"/>
-          </div>
-        </div>
-        <!-- Step 2: Description & Category -->
-        <div id="cw-form-step-1" style="display:none">
-          <div class="space-y-4 mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary leading-tight">Alanınızı tanımlayın</h1>
-            <p class="text-lg text-on-surface-variant leading-relaxed max-w-md">Workspace'inizin amacını ve kategorisini belirleyin. Bu, AI'ın içerik önerilerini kişiselleştirmesine yardımcı olacak.</p>
-          </div>
-          <div class="space-y-8 mb-12">
-            <div class="relative">
-              <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-3 block">Açıklama</label>
-              <textarea class="w-full bg-surface-container-low border-none rounded-2xl px-5 py-4 text-base placeholder:text-neutral-300 focus:ring-1 focus:ring-primary resize-none h-28" placeholder="Bu workspace ne için kullanılacak?"></textarea>
-            </div>
-            <div>
-              <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4 block">Kategori</label>
-              <div class="flex flex-wrap gap-3">
-                <button onclick="selectCwCat(this)" class="cw-cat px-5 py-2.5 rounded-full text-sm font-medium bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-all">Satış Eğitimi</button>
-                <button onclick="selectCwCat(this)" class="cw-cat px-5 py-2.5 rounded-full text-sm font-medium bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-all">Çağrı Merkezi</button>
-                <button onclick="selectCwCat(this)" class="cw-cat px-5 py-2.5 rounded-full text-sm font-medium bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-all">Oryantasyon</button>
-                <button onclick="selectCwCat(this)" class="cw-cat px-5 py-2.5 rounded-full text-sm font-medium bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-all">Ürün Bilgisi</button>
-                <button onclick="selectCwCat(this)" class="cw-cat px-5 py-2.5 rounded-full text-sm font-medium bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-all">Diğer</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Step 3: Invite Members -->
-        <div id="cw-form-step-2" style="display:none">
-          <div class="space-y-4 mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary leading-tight">Ekibinizi davet edin</h1>
-            <p class="text-lg text-on-surface-variant leading-relaxed max-w-md">Workspace'inize üye ekleyin. E-posta adresleri ile davet gönderebilir veya sonra ekleyebilirsiniz.</p>
-          </div>
-          <div class="space-y-6 mb-12">
-            <div class="relative">
-              <input class="w-full bg-surface-container-low border-none rounded-2xl px-5 py-4 text-base placeholder:text-neutral-300 focus:ring-1 focus:ring-primary" placeholder="E-posta adresi ekleyin..." type="email"/>
-            </div>
-            <div class="space-y-3">
-              <div class="flex items-center justify-between bg-surface-container-low rounded-2xl px-5 py-3">
-                <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">AC</div><div><p class="text-sm font-bold">Alexander Chen</p><p class="text-xs text-neutral-400">admin@teachfast.ai</p></div></div>
-                <span class="text-xs font-bold text-primary bg-primary/5 px-3 py-1 rounded-full">Admin</span>
-              </div>
-              <div class="flex items-center justify-between bg-surface-container-low rounded-2xl px-5 py-3">
-                <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-600 text-xs font-bold">SA</div><div><p class="text-sm font-bold">Sena Ay</p><p class="text-xs text-neutral-400">sena@teachfast.ai</p></div></div>
-                <span class="text-xs font-medium text-neutral-500 bg-neutral-100 px-3 py-1 rounded-full">Üye</span>
-              </div>
-            </div>
-            <button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline"><span class="material-symbols-outlined text-base">add</span>Daha fazla ekle</button>
-          </div>
-        </div>
-        <!-- Actions -->
-        <div class="flex items-center justify-between pt-8">
-          <button onclick="cwBack()" class="px-8 py-3 text-secondary font-semibold hover:text-primary transition-colors" id="cw-back-btn">İptal</button>
-          <button onclick="cwNext()" class="bg-primary text-on-primary px-10 py-4 rounded-full font-bold shadow-xl hover:bg-secondary transition-all active:scale-95 flex items-center gap-2 group" id="cw-next-btn">
-            <span>Sonraki</span>
-            <span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
-          </button>
-        </div>
-      </div>
-    </section>
-    <section class="hidden lg:flex flex-1 bg-surface-container-low items-center justify-center p-12 overflow-hidden relative">
-      <div class="absolute top-20 right-20 w-64 h-64 bg-surface-container-highest/20 rounded-full blur-3xl"></div>
-      <div class="absolute bottom-10 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-      <div class="relative z-10 w-full max-w-lg aspect-[4/3] bg-surface-container-lowest rounded-xl shadow-[0px_40px_80px_rgba(0,0,0,0.06)] border border-white/50 p-8 flex flex-col gap-6 transform rotate-2 hover:rotate-0 transition-transform duration-700">
-        <div class="flex items-center justify-between"><div class="flex gap-2"><div class="w-3 h-3 rounded-full bg-neutral-200"></div><div class="w-3 h-3 rounded-full bg-neutral-200"></div><div class="w-3 h-3 rounded-full bg-neutral-200"></div></div><div class="w-24 h-4 bg-neutral-100 rounded-full"></div></div>
-        <div class="space-y-3"><div class="h-8 bg-surface-container-high rounded-lg w-3/4"></div><div class="h-4 bg-surface-container rounded-lg w-1/2"></div></div>
-        <div class="grid grid-cols-2 gap-4 flex-1">
-          <div class="bg-neutral-50 rounded-lg p-4 flex flex-col gap-3"><div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-sm">school</span></div><div class="h-2 bg-neutral-200 rounded w-full"></div><div class="h-2 bg-neutral-200 rounded w-2/3"></div></div>
-          <div class="bg-neutral-50 rounded-lg p-4 flex flex-col gap-3"><div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-sm">menu_book</span></div><div class="h-2 bg-neutral-200 rounded w-full"></div><div class="h-2 bg-neutral-200 rounded w-2/3"></div></div>
-          <div class="col-span-2 bg-primary text-white rounded-lg p-4 flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-6 h-6 rounded bg-white/20"></div><div class="h-3 bg-white/30 rounded w-32"></div></div><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">bolt</span></div>
-        </div>
-        <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-lg border border-neutral-50 max-w-[180px]"><p class="text-[10px] font-bold text-primary-container leading-tight">"Eğitim materyallerinizi modern bir küratör hassasiyetiyle düzenleyin."</p></div>
-      </div>
-      <div class="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdo1qDcjLnkTsLL13c2xIsb1t_2RNUdaSesDiOxDFh4a3uLAZUTfo-9c5WdP5KRFXAtx6aeoF46VpOZOUr4OO5BC0nfDLQRZ8d5cIWbhn07DzEK-UhSmgh5FGCzPRRPHOvgonAI7awUqbjuY2vCiNtl611Xqt8RKrmHfl8cL2aKunUQzyG8qZzrqQ5yvHU_kQ4Rse6Ol4FbY4qibfnZpph9OyOyRhI-evrnnBEW6IE2yKyPbjEEbDW4NV4rIJ3hMqjm3ugWLax8A"/></div>
-    </section>
   </main>
 </div>
 
-<!-- ===================== SETTINGS PAGE ===================== -->
 <div id="page-settings" class="page">
   <aside class="fixed left-0 top-0 h-full flex flex-col p-6 w-64 border-r border-neutral-100 bg-white z-30">
     <div class="mb-12 px-4"><h1 class="font-bold text-xl tracking-tighter text-black cursor-pointer" onclick="navigate('welcome')">TeachFast.ai</h1><p class="text-xs text-on-surface-variant mt-1">The Digital Curator</p></div>
-    <nav class="flex-1 space-y-1">
-      <a class="nav-link" onclick="navigate('dashboard')"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
-      <a class="nav-link" onclick="navigate('library')"><span class="material-symbols-outlined">folder_open</span><span>Library</span></a>
-      <a class="nav-link" onclick="navigate('workspaces')"><span class="material-symbols-outlined">workspaces</span><span>Workspaces</span></a>
-      <a class="nav-link active-nav"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
-    </nav>
-    <div class="mt-auto px-4 pt-6 flex items-center gap-3 border-t border-surface-container">
-      <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOmoWdrsG9iVZ7WrS_X2epu1MErvhzdAVkWm5MxTooSLeS37wddfZbO_Iy8fF9xAJO9mx8vdI42DxaKpGg1CL2D1s0pZ4v3bmji7hQ9B8bGCZgESZKmdy79GQGPvX1cLdIS_FXrxIe8OipcPMlpVRdMpcNT0XrThUgg51n5iGAGxpC0hEvYUDir9353kQOmgE9ZzcGKaHhU_0cqH_89Ise3zFKdRRmLoZkP0GjAZ4_VKS4Km09TUEmgEZjehRYznazOMxSSH6IZ_ho"/></div>
-      <div><span class="text-xs font-bold block">Alex Morgan</span><span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Free Plan</span></div>
-    </div>
+    <nav class="flex-1 space-y-1"><a class="nav-link" onclick="navigate('dashboard')"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a><a class="nav-link" onclick="navigate('library')"><span class="material-symbols-outlined">folder_open</span><span>Library</span></a><a class="nav-link" onclick="navigate('workspaces')"><span class="material-symbols-outlined">workspaces</span><span>Workspaces</span></a><a class="nav-link active-nav"><span class="material-symbols-outlined">settings</span><span>Settings</span></a></nav>
   </aside>
-  <main class="ml-64 min-h-screen bg-surface flex items-center justify-center">
-    <div class="text-center space-y-4"><span class="material-symbols-outlined text-6xl text-neutral-300">settings</span><h2 class="text-3xl font-bold">Settings</h2><p class="text-on-surface-variant">Coming soon.</p></div>
-  </main>
+  <main class="ml-64 min-h-screen bg-surface flex items-center justify-center"><div class="text-center space-y-4"><span class="material-symbols-outlined text-6xl text-neutral-300">settings</span><h2 class="text-3xl font-bold">Settings</h2><p class="text-on-surface-variant">Coming soon.</p></div></main>
 </div>
 
 <!-- ===================== DOCUMENT PAGE ===================== -->
@@ -574,35 +350,23 @@ tailwind.config = {
   <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-100 shadow-sm flex items-center justify-between px-6 py-3">
     <div class="flex items-center gap-8">
       <span class="text-xl font-bold tracking-tighter text-black cursor-pointer" onclick="navigate('library')">TeachFast.ai</span>
-      <nav class="hidden md:flex items-center gap-6">
-        <a class="text-black font-semibold border-b-2 border-black pb-1" href="#">Modules</a>
-        <a class="text-zinc-500 hover:text-black cursor-pointer" onclick="navigate('library')">Library</a>
-        <a class="text-zinc-500 hover:text-black" href="#">Progress</a>
-      </nav>
+      <nav class="hidden md:flex items-center gap-6"><a class="text-black font-semibold border-b-2 border-black pb-1">Modules</a><a class="text-zinc-500 hover:text-black cursor-pointer" onclick="navigate('library')">Library</a><a class="text-zinc-500 hover:text-black">Progress</a></nav>
     </div>
     <div class="flex items-center gap-4">
       <button class="material-symbols-outlined text-zinc-500 hover:text-black">notifications</button>
-      <button class="bg-primary text-on-primary px-5 py-2 rounded-full text-sm font-medium hover:bg-secondary transition-all">Upgrade</button>
+      <button class="bg-primary text-on-primary px-5 py-2 rounded-full text-sm font-medium hover:bg-secondary">Upgrade</button>
       <div class="w-8 h-8 rounded-full overflow-hidden bg-zinc-200"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0IGhs9uXwGz1lch5XuPe8J_d-4QiJrUgs42Vrt7bIiKEUhxnDbiJzZEJvmSE1yRzjZhqGvUXMyr_2MJzQk10SdFMVlrctxJorBGOHe5FXiTAUZe6I39hpLumwYYuEubxheCFHdcwM9ieLL6ReTmLmYNENXOBE1aBhUkxEJ-ZBZrKP2kKLl3FR_wo6gbx1ORVMT4YdYOl07gzGIKhx1Y78cfLbyq1idIzw0J76zaui8s52c4r4MK6dWbJ4y8LQsYXrso7-TL4Y4D_p"/></div>
     </div>
   </header>
   <main class="pt-16 h-screen flex flex-col md:flex-row overflow-hidden">
     <section class="w-full md:w-1/2 h-full bg-white flex flex-col border-r border-zinc-100 relative overflow-hidden">
       <div class="px-12 py-8 flex-none border-b border-zinc-50 bg-white z-10 relative">
-        <div class="flex items-center justify-between"><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Full Document</span><div class="flex gap-2"><button class="p-2 hover:bg-zinc-50 rounded-full"><span class="material-symbols-outlined text-zinc-400">zoom_in</span></button><button class="p-2 hover:bg-zinc-50 rounded-full"><span class="material-symbols-outlined text-zinc-400">bookmark</span></button></div></div>
+        <div class="flex items-center justify-between"><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Full Document</span></div>
         <h1 class="text-3xl font-bold tracking-tight text-black mt-4">The Cognitive Architecture of Learning</h1>
         <p class="text-zinc-500 text-sm mt-1 italic">Source: MIT Micro-Learning Symposium 2024</p>
       </div>
       <div class="flex-1 overflow-y-auto relative custom-scrollbar">
         <div class="px-12 py-10">
-          <article class="text-lg leading-relaxed text-zinc-800 max-w-2xl mx-auto mb-10" style="font-family:'Lora',serif">
-            <p class="mb-6">Micro-learning is not simply the act of breaking information into smaller pieces. It is a strategic educational architecture designed to align with the brain's limited cognitive load capacity. By presenting information in "bursts" of 2–5 minutes, we bypass the fatigue associated with long-form traditional lecture formats.</p>
-            <p class="mb-6">The primary mechanism involved is the <strong>spaced repetition</strong> cycle. When a concept is introduced and then immediately reinforced through interactive testing, the neural pathways associated with that concept are strengthened through active recall.</p>
-            <p class="mb-6">Research indicates that the "forgetting curve" can be significantly flattened by these intermittent interventions. However, the quality of the intervention determines the depth of encoding.</p>
-            <p class="mb-6">In this session, we explore how TeachFast.ai utilizes semantic mapping to generate questions that don't just test rote memorization, but force the user to synthesize new information with existing mental models.</p>
-            <p class="mb-6">Furthermore, the visual environment plays a crucial role. A minimalist aesthetic reduces "visual noise," allowing the prefrontal cortex to dedicate more resources to information processing.</p>
-            <p class="mb-6">Beyond visual design, the pacing of content delivery must be adaptive. Systems that sense user response latency and adjust question difficulty in real-time demonstrate significantly higher knowledge retention outcomes.</p>
-          </article>
           <article class="text-lg leading-relaxed text-zinc-800 max-w-2xl mx-auto" style="font-family:'Lora',serif">
             <p class="mb-6">Micro-learning is not simply the act of breaking information into smaller pieces. It is a strategic educational architecture designed to align with the brain's limited cognitive load capacity. By presenting information in "bursts" of 2–5 minutes, we bypass the fatigue associated with long-form traditional lecture formats.</p>
             <p class="mb-6">The primary mechanism involved is the <strong>spaced repetition</strong> cycle. When a concept is introduced and then immediately reinforced through interactive testing, the neural pathways associated with that concept are strengthened through active recall.</p>
@@ -613,107 +377,62 @@ tailwind.config = {
           </article>
         </div>
         <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none z-10"></div>
-        <div class="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white to-transparent pointer-events-none z-10"></div>
       </div>
       <div class="absolute bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-black/5 backdrop-blur-md rounded-full border border-white/20 z-20">
         <div class="flex items-center gap-4 text-xs font-semibold uppercase tracking-tighter"><span class="text-black">Page 1 of 12</span><div class="w-24 h-1 bg-zinc-200 rounded-full overflow-hidden"><div class="w-1/12 h-full bg-black"></div></div></div>
       </div>
     </section>
     <section class="w-full md:w-1/2 h-full bg-surface-container-low flex flex-col overflow-hidden relative">
-      <!-- Header -->
       <div class="px-10 py-6 flex items-center justify-between border-b border-zinc-200/50">
         <div class="flex items-center gap-3">
           <div id="doc-step-num" class="w-10 h-10 rounded-full border-2 border-black flex items-center justify-center font-bold">1</div>
           <div><span class="text-xs font-bold uppercase tracking-widest text-zinc-500 block leading-none" id="doc-step-label">Step 1 of 3</span><span class="text-sm font-semibold text-black" id="doc-step-title">Knowledge Card</span></div>
         </div>
         <div class="flex items-center gap-3">
-          <div class="flex gap-1" id="doc-step-dots">
-            <div class="w-8 h-1 rounded-full bg-black"></div>
-            <div class="w-8 h-1 rounded-full bg-zinc-200"></div>
-            <div class="w-8 h-1 rounded-full bg-zinc-200"></div>
-          </div>
+          <div class="flex gap-1" id="doc-step-dots"><div class="w-8 h-1 rounded-full bg-black"></div><div class="w-8 h-1 rounded-full bg-zinc-200"></div><div class="w-8 h-1 rounded-full bg-zinc-200"></div></div>
           <button onclick="docStepNext()" class="bg-black text-white px-8 py-2.5 rounded-full font-bold flex items-center gap-2 hover:bg-zinc-800 active:scale-95" id="doc-next-btn">Next <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
         </div>
       </div>
-
       <!-- Step 1: Knowledge Card -->
       <div id="doc-flow-step-0" class="flex-1 overflow-y-auto px-10 py-12 custom-scrollbar">
         <div class="space-y-8">
           <div class="flex items-center gap-2"><span class="material-symbols-outlined text-zinc-400" style="font-variation-settings:'FILL' 1">auto_awesome</span><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Knowledge Card</span></div>
           <div class="bg-white rounded-2xl p-8 border border-zinc-100 shadow-sm space-y-6">
-            <div class="flex items-center gap-3 pb-4 border-b border-zinc-50">
-              <div class="w-10 h-10 rounded-xl bg-black flex items-center justify-center"><span class="material-symbols-outlined text-white text-lg">neurology</span></div>
-              <div><p class="font-bold text-lg">Cognitive Load Theory</p><p class="text-xs text-zinc-400">Core Concept • Day 1</p></div>
-            </div>
-            <p class="text-zinc-700 leading-relaxed">The human brain has a <strong>limited working memory capacity</strong>. Micro-learning works by presenting information in short 2–5 minute "bursts" that stay within this capacity, preventing cognitive overload and improving retention.</p>
-            <div class="bg-surface-container-low rounded-xl p-5 space-y-3">
-              <p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Key Takeaways</p>
-              <div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Short bursts bypass cognitive fatigue from long lectures</p></div>
-              <div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Working memory processes only 4–7 items at a time</p></div>
-              <div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Spacing effect strengthens long-term encoding</p></div>
-            </div>
-          </div>
-          <div class="bg-white rounded-2xl p-8 border border-zinc-100 shadow-sm space-y-6">
-            <div class="flex items-center gap-3 pb-4 border-b border-zinc-50">
-              <div class="w-10 h-10 rounded-xl bg-black flex items-center justify-center"><span class="material-symbols-outlined text-white text-lg">psychology</span></div>
-              <div><p class="font-bold text-lg">Spaced Repetition</p><p class="text-xs text-zinc-400">Core Concept • Day 1</p></div>
-            </div>
-            <p class="text-zinc-700 leading-relaxed">When a concept is introduced and <strong>immediately reinforced through testing</strong>, neural pathways are strengthened via active recall. The "forgetting curve" is significantly flattened by systematic review at increasing intervals.</p>
-            <div class="bg-surface-container-low rounded-xl p-5 space-y-3">
-              <p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Key Takeaways</p>
-              <div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Active recall strengthens neural connections</p></div>
-              <div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Forgetting curve flattens with spaced interventions</p></div>
-              <div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Quality of intervention determines encoding depth</p></div>
-            </div>
+            <div class="flex items-center gap-3 pb-4 border-b border-zinc-50"><div class="w-10 h-10 rounded-xl bg-black flex items-center justify-center"><span class="material-symbols-outlined text-white text-lg">neurology</span></div><div><p class="font-bold text-lg">Cognitive Load Theory</p><p class="text-xs text-zinc-400">Core Concept • Day 1</p></div></div>
+            <p class="text-zinc-700 leading-relaxed">The human brain has a <strong>limited working memory capacity</strong>. Micro-learning works by presenting information in short 2–5 minute "bursts" that stay within this capacity.</p>
+            <div class="bg-surface-container-low rounded-xl p-5 space-y-3"><p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Key Takeaways</p><div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Short bursts bypass cognitive fatigue</p></div><div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Working memory processes only 4–7 items at a time</p></div><div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Spacing effect strengthens long-term encoding</p></div></div>
           </div>
         </div>
       </div>
-
       <!-- Step 2: Quiz + Flashcard -->
       <div id="doc-flow-step-1" class="flex-1 overflow-y-auto px-10 py-12 custom-scrollbar" style="display:none">
         <div class="space-y-10">
-          <!-- Quiz -->
           <div class="space-y-6">
             <div class="flex items-center gap-2"><span class="material-symbols-outlined text-zinc-400">quiz</span><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Quiz — Question 1 of 3</span></div>
-            <h2 class="text-2xl font-bold tracking-tight text-black leading-tight">Based on the document, what is the primary benefit of "bursts" in micro-learning architectures?</h2>
+            <h2 class="text-2xl font-bold tracking-tight text-black leading-tight">What is the primary benefit of "bursts" in micro-learning?</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6" id="quiz-options">
               <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">A</span><span class="text-sm font-medium text-zinc-700">Increases reading speed by 40%</span></button>
               <button onclick="selectQuiz(this,true)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">B</span><span class="text-sm font-medium text-zinc-700">Bypasses cognitive load fatigue</span></button>
-              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">C</span><span class="text-sm font-medium text-zinc-700">Eliminates the need for visual focus</span></button>
-              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">D</span><span class="text-sm font-medium text-zinc-700">Prioritizes rote memorization cycles</span></button>
+              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">C</span><span class="text-sm font-medium text-zinc-700">Eliminates visual focus needs</span></button>
+              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">D</span><span class="text-sm font-medium text-zinc-700">Prioritizes rote memorization</span></button>
             </div>
-            <!-- Feedback -->
             <div id="quiz-feedback" style="display:none"></div>
           </div>
-          <!-- Flashcard -->
           <div class="pt-4 space-y-6">
             <div class="flex items-center gap-2"><span class="material-symbols-outlined text-zinc-400">style</span><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Flash Card</span></div>
             <div onclick="flipCard(this)" class="bg-black text-white rounded-2xl text-center shadow-2xl relative overflow-hidden cursor-pointer" style="min-height:220px;perspective:1000px">
               <div id="fc-inner" style="transition:transform .6s;transform-style:preserve-3d;position:relative;min-height:220px">
-                <!-- Front -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center p-10" style="backface-visibility:hidden">
-                  <p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Key Concept</p>
-                  <h3 class="text-4xl font-extrabold tracking-tighter mb-4">Spaced Repetition</h3>
-                  <div class="w-12 h-1 bg-white/30 mx-auto mb-4"></div>
-                  <p class="text-zinc-500 text-xs">Tap to reveal definition</p>
-                </div>
-                <!-- Back -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center p-10" style="backface-visibility:hidden;transform:rotateY(180deg)">
-                  <p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Definition</p>
-                  <p class="text-zinc-200 text-lg italic max-w-md leading-relaxed" style="font-family:'Lora',serif">"The systematic reinforcement of neural pathways via active recall at increasing time intervals."</p>
-                  <p class="text-zinc-500 text-xs mt-4">Tap to flip back</p>
-                </div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-10" style="backface-visibility:hidden"><p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Key Concept</p><h3 class="text-4xl font-extrabold tracking-tighter mb-4">Spaced Repetition</h3><p class="text-zinc-500 text-xs">Tap to reveal</p></div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-10" style="backface-visibility:hidden;transform:rotateY(180deg)"><p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Definition</p><p class="text-zinc-200 text-lg italic max-w-md leading-relaxed" style="font-family:'Lora',serif">"Systematic reinforcement of neural pathways via active recall at increasing time intervals."</p><p class="text-zinc-500 text-xs mt-4">Tap to flip back</p></div>
               </div>
             </div>
           </div>
-          <!-- Score -->
           <div class="bg-white rounded-xl flex items-center justify-between px-6 py-5 border border-zinc-100">
-            <div class="flex gap-8"><div class="flex flex-col"><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Accuracy</span><span class="font-bold" id="doc-accuracy">—</span></div><div class="flex flex-col"><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Session Streak</span><span class="font-bold" id="doc-streak">0</span></div></div>
-            <div class="flex items-center gap-2 text-zinc-400"><span class="material-symbols-outlined text-sm">auto_awesome</span><span class="text-xs font-medium">AI adapting difficulty</span></div>
+            <div class="flex gap-8"><div class="flex flex-col"><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Accuracy</span><span class="font-bold" id="doc-accuracy">—</span></div><div class="flex flex-col"><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Streak</span><span class="font-bold" id="doc-streak">0</span></div></div>
+            <div class="flex items-center gap-2 text-zinc-400"><span class="material-symbols-outlined text-sm">auto_awesome</span><span class="text-xs font-medium">AI adapting</span></div>
           </div>
         </div>
       </div>
-
       <!-- Step 3: Voice Practice -->
       <div id="doc-flow-step-2" class="flex-1 overflow-y-auto px-10 py-12 custom-scrollbar" style="display:none">
         <div class="space-y-8">
@@ -723,50 +442,25 @@ tailwind.config = {
             <div class="relative z-10 flex flex-col items-center justify-center h-full">
               <div class="flex items-center gap-2 mb-1"><div class="w-2 h-2 rounded-full bg-green-400 lw-pulse"></div><span class="text-[10px] text-green-400 font-bold uppercase tracking-widest">Ready</span></div>
               <p class="text-zinc-500 text-xs mb-10">AI Tutor — Cognitive Load Roleplay</p>
-              <!-- Orb -->
               <div class="relative mb-10" style="width:160px;height:160px">
                 <div class="absolute inset-0 rounded-full lw-pulse" style="background:radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)"></div>
                 <div class="absolute rounded-full lw-pulse" style="inset:15px;background:radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);animation-delay:.3s"></div>
                 <div class="absolute rounded-full lw-pulse" style="inset:30px;background:radial-gradient(circle, rgba(255,255,255,0.16) 0%, transparent 70%);animation-delay:.6s"></div>
                 <div class="absolute rounded-full" style="inset:45px;background:radial-gradient(circle at 40% 35%, #ffffff 0%, #a0a0a0 40%, #505050 100%);box-shadow:0 0 50px rgba(255,255,255,0.15), inset 0 -10px 20px rgba(0,0,0,0.4)"></div>
               </div>
-              <!-- Controls -->
               <div class="flex items-center gap-8">
-                <button class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"><span class="material-symbols-outlined text-white/60 text-xl">volume_up</span></button>
-                <button onclick="toggleVoiceDemo(this)" id="voice-mic-btn" class="w-16 h-16 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center shadow-lg hover:bg-white/15 transition-all"><span class="material-symbols-outlined text-white text-2xl">mic</span></button>
-                <button class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"><span class="material-symbols-outlined text-white/60 text-xl">call_end</span></button>
+                <button class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-white/60 text-xl">volume_up</span></button>
+                <button onclick="toggleVoiceDemo(this)" id="voice-mic-btn" class="w-16 h-16 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-white text-2xl">mic</span></button>
+                <button class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-white/60 text-xl">call_end</span></button>
               </div>
               <p class="text-zinc-600 text-xs mt-6" id="voice-status-text">Tap the microphone to start</p>
             </div>
           </div>
-          <!-- Mode chips -->
-          <div class="grid grid-cols-3 gap-3">
-            <div class="bg-white rounded-xl p-4 text-center border border-zinc-100 cursor-pointer hover:border-black transition-colors">
-              <span class="material-symbols-outlined text-xl text-black mb-1">record_voice_over</span>
-              <p class="text-xs font-bold">Roleplay</p>
-              <p class="text-[10px] text-zinc-400 mt-1">Practice scenarios</p>
-            </div>
-            <div class="bg-white rounded-xl p-4 text-center border border-zinc-100 cursor-pointer hover:border-black transition-colors">
-              <span class="material-symbols-outlined text-xl text-black mb-1">question_answer</span>
-              <p class="text-xs font-bold">Q&A</p>
-              <p class="text-[10px] text-zinc-400 mt-1">Verbal quizzing</p>
-            </div>
-            <div class="bg-white rounded-xl p-4 text-center border border-zinc-100 cursor-pointer hover:border-black transition-colors">
-              <span class="material-symbols-outlined text-xl text-black mb-1">assessment</span>
-              <p class="text-xs font-bold">Evaluation</p>
-              <p class="text-[10px] text-zinc-400 mt-1">AI scores you</p>
-            </div>
-          </div>
-          <!-- Session complete will show here -->
           <div id="voice-complete" style="display:none" class="bg-white rounded-2xl p-8 border border-zinc-100 text-center space-y-4">
             <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto"><span class="material-symbols-outlined text-3xl text-green-600">check_circle</span></div>
             <h3 class="text-xl font-bold">Day 1 Complete!</h3>
-            <p class="text-sm text-zinc-500 max-w-sm mx-auto">You've completed all learning activities for today. Come back tomorrow for Day 2.</p>
-            <div class="flex justify-center gap-6 pt-2">
-              <div class="text-center"><p class="text-2xl font-black">92%</p><p class="text-[10px] text-zinc-400 uppercase tracking-widest">Accuracy</p></div>
-              <div class="text-center"><p class="text-2xl font-black">3/3</p><p class="text-[10px] text-zinc-400 uppercase tracking-widest">Steps</p></div>
-              <div class="text-center"><p class="text-2xl font-black">4m</p><p class="text-[10px] text-zinc-400 uppercase tracking-widest">Duration</p></div>
-            </div>
+            <p class="text-sm text-zinc-500 max-w-sm mx-auto">Come back tomorrow for Day 2.</p>
+            <div class="flex justify-center gap-6 pt-2"><div class="text-center"><p class="text-2xl font-black">92%</p><p class="text-[10px] text-zinc-400 uppercase tracking-widest">Accuracy</p></div><div class="text-center"><p class="text-2xl font-black">3/3</p><p class="text-[10px] text-zinc-400 uppercase tracking-widest">Steps</p></div><div class="text-center"><p class="text-2xl font-black">4m</p><p class="text-[10px] text-zinc-400 uppercase tracking-widest">Duration</p></div></div>
           </div>
         </div>
       </div>
@@ -779,20 +473,20 @@ tailwind.config = {
   <div id="tut-step-0" class="tut-step w-full max-w-lg bg-white rounded-2xl p-10 shadow-2xl items-center text-center relative">
     <div class="mb-10 w-24 h-24 bg-surface-container-low rounded-full flex items-center justify-center mx-auto"><span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings:'FILL' 1">school</span></div>
     <h2 class="text-3xl font-bold text-primary tracking-tight mb-4">Welcome to TeachFast AI</h2>
-    <p class="text-on-surface-variant leading-relaxed mb-10 max-w-sm mx-auto">Your AI teacher and other powerful tools for smarter and faster learning. Click 'Next' to get started!</p>
+    <p class="text-on-surface-variant leading-relaxed mb-10 max-w-sm mx-auto">Your AI teacher for smarter and faster learning.</p>
     <button onclick="tutNext()" class="w-full bg-primary text-white py-4 rounded-full font-bold hover:bg-secondary active:scale-[0.98] transition-all mb-12">Next</button>
     <div class="flex items-center justify-center gap-3"><div class="w-2.5 h-2.5 rounded-full bg-primary"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div></div>
     <button onclick="tutClose()" class="absolute top-6 right-6 text-neutral-400 hover:text-primary"><span class="material-symbols-outlined text-xl">close</span></button>
   </div>
   <div id="tut-step-1" class="tut-step w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden" style="max-height:90vh">
-    <div class="px-10 pt-10 pb-6 text-center"><h3 class="text-3xl font-bold tracking-tight text-primary mb-3">Upload, Paste or Save</h3><p class="text-on-surface-variant leading-relaxed px-4">Upload any content to start learning.</p></div>
-    <div class="px-10"><div class="flex justify-center gap-2 mb-8 bg-surface-container-low p-1 rounded-full w-fit mx-auto"><button class="px-6 py-2 rounded-full text-sm font-semibold bg-white text-primary shadow-sm">Upload</button><button class="px-6 py-2 rounded-full text-sm font-medium text-on-surface-variant">Paste</button><button class="px-6 py-2 rounded-full text-sm font-medium text-on-surface-variant">Save</button></div><div class="bg-surface-container-low rounded-lg border-2 border-dashed border-outline-variant flex flex-col items-center justify-center py-12 px-8 text-center mb-8"><div class="mb-5 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-primary text-3xl">cloud_upload</span></div><p class="font-semibold text-primary mb-1">Drop your files here or click to browse</p></div></div>
-    <div class="px-10 py-6 flex items-center justify-between border-t border-surface-container"><button onclick="tutBack()" class="px-6 py-2 text-primary font-semibold hover:bg-surface-container rounded-full">Back</button><div class="flex gap-2 items-center"><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2.5 h-2.5 rounded-full bg-primary"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div></div><button onclick="tutNext()" class="px-8 py-2 bg-primary text-white font-semibold rounded-full hover:bg-secondary">Next</button></div>
+    <div class="px-10 pt-10 pb-6 text-center"><h3 class="text-3xl font-bold tracking-tight text-primary mb-3">Upload, Paste or Save</h3><p class="text-on-surface-variant">Upload any content to start learning.</p></div>
+    <div class="px-10"><div class="bg-surface-container-low rounded-lg border-2 border-dashed border-outline-variant flex flex-col items-center justify-center py-12 px-8 text-center mb-8"><div class="mb-5 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-primary text-3xl">cloud_upload</span></div><p class="font-semibold text-primary mb-1">Drop your files here</p></div></div>
+    <div class="px-10 py-6 flex items-center justify-between border-t border-surface-container"><button onclick="tutBack()" class="px-6 py-2 text-primary font-semibold hover:bg-surface-container rounded-full">Back</button><div class="flex gap-2"><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2.5 h-2.5 rounded-full bg-primary"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div></div><button onclick="tutNext()" class="px-8 py-2 bg-primary text-white font-semibold rounded-full hover:bg-secondary">Next</button></div>
   </div>
   <div id="tut-step-2" class="tut-step w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden" style="max-height:90vh">
-    <div class="p-8 pb-4"><div class="flex justify-between items-start"><div><h2 class="text-3xl font-bold tracking-tight text-primary">Chat with AI</h2><p class="text-on-surface-variant text-sm mt-1">Ask questions and get personalized insights.</p></div></div></div>
+    <div class="p-8 pb-4"><h2 class="text-3xl font-bold tracking-tight text-primary">Chat with AI</h2><p class="text-on-surface-variant text-sm mt-1">Ask questions and get personalized insights.</p></div>
     <div class="p-8 pt-4"><div class="w-full min-h-[220px] rounded-lg bg-surface-container-low flex flex-col items-center justify-center text-center space-y-4 py-10"><div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-3xl text-primary" style="font-variation-settings:'FILL' 1">psychology</span></div><p class="font-medium text-lg">Your AI Curator is ready.</p></div></div>
-    <div class="p-8 pt-0 flex flex-col items-center gap-5"><div class="flex gap-2 items-center"><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div><div class="w-full relative"><input class="w-full bg-surface-container-high border-none rounded-full px-6 py-4 text-sm" placeholder="Send a message..." type="text"/><button class="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white p-2 rounded-full"><span class="material-symbols-outlined text-sm">arrow_upward</span></button></div><div class="w-full flex justify-between"><button onclick="tutBack()" class="px-8 py-3 rounded-full border border-outline-variant/30 text-sm font-bold">Back</button><button onclick="tutClose()" class="px-8 py-3 rounded-full bg-primary text-white text-sm font-bold">Finish</button></div></div>
+    <div class="p-8 pt-0 flex flex-col items-center gap-5"><div class="flex gap-2"><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div><div class="w-full flex justify-between"><button onclick="tutBack()" class="px-8 py-3 rounded-full border border-outline-variant/30 text-sm font-bold">Back</button><button onclick="tutClose()" class="px-8 py-3 rounded-full bg-primary text-white text-sm font-bold">Finish</button></div></div>
   </div>
 </div>
 
@@ -827,9 +521,9 @@ tailwind.config = {
       <div id="lw-step-2" style="display:none">
         <div class="mb-12"><p class="font-semibold uppercase text-[10px] tracking-widest text-on-surface-variant mb-4">SELECT PLATFORM</p><h1 class="font-bold text-4xl md:text-5xl tracking-tighter text-primary">Where would you like to learn this document?</h1></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="lw-option p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.271.607-1.445c.159-.175.347-.218.463-.218l.332.005c.109.004.258-.041.405.314.159.386.541 1.32.588 1.417.047.097.078.21.014.339-.064.128-.096.21-.191.319-.095.109-.2.243-.285.326-.096.097-.197.202-.085.395.112.193.497.82 1.069 1.328.736.656 1.357.86 1.55.956.193.097.304.081.416-.048.112-.129.476-.554.604-.744.127-.19.255-.159.43-.095.174.064 1.104.52 1.295.617.191.096.318.144.364.225.046.081.046.469-.098.874zM12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11-11-4.925-11-11 4.925-11 11-11zm0 2c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">WhatsApp</h3><p class="text-on-surface-variant text-sm leading-relaxed">Receive daily learning content via WhatsApp. Anytime, anywhere.</p></div>
-          <div class="lw-option p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#4A154B] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">Slack</h3><p class="text-on-surface-variant text-sm leading-relaxed">Learning content delivered to your Slack channel.</p></div>
-          <div class="lw-option lw-selected p-8 rounded-lg bg-primary text-on-primary transition-all cursor-pointer ring-4 ring-primary/10" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-2xl" style="font-variation-settings:'FILL' 1">school</span></div><div class="w-5 h-5 rounded-full bg-white flex items-center justify-center lw-dot flex-shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div></div><h3 class="font-bold text-xl mb-2">TeachFast</h3><p class="text-white/70 text-sm leading-relaxed">Learn within the platform. Use TeachFast for the richest experience.</p></div>
+          <div class="lw-option lw-platform p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="whatsapp" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.271.607-1.445c.159-.175.347-.218.463-.218l.332.005c.109.004.258-.041.405.314.159.386.541 1.32.588 1.417.047.097.078.21.014.339-.064.128-.096.21-.191.319-.095.109-.2.243-.285.326-.096.097-.197.202-.085.395.112.193.497.82 1.069 1.328.736.656 1.357.86 1.55.956.193.097.304.081.416-.048.112-.129.476-.554.604-.744.127-.19.255-.159.43-.095.174.064 1.104.52 1.295.617.191.096.318.144.364.225.046.081.046.469-.098.874zM12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11-11-4.925-11-11 4.925-11 11-11zm0 2c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">WhatsApp</h3><p class="text-on-surface-variant text-sm leading-relaxed">Receive daily learning content via WhatsApp.</p></div>
+          <div class="lw-option lw-platform p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="slack" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#4A154B] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">Slack</h3><p class="text-on-surface-variant text-sm leading-relaxed">Learning content delivered to your Slack channel.</p></div>
+          <div class="lw-option lw-platform lw-selected p-8 rounded-lg bg-primary text-on-primary transition-all cursor-pointer ring-4 ring-primary/10" data-platform="teachfast" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-2xl" style="font-variation-settings:'FILL' 1">school</span></div><div class="w-5 h-5 rounded-full bg-white flex items-center justify-center lw-dot flex-shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div></div><h3 class="font-bold text-xl mb-2">TeachFast</h3><p class="text-white/70 text-sm leading-relaxed">Learn within the platform.</p></div>
         </div>
       </div>
       <div class="mt-16 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-surface-container pt-8">
@@ -843,6 +537,52 @@ tailwind.config = {
   </div>
 </div>
 
+<!-- ===================== SLACK INTEGRATION PAGE ===================== -->
+<div id="slack-integration-overlay" class="fixed inset-0 z-[300] flex items-center justify-center" style="display:none; background: linear-gradient(135deg, #4A154B 0%, #611f69 40%, #2d0e30 100%);">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-[#E01E5A]/10 rounded-full blur-3xl"></div>
+  </div>
+  <div class="relative z-10 w-full max-w-md mx-4">
+    <!-- Slack Header -->
+    <div class="text-center mb-8">
+      <div class="w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center mx-auto mb-6 shadow-2xl border border-white/10">
+        <svg class="w-12 h-12 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg>
+      </div>
+      <h1 class="text-3xl font-extrabold text-white tracking-tight mb-2">Connect to Slack</h1>
+      <p class="text-white/60 text-sm">Authorize TeachFast to deliver learning content to your workspace</p>
+    </div>
+    <!-- OAuth Card -->
+    <div class="bg-white rounded-2xl p-8 shadow-2xl space-y-6">
+      <div class="flex items-center gap-4 pb-6 border-b border-neutral-100">
+        <div class="w-12 h-12 rounded-xl bg-black flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-white" style="font-variation-settings:'FILL' 1">school</span></div>
+        <div><p class="font-bold text-lg text-black">TeachFast.ai</p><p class="text-xs text-neutral-500">wants to access your Slack workspace</p></div>
+      </div>
+      <div class="space-y-4">
+        <p class="text-xs font-bold uppercase tracking-widest text-neutral-400">Permissions requested</p>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center"><span class="material-symbols-outlined text-green-600 text-base">chat</span></div><div><p class="text-sm font-semibold text-black">Send messages</p><p class="text-xs text-neutral-400">Post learning content to channels</p></div></div>
+          <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center"><span class="material-symbols-outlined text-blue-600 text-base">schedule</span></div><div><p class="text-sm font-semibold text-black">Schedule messages</p><p class="text-xs text-neutral-400">Send daily learning at preferred times</p></div></div>
+          <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center"><span class="material-symbols-outlined text-purple-600 text-base">groups</span></div><div><p class="text-sm font-semibold text-black">Access channels</p><p class="text-xs text-neutral-400">View channel list for delivery</p></div></div>
+        </div>
+      </div>
+      <div class="space-y-3 pt-2">
+        <div class="bg-neutral-50 rounded-xl p-4 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-[#4A154B] flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2z"/></svg></div>
+          <div class="flex-1 min-w-0"><p class="text-sm font-bold text-black truncate">Alex's Company</p><p class="text-xs text-neutral-400">alex-company.slack.com</p></div>
+          <span class="material-symbols-outlined text-neutral-300 text-lg">unfold_more</span>
+        </div>
+        <button onclick="completeSlackIntegration()" class="w-full bg-[#4A154B] text-white py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-[#611f69] active:scale-[0.98] transition-all shadow-lg">
+          <svg class="w-5 h-5 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2z"/></svg>
+          Integrate with Slack
+        </button>
+        <button onclick="cancelSlackIntegration()" class="w-full py-3 text-neutral-500 font-medium text-sm hover:text-black transition-colors">Cancel</button>
+      </div>
+    </div>
+    <p class="text-center text-white/30 text-xs mt-6">By connecting, you agree to TeachFast's Terms of Service</p>
+  </div>
+</div>
+
 <!-- ===================== LOADING SCREEN ===================== -->
 <div id="learn-loading" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(249,249,249,0.95);">
   <div style="position:absolute; inset:0; backdrop-filter:blur(16px);"></div>
@@ -853,8 +593,8 @@ tailwind.config = {
         <div class="lw-spin" style="position:absolute; inset:0; border:4px solid transparent; border-top-color:#000000; border-radius:9999px;"></div>
         <div class="lw-pulse" style="width:5rem; height:5rem; background:#1b1b1b; border-radius:9999px; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-outlined" style="color:white; font-size:2rem; font-variation-settings:'FILL' 1;">smart_toy</span></div>
       </div>
-      <h2 style="font-size:1.5rem; font-weight:800; letter-spacing:-0.02em; color:#000000; margin-bottom:0.75rem; font-family:'Inter',sans-serif;">Your learning plan is being created...</h2>
-      <p style="color:#4c4546; font-size:0.875rem; line-height:1.6; max-width:260px; font-family:'Inter',sans-serif;">Please wait, our AI is analyzing your document.</p>
+      <h2 id="loading-title" style="font-size:1.5rem; font-weight:800; letter-spacing:-0.02em; color:#000000; margin-bottom:0.75rem; font-family:'Inter',sans-serif;">Your learning plan is being created...</h2>
+      <p id="loading-subtitle" style="color:#4c4546; font-size:0.875rem; line-height:1.6; max-width:260px; font-family:'Inter',sans-serif;">Please wait, our AI is analyzing your document.</p>
       <div style="margin-top:2rem; display:flex; gap:6px; justify-content:center;">
         <div class="lw-b1" style="width:8px; height:8px; border-radius:9999px; background:rgba(0,0,0,0.2);"></div>
         <div class="lw-b2" style="width:8px; height:8px; border-radius:9999px; background:rgba(0,0,0,0.4);"></div>
@@ -867,117 +607,34 @@ tailwind.config = {
 <!-- ===================== DOCUMENT TUTORIAL OVERLAY ===================== -->
 <div id="doc-tutorial-overlay" class="fixed inset-0 z-[250] items-center justify-center p-6 bg-black/50 backdrop-blur-md" style="display:none">
   <div id="doc-tut-step-0" class="tut-step w-full max-w-lg bg-white rounded-2xl p-10 shadow-2xl items-center text-center relative">
-    <div class="mb-8 w-20 h-20 bg-surface-container-low rounded-full flex items-center justify-center mx-auto">
-      <span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings:'FILL' 1">auto_awesome</span>
-    </div>
+    <div class="mb-8 w-20 h-20 bg-surface-container-low rounded-full flex items-center justify-center mx-auto"><span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings:'FILL' 1">auto_awesome</span></div>
     <h2 class="text-3xl font-bold text-primary tracking-tight mb-4">Your Learning Plan is Ready!</h2>
-    <p class="text-on-surface-variant leading-relaxed mb-4 max-w-sm mx-auto">We've analyzed your document and created a personalized learning journey. Let us show you around.</p>
+    <p class="text-on-surface-variant leading-relaxed mb-4 max-w-sm mx-auto">We've analyzed your document and created a personalized learning journey.</p>
     <div class="bg-surface-container-low rounded-xl p-5 mb-10 text-left space-y-3">
       <div class="flex items-center gap-3"><span class="material-symbols-outlined text-lg text-primary">check_circle</span><span class="text-sm font-medium">7-day personalized study plan</span></div>
       <div class="flex items-center gap-3"><span class="material-symbols-outlined text-lg text-primary">check_circle</span><span class="text-sm font-medium">18 knowledge cards generated</span></div>
       <div class="flex items-center gap-3"><span class="material-symbols-outlined text-lg text-primary">check_circle</span><span class="text-sm font-medium">12 quiz questions created</span></div>
-      <div class="flex items-center gap-3"><span class="material-symbols-outlined text-lg text-primary">check_circle</span><span class="text-sm font-medium">6 flashcards ready</span></div>
     </div>
     <button onclick="docTutNext()" class="w-full bg-primary text-white py-4 rounded-full font-bold hover:bg-secondary active:scale-[0.98] transition-all mb-8">Let's Go</button>
-    <div class="flex items-center justify-center gap-3"><div class="w-2.5 h-2.5 rounded-full bg-primary"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div></div>
     <button onclick="docTutClose()" class="absolute top-6 right-6 text-neutral-400 hover:text-primary"><span class="material-symbols-outlined text-xl">close</span></button>
   </div>
-  <div id="doc-tut-step-1" class="tut-step w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden relative">
-    <div class="p-8 pb-4 text-center">
-      <div class="w-14 h-14 bg-surface-container-low rounded-full flex items-center justify-center mx-auto mb-4"><span class="material-symbols-outlined text-2xl text-primary">description</span></div>
-      <h3 class="text-2xl font-bold tracking-tight text-primary mb-2">Source Document</h3>
-      <p class="text-on-surface-variant text-sm max-w-md mx-auto">The left panel shows your original document. Scroll through and read at your own pace — highlighted sections connect to the questions on the right.</p>
-    </div>
-    <div class="px-8 pb-4">
-      <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
-        <div class="flex items-center gap-3 mb-4"><div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-sm text-primary">article</span></div><div><p class="text-xs font-bold text-primary">The Cognitive Architecture of Learning</p><p class="text-[10px] text-on-surface-variant">MIT Micro-Learning Symposium 2024</p></div></div>
-        <div class="space-y-2"><div class="h-2 w-full bg-surface-container-high rounded"></div><div class="h-2 w-5/6 bg-surface-container-high rounded"></div><div class="h-2 w-4/6 bg-surface-container-high rounded"></div><div class="h-2 w-full bg-yellow-100 rounded border border-yellow-200"></div><div class="h-2 w-3/4 bg-surface-container-high rounded"></div></div>
-        <div class="mt-4 flex items-center gap-2 text-[10px] text-on-surface-variant"><span class="material-symbols-outlined text-xs">bookmark</span>Page 1 of 12</div>
-      </div>
-    </div>
-    <div class="px-8 py-6 flex items-center justify-between border-t border-surface-container"><button onclick="docTutBack()" class="px-6 py-2 text-primary font-semibold hover:bg-surface-container rounded-full">Back</button><div class="flex gap-2 items-center"><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2.5 h-2.5 rounded-full bg-primary"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div></div><button onclick="docTutNext()" class="px-8 py-2 bg-primary text-white font-semibold rounded-full hover:bg-secondary">Next</button></div>
-  </div>
-  <div id="doc-tut-step-2" class="tut-step w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden relative">
-    <div class="p-8 pb-4 text-center">
-      <div class="w-14 h-14 bg-surface-container-low rounded-full flex items-center justify-center mx-auto mb-4"><span class="material-symbols-outlined text-2xl text-primary" style="font-variation-settings:'FILL' 1">psychology</span></div>
-      <h3 class="text-2xl font-bold tracking-tight text-primary mb-2">Interactive Learning</h3>
-      <p class="text-on-surface-variant text-sm max-w-md mx-auto">The right panel is where the magic happens. AI-generated quizzes, flashcards, and knowledge cards adapt to your progress in real-time.</p>
-    </div>
-    <div class="px-8 pb-4">
-      <div class="grid grid-cols-3 gap-3">
-        <div class="bg-surface-container-low rounded-xl p-4 text-center"><span class="material-symbols-outlined text-xl text-primary mb-2">quiz</span><p class="text-xs font-bold">Quizzes</p><p class="text-[10px] text-on-surface-variant mt-1">Test your understanding</p></div>
-        <div class="bg-surface-container-low rounded-xl p-4 text-center"><span class="material-symbols-outlined text-xl text-primary mb-2">style</span><p class="text-xs font-bold">Flashcards</p><p class="text-[10px] text-on-surface-variant mt-1">Memorize key concepts</p></div>
-        <div class="bg-surface-container-low rounded-xl p-4 text-center"><span class="material-symbols-outlined text-xl text-primary mb-2">school</span><p class="text-xs font-bold">Knowledge</p><p class="text-[10px] text-on-surface-variant mt-1">Deep-dive summaries</p></div>
-      </div>
-      <div class="mt-4 bg-black text-white rounded-xl p-5 text-center">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">Sample Question</p>
-        <p class="text-sm font-semibold">What is the primary benefit of micro-learning bursts?</p>
-        <div class="grid grid-cols-2 gap-2 mt-4">
-          <div class="bg-white/10 rounded-lg py-2 px-3 text-xs">A. Speed reading</div>
-          <div class="bg-white/20 rounded-lg py-2 px-3 text-xs border border-white/30">B. Bypass fatigue</div>
-          <div class="bg-white/10 rounded-lg py-2 px-3 text-xs">C. Visual focus</div>
-          <div class="bg-white/10 rounded-lg py-2 px-3 text-xs">D. Rote memory</div>
-        </div>
-      </div>
-    </div>
-    <div class="px-8 py-6 flex items-center justify-between border-t border-surface-container"><button onclick="docTutBack()" class="px-6 py-2 text-primary font-semibold hover:bg-surface-container rounded-full">Back</button><div class="flex gap-2 items-center"><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2.5 h-2.5 rounded-full bg-primary"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div></div><button onclick="docTutNext()" class="px-8 py-2 bg-primary text-white font-semibold rounded-full hover:bg-secondary">Next</button></div>
-  </div>
-  <!-- Step 3: Voice Practice with AI -->
-  <div id="doc-tut-step-3" class="tut-step w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden relative">
-    <div class="p-8 pb-4 text-center">
-      <div class="w-14 h-14 bg-surface-container-low rounded-full flex items-center justify-center mx-auto mb-4"><span class="material-symbols-outlined text-2xl text-primary" style="font-variation-settings:'FILL' 1">mic</span></div>
-      <h3 class="text-2xl font-bold tracking-tight text-primary mb-2">Realtime Voice Practice</h3>
-      <p class="text-on-surface-variant text-sm max-w-md mx-auto">Have a live voice conversation with your AI tutor. No typing — just speak naturally and practice what you've learned through roleplay scenarios.</p>
-    </div>
-    <div class="px-8 pb-4">
-      <div class="bg-black rounded-2xl px-6 pt-8 pb-10 text-white relative overflow-hidden" style="min-height:280px">
-        <div class="absolute inset-0" style="background:radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0a0a0a 100%)"></div>
-        <div class="relative z-10 flex flex-col items-center justify-center h-full">
-          <div class="flex items-center gap-2 mb-2"><div class="w-2 h-2 rounded-full bg-green-400 lw-pulse"></div><span class="text-[10px] text-green-400 font-bold uppercase tracking-widest">Listening</span></div>
-          <p class="text-zinc-500 text-xs mb-8">AI Tutor — Spaced Repetition Roleplay</p>
-          <!-- Orb -->
-          <div class="relative mb-8" style="width:140px;height:140px">
-            <div class="absolute inset-0 rounded-full lw-pulse" style="background:radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)"></div>
-            <div class="absolute rounded-full lw-pulse" style="inset:10px;background:radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);animation-delay:.3s"></div>
-            <div class="absolute rounded-full lw-pulse" style="inset:25px;background:radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%);animation-delay:.6s"></div>
-            <div class="absolute rounded-full" style="inset:40px;background:radial-gradient(circle at 40% 35%, #ffffff 0%, #a0a0a0 40%, #505050 100%);box-shadow:0 0 40px rgba(255,255,255,0.15), inset 0 -8px 16px rgba(0,0,0,0.4)"></div>
-          </div>
-          <!-- Controls -->
-          <div class="flex items-center gap-8">
-            <button class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"><span class="material-symbols-outlined text-white/60 text-xl">volume_up</span></button>
-            <button class="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center shadow-lg shadow-red-500/30 hover:bg-red-600 transition-colors"><span class="material-symbols-outlined text-white text-2xl" style="font-variation-settings:'FILL' 1">mic</span></button>
-            <button class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"><span class="material-symbols-outlined text-white/60 text-xl">call_end</span></button>
-          </div>
-        </div>
-      </div>
-      <div class="grid grid-cols-3 gap-3 mt-4">
-        <div class="bg-surface-container-low rounded-lg p-3 text-center"><span class="material-symbols-outlined text-base text-primary">record_voice_over</span><p class="text-[10px] font-bold mt-1">Roleplay</p></div>
-        <div class="bg-surface-container-low rounded-lg p-3 text-center"><span class="material-symbols-outlined text-base text-primary">question_answer</span><p class="text-[10px] font-bold mt-1">Q&A Practice</p></div>
-        <div class="bg-surface-container-low rounded-lg p-3 text-center"><span class="material-symbols-outlined text-base text-primary">assessment</span><p class="text-[10px] font-bold mt-1">AI Evaluation</p></div>
-      </div>
-    </div>
-    <div class="px-8 py-6 flex items-center justify-between border-t border-surface-container"><button onclick="docTutBack()" class="px-6 py-2 text-primary font-semibold hover:bg-surface-container rounded-full">Back</button><div class="flex gap-2 items-center"><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2.5 h-2.5 rounded-full bg-primary"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div></div><button onclick="docTutNext()" class="px-8 py-2 bg-primary text-white font-semibold rounded-full hover:bg-secondary">Next</button></div>
-  </div>
-  <!-- Step 4: Progress Tracking -->
-  <div id="doc-tut-step-4" class="tut-step w-full max-w-lg bg-white rounded-2xl p-10 shadow-2xl items-center text-center relative">
+  <div id="doc-tut-step-1" class="tut-step w-full max-w-lg bg-white rounded-2xl p-10 shadow-2xl items-center text-center relative">
     <div class="w-14 h-14 bg-surface-container-low rounded-full flex items-center justify-center mx-auto mb-6"><span class="material-symbols-outlined text-2xl text-primary" style="font-variation-settings:'FILL' 1">trending_up</span></div>
     <h3 class="text-2xl font-bold tracking-tight text-primary mb-2">Track Your Progress</h3>
-    <p class="text-on-surface-variant text-sm max-w-sm mx-auto mb-8">Your accuracy, streaks, and session stats are always visible. The AI adapts question difficulty based on your performance.</p>
+    <p class="text-on-surface-variant text-sm max-w-sm mx-auto mb-8">AI adapts question difficulty based on your performance.</p>
     <div class="bg-surface-container-low rounded-xl p-6 mb-8 flex items-center justify-around">
       <div class="text-center"><p class="text-3xl font-black text-primary">92%</p><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-1">Accuracy</p></div>
-      <div class="w-px h-10 bg-outline-variant"></div>
-      <div class="text-center"><p class="text-3xl font-black text-primary">4</p><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-1">Streak</p></div>
       <div class="w-px h-10 bg-outline-variant"></div>
       <div class="text-center"><p class="text-3xl font-black text-primary">Day 1</p><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-1">of 7</p></div>
     </div>
     <button onclick="docTutClose()" class="w-full bg-primary text-white py-4 rounded-full font-bold hover:bg-secondary active:scale-[0.98] transition-all mb-8">Start Learning</button>
-    <div class="flex items-center justify-center gap-3"><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2 h-2 rounded-full bg-surface-container-highest"></div><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div>
     <button onclick="docTutClose()" class="absolute top-6 right-6 text-neutral-400 hover:text-primary"><span class="material-symbols-outlined text-xl">close</span></button>
   </div>
 </div>
 
 <script>
 var tutorialShown = false;
+var selectedPlatform = 'teachfast';
 
 function navigate(page) {
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
@@ -986,11 +643,30 @@ function navigate(page) {
   if(page==='dashboard' && !tutorialShown) startTutorial();
   if(page==='create-workspace'){cwStep=0; cwShowStep();}
 }
-
 function showPage(id) {
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   var t = document.getElementById(id);
   if(t){t.classList.add('active'); window.scrollTo({top:0});}
+}
+
+// Toast notification system
+function showToast(icon, iconColor, title, subtitle, duration, callback) {
+  var container = document.getElementById('toast-container');
+  container.style.display = 'flex';
+  var toast = document.createElement('div');
+  toast.className = 'toast-enter';
+  toast.style.cssText = 'background:white; border-radius:1rem; padding:1rem 1.5rem; box-shadow:0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05); display:flex; align-items:center; gap:0.75rem; min-width:340px; max-width:480px;';
+  toast.innerHTML = '<div style="width:40px;height:40px;border-radius:12px;background:'+iconColor+';display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="material-symbols-outlined" style="color:white;font-size:20px;font-variation-settings:\'FILL\' 1">'+icon+'</span></div><div style="flex:1;min-width:0"><p style="font-weight:700;font-size:14px;color:#000;margin:0">'+title+'</p>'+(subtitle?'<p style="font-size:12px;color:#737373;margin:2px 0 0 0">'+subtitle+'</p>':'')+'</div>';
+  container.appendChild(toast);
+  setTimeout(function(){
+    toast.classList.remove('toast-enter');
+    toast.classList.add('toast-exit');
+    setTimeout(function(){
+      toast.remove();
+      if(!container.children.length) container.style.display='none';
+      if(callback) callback();
+    }, 400);
+  }, duration);
 }
 
 // Tutorial
@@ -1012,20 +688,61 @@ function tutClose(){
 
 // Learn Wizard
 var lwStep=0;
-function openLearnWizard(){lwStep=0; lwShowStep(0); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML='Start Learning <span class="material-symbols-outlined text-sm">arrow_forward</span>'; document.getElementById('learn-wizard').style.display='flex';}
+function openLearnWizard(){lwStep=0; selectedPlatform='teachfast'; lwShowStep(0); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML='Start Learning <span class="material-symbols-outlined text-sm">arrow_forward</span>'; document.getElementById('learn-wizard').style.display='flex';}
 function closeLearnWizard(){document.getElementById('learn-wizard').style.display='none';}
+
+function getSelectedPlatform(){
+  var sel = document.querySelector('#lw-step-2 .lw-selected');
+  if(sel && sel.dataset.platform) return sel.dataset.platform;
+  return 'teachfast';
+}
+
 function lwNext(){
   if(lwStep<2){lwStep++; lwShowStep(lwStep); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML=(lwStep===2?'Complete':'Start Learning')+' <span class="material-symbols-outlined text-sm">arrow_forward</span>';}
   else{
+    selectedPlatform = getSelectedPlatform();
     document.getElementById('learn-wizard').style.display='none';
-    document.getElementById('learn-loading').style.display='block';
-    window.setTimeout(function(){
-      document.getElementById('learn-loading').style.display='none';
-      showPage('page-document');
-      startDocTutorial();
-    },6000);
+    if(selectedPlatform === 'slack'){
+      // Show Slack integration page
+      document.getElementById('slack-integration-overlay').style.display='flex';
+    } else {
+      startAnalysisFlow();
+    }
   }
 }
+
+function startAnalysisFlow(){
+  document.getElementById('loading-title').textContent='Your learning plan is being created...';
+  document.getElementById('loading-subtitle').textContent='Please wait, our AI is analyzing your document.';
+  document.getElementById('learn-loading').style.display='block';
+  setTimeout(function(){
+    document.getElementById('learn-loading').style.display='none';
+    showPage('page-document');
+    startDocTutorial();
+  },6000);
+}
+
+function completeSlackIntegration(){
+  document.getElementById('slack-integration-overlay').style.display='none';
+  // Show "Slack integrated" toast for 3 seconds
+  showToast('check_circle', '#4A154B', 'Slack successfully integrated!', 'Your workspace is now connected to TeachFast.', 3000, function(){
+    // After that toast disappears, show "Analyzing" toast for 6 seconds
+    showToast('smart_toy', '#000000', 'Analyzing your document...', 'AI is creating your personalized learning plan.', 6000, function(){
+      // Then navigate to document page
+      showPage('page-document');
+      startDocTutorial();
+    });
+  });
+}
+
+function cancelSlackIntegration(){
+  document.getElementById('slack-integration-overlay').style.display='none';
+  // Go back to wizard at step 2
+  lwStep=2; lwShowStep(2); lwUpdateProgress();
+  document.getElementById('lw-next-btn').innerHTML='Complete <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+  document.getElementById('learn-wizard').style.display='flex';
+}
+
 function lwBack(){if(lwStep>0){lwStep--; lwShowStep(lwStep); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML='Start Learning <span class="material-symbols-outlined text-sm">arrow_forward</span>';} else closeLearnWizard();}
 function lwShowStep(n){['lw-step-0','lw-step-1','lw-step-2'].forEach(function(id,i){document.getElementById(id).style.display=i===n?'block':'none';});}
 function lwUpdateProgress(){document.querySelectorAll('#lw-progress-bar div').forEach(function(b,i){b.className=i<=lwStep?'w-8 h-1 rounded-full bg-primary':'w-8 h-1 rounded-full bg-surface-container-highest';}); document.getElementById('lw-counter').textContent=(lwStep+1)+' / 3';}
@@ -1041,9 +758,6 @@ function selectLwOption(el){
   var dot=el.querySelector('.lw-dot'); if(dot){dot.className='w-5 h-5 rounded-full bg-white flex items-center justify-center lw-dot flex-shrink-0'; dot.innerHTML='<div style="width:10px;height:10px;border-radius:9999px;background:#000;"></div>';}
 }
 
-// Workspace tabs
-function switchTab(prefix,tab){['upload','paste','save'].forEach(function(t){var btn=document.getElementById(prefix+'-tab-'+t); var panel=document.getElementById(prefix+'-panel-'+t); if(!btn||!panel)return; if(t===tab){btn.classList.add('bg-white','text-primary','shadow-sm'); btn.classList.remove('text-on-surface-variant'); panel.classList.remove('hidden');}else{btn.classList.remove('bg-white','text-primary','shadow-sm'); btn.classList.add('text-on-surface-variant'); panel.classList.add('hidden');}});}
-
 // Document Tutorial
 var docTutStep=0;
 function startDocTutorial(){
@@ -1051,176 +765,56 @@ function startDocTutorial(){
   document.getElementById('doc-tutorial-overlay').style.display='flex';
   showDocTutStep(0);
 }
-function showDocTutStep(n){
-  for(var i=0;i<5;i++){
-    var el=document.getElementById('doc-tut-step-'+i);
-    if(el) el.classList.toggle('active',i===n);
-  }
-}
-function docTutNext(){
-  if(++docTutStep>=5) docTutClose();
-  else showDocTutStep(docTutStep);
-}
-function docTutBack(){
-  if(--docTutStep<0) docTutStep=0;
-  showDocTutStep(docTutStep);
-}
-function docTutClose(){
-  document.getElementById('doc-tutorial-overlay').style.display='none';
-}
+function showDocTutStep(n){for(var i=0;i<2;i++){var el=document.getElementById('doc-tut-step-'+i); if(el) el.classList.toggle('active',i===n);}}
+function docTutNext(){if(++docTutStep>=2) docTutClose(); else showDocTutStep(docTutStep);}
+function docTutClose(){document.getElementById('doc-tutorial-overlay').style.display='none';}
 
 // Create Workspace Flow
 var cwStep=0;
-function cwNext(){
-  if(cwStep<2){
-    cwStep++;
-    cwShowStep();
-  } else {
-    // Complete - go back to workspaces
-    cwStep=0;
-    cwShowStep();
-    navigate('workspaces');
-  }
-}
-function cwBack(){
-  if(cwStep>0){
-    cwStep--;
-    cwShowStep();
-  } else {
-    navigate('workspaces');
-  }
-}
+function cwNext(){if(cwStep<2){cwStep++; cwShowStep();} else {cwStep=0; cwShowStep(); navigate('workspaces');}}
+function cwBack(){if(cwStep>0){cwStep--; cwShowStep();} else navigate('workspaces');}
 function cwShowStep(){
-  for(var i=0;i<3;i++){
-    var el=document.getElementById('cw-form-step-'+i);
-    if(el) el.style.display=i===cwStep?'':'none';
-  }
+  for(var i=0;i<3;i++){var el=document.getElementById('cw-form-step-'+i); if(el) el.style.display=i===cwStep?'':'none';}
   document.getElementById('cw-step-label').textContent='Adım '+(cwStep+1)+' / 3';
   document.getElementById('cw-back-btn').textContent=cwStep===0?'İptal':'Geri';
-  if(cwStep===2){
-    document.getElementById('cw-next-btn').innerHTML='<span>Oluştur</span><span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">check</span>';
-  } else {
-    document.getElementById('cw-next-btn').innerHTML='<span>Sonraki</span><span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>';
-  }
+  if(cwStep===2){document.getElementById('cw-next-btn').innerHTML='<span>Oluştur</span><span class="material-symbols-outlined text-xl">check</span>';}
+  else{document.getElementById('cw-next-btn').innerHTML='<span>Sonraki</span><span class="material-symbols-outlined text-xl">arrow_forward</span>';}
 }
-function selectCwCat(el){
-  document.querySelectorAll('.cw-cat').forEach(function(c){
-    c.classList.remove('bg-primary','text-white');
-    c.classList.add('bg-surface-container-low','text-on-surface-variant');
-  });
-  el.classList.remove('bg-surface-container-low','text-on-surface-variant');
-  el.classList.add('bg-primary','text-white');
-}
+function selectCwCat(el){document.querySelectorAll('.cw-cat').forEach(function(c){c.classList.remove('bg-primary','text-white');c.classList.add('bg-surface-container-low','text-on-surface-variant');}); el.classList.remove('bg-surface-container-low','text-on-surface-variant'); el.classList.add('bg-primary','text-white');}
 
 // Document Learning Flow
 var docFlowStep=0;
 var docStepTitles=['Knowledge Card','Quiz + Flashcard','Voice Practice'];
-function docStepNext(){
-  if(docFlowStep<2){
-    docFlowStep++;
-    showDocFlow();
-  }
-}
+function docStepNext(){if(docFlowStep<2){docFlowStep++; showDocFlow();}}
 function showDocFlow(){
-  for(var i=0;i<3;i++){
-    var el=document.getElementById('doc-flow-step-'+i);
-    if(el) el.style.display=i===docFlowStep?'':'none';
-  }
+  for(var i=0;i<3;i++){var el=document.getElementById('doc-flow-step-'+i); if(el) el.style.display=i===docFlowStep?'':'none';}
   document.getElementById('doc-step-num').textContent=docFlowStep+1;
   document.getElementById('doc-step-label').textContent='Step '+(docFlowStep+1)+' of 3';
   document.getElementById('doc-step-title').textContent=docStepTitles[docFlowStep];
-  var dots=document.getElementById('doc-step-dots');
-  dots.innerHTML='';
-  for(var j=0;j<3;j++){
-    var d=document.createElement('div');
-    d.className='w-8 h-1 rounded-full '+(j<=docFlowStep?'bg-black':'bg-zinc-200');
-    dots.appendChild(d);
-  }
-  if(docFlowStep===2){
-    document.getElementById('doc-next-btn').style.display='none';
-  } else {
-    document.getElementById('doc-next-btn').style.display='';
-  }
+  var dots=document.getElementById('doc-step-dots'); dots.innerHTML='';
+  for(var j=0;j<3;j++){var d=document.createElement('div'); d.className='w-8 h-1 rounded-full '+(j<=docFlowStep?'bg-black':'bg-zinc-200'); dots.appendChild(d);}
+  document.getElementById('doc-next-btn').style.display=docFlowStep===2?'none':'';
 }
 
-// Quiz interaction
+// Quiz
 var quizAnswered=false;
 function selectQuiz(el,correct){
-  if(quizAnswered) return;
-  quizAnswered=true;
-  var opts=document.querySelectorAll('.doc-quiz-opt');
-  opts.forEach(function(o){
-    o.style.pointerEvents='none';
-    o.classList.remove('hover:border-black');
-  });
+  if(quizAnswered) return; quizAnswered=true;
+  var opts=document.querySelectorAll('.doc-quiz-opt'); opts.forEach(function(o){o.style.pointerEvents='none';});
   var badge=el.querySelector('span:first-child');
-  if(correct){
-    el.style.border='2px solid #16a34a';
-    el.style.background='#f0fdf4';
-    badge.style.background='#16a34a';
-    badge.style.color='#fff';
-    document.getElementById('quiz-feedback').style.display='block';
-    document.getElementById('quiz-feedback').innerHTML='<div class="bg-green-50 border border-green-200 rounded-xl p-5 flex items-start gap-3"><span class="material-symbols-outlined text-green-600 mt-0.5">check_circle</span><div><p class="font-bold text-green-800 text-sm">Correct!</p><p class="text-green-700 text-sm mt-1">Micro-learning bursts are designed to work within the brain\'s cognitive load limits, bypassing the fatigue of traditional long-form lectures.</p></div></div>';
-    document.getElementById('doc-accuracy').textContent='100%';
-    document.getElementById('doc-streak').textContent='1';
-  } else {
-    el.style.border='2px solid #dc2626';
-    el.style.background='#fef2f2';
-    badge.style.background='#dc2626';
-    badge.style.color='#fff';
-    // highlight correct
-    opts[1].style.border='2px solid #16a34a';
-    opts[1].style.background='#f0fdf4';
-    opts[1].querySelector('span:first-child').style.background='#16a34a';
-    opts[1].querySelector('span:first-child').style.color='#fff';
-    document.getElementById('quiz-feedback').style.display='block';
-    document.getElementById('quiz-feedback').innerHTML='<div class="bg-red-50 border border-red-200 rounded-xl p-5 flex items-start gap-3"><span class="material-symbols-outlined text-red-600 mt-0.5">cancel</span><div><p class="font-bold text-red-800 text-sm">Not quite!</p><p class="text-red-700 text-sm mt-1">The correct answer is <strong>B</strong>. Micro-learning bursts bypass cognitive load fatigue by keeping content within working memory limits.</p></div></div>';
-    document.getElementById('doc-accuracy').textContent='0%';
-    document.getElementById('doc-streak').textContent='0';
-  }
+  if(correct){el.style.border='2px solid #16a34a'; el.style.background='#f0fdf4'; badge.style.background='#16a34a'; badge.style.color='#fff'; document.getElementById('quiz-feedback').style.display='block'; document.getElementById('quiz-feedback').innerHTML='<div class="bg-green-50 border border-green-200 rounded-xl p-5 flex items-start gap-3"><span class="material-symbols-outlined text-green-600 mt-0.5">check_circle</span><div><p class="font-bold text-green-800 text-sm">Correct!</p><p class="text-green-700 text-sm mt-1">Micro-learning bursts bypass cognitive load fatigue.</p></div></div>'; document.getElementById('doc-accuracy').textContent='100%'; document.getElementById('doc-streak').textContent='1';}
+  else{el.style.border='2px solid #dc2626'; el.style.background='#fef2f2'; badge.style.background='#dc2626'; badge.style.color='#fff'; opts[1].style.border='2px solid #16a34a'; opts[1].style.background='#f0fdf4'; opts[1].querySelector('span:first-child').style.background='#16a34a'; opts[1].querySelector('span:first-child').style.color='#fff'; document.getElementById('quiz-feedback').style.display='block'; document.getElementById('quiz-feedback').innerHTML='<div class="bg-red-50 border border-red-200 rounded-xl p-5 flex items-start gap-3"><span class="material-symbols-outlined text-red-600 mt-0.5">cancel</span><div><p class="font-bold text-red-800 text-sm">Not quite!</p><p class="text-red-700 text-sm mt-1">The correct answer is B.</p></div></div>'; document.getElementById('doc-accuracy').textContent='0%'; document.getElementById('doc-streak').textContent='0';}
 }
 
-// Flashcard flip
-function flipCard(el){
-  var inner=document.getElementById('fc-inner');
-  if(inner.style.transform==='rotateY(180deg)'){
-    inner.style.transform='rotateY(0deg)';
-  } else {
-    inner.style.transform='rotateY(180deg)';
-  }
-}
+function flipCard(el){var inner=document.getElementById('fc-inner'); inner.style.transform=inner.style.transform==='rotateY(180deg)'?'rotateY(0deg)':'rotateY(180deg)';}
 
-// Voice demo toggle
+// Voice demo
 var voiceActive=false;
 function toggleVoiceDemo(btn){
   voiceActive=!voiceActive;
-  if(voiceActive){
-    btn.style.background='#ef4444';
-    btn.style.borderColor='#ef4444';
-    btn.innerHTML='<span class="material-symbols-outlined text-white text-2xl" style="font-variation-settings:\'FILL\' 1">mic</span>';
-    document.getElementById('voice-status-text').textContent='Listening... speak now';
-    // simulate AI response after 3s
-    setTimeout(function(){
-      if(voiceActive){
-        document.getElementById('voice-status-text').textContent='AI is responding...';
-        setTimeout(function(){
-          document.getElementById('voice-status-text').textContent='Your turn — tap to speak';
-          btn.style.background='rgba(255,255,255,0.1)';
-          btn.style.borderColor='rgba(255,255,255,0.2)';
-          voiceActive=false;
-          // Show complete after demo
-          setTimeout(function(){
-            document.getElementById('voice-complete').style.display='block';
-            document.getElementById('voice-complete').scrollIntoView({behavior:'smooth'});
-          },2000);
-        },2500);
-      }
-    },3000);
-  } else {
-    btn.style.background='rgba(255,255,255,0.1)';
-    btn.style.borderColor='rgba(255,255,255,0.2)';
-    document.getElementById('voice-status-text').textContent='Tap the microphone to start';
-  }
+  if(voiceActive){btn.style.background='#ef4444'; btn.style.borderColor='#ef4444'; document.getElementById('voice-status-text').textContent='Listening... speak now';
+    setTimeout(function(){if(voiceActive){document.getElementById('voice-status-text').textContent='AI is responding...'; setTimeout(function(){document.getElementById('voice-status-text').textContent='Your turn'; btn.style.background='rgba(255,255,255,0.1)'; btn.style.borderColor='rgba(255,255,255,0.2)'; voiceActive=false; setTimeout(function(){document.getElementById('voice-complete').style.display='block'; document.getElementById('voice-complete').scrollIntoView({behavior:'smooth'});},2000);},2500);}},3000);
+  } else {btn.style.background='rgba(255,255,255,0.1)'; btn.style.borderColor='rgba(255,255,255,0.2)'; document.getElementById('voice-status-text').textContent='Tap the microphone to start';}
 }
 </script>
 </body>
