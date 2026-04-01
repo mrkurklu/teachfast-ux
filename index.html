@@ -47,6 +47,7 @@ tailwind.config = {
   .pref-card-check{opacity:0;transform:scale(.85);transition:opacity .15s ease,transform .15s ease;}
   .pref-card-selected .pref-card-check{opacity:1;transform:scale(1);}
   .learning-prefs-cta-disabled{opacity:.45;pointer-events:none;cursor:not-allowed;}
+  .doc-intent-textarea{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.8125rem;line-height:1.55;min-height:9rem;resize:vertical;}
 </style>
 </head>
 <body class="antialiased">
@@ -167,8 +168,22 @@ tailwind.config = {
     </div>
   </header>
   <main class="min-h-screen pt-28 pb-20 px-6 max-w-3xl mx-auto">
-    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3">Nasıl öğrenmek istersiniz?</h1>
-    <p class="text-on-surface-variant mb-10 leading-relaxed">Dokümanınız modüllere ayrıldı. <strong class="text-primary font-semibold">Birden fazla yöntemi</strong> seçebilirsiniz; akış ve öneriler seçimlerinize göre birleştirilir.</p>
+    <div class="rounded-2xl border-2 border-outline-variant/80 bg-surface-container-lowest px-5 py-4 flex gap-4 items-start mb-8 text-left shadow-sm">
+      <span class="material-symbols-outlined text-primary flex-shrink-0 text-2xl" style="font-variation-settings:'FILL' 1">check_circle</span>
+      <div>
+        <p class="font-bold text-primary text-sm tracking-tight">Dokümanı anladım</p>
+        <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed">Yapı ve ana fikirler çıkarıldı (prototip). Şimdi <strong class="text-on-surface font-semibold">bu içeriği sen nasıl kullanmak istiyorsun?</strong> Aşağıya kendi cümlelerinle yaz.</p>
+      </div>
+    </div>
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3">Bu dokümanı nasıl kullanmak istersin?</h1>
+    <p class="text-on-surface-variant mb-6 leading-relaxed">Prompt gibi serbest yaz; plan özeti ve vurgular bu metinden yola çıkar (demo). İstersen hemen altından <strong class="text-primary font-semibold">formatları</strong> da işaretleyerek netleştir.</p>
+    <div class="mb-10">
+      <label for="user-document-intent" class="block text-xs font-bold uppercase tracking-[0.15em] text-on-surface-variant mb-2">Nasıl kullanmak istediğini anlat</label>
+      <textarea id="user-document-intent" class="doc-intent-textarea w-full rounded-2xl border-2 border-outline-variant bg-white px-4 py-3 text-on-surface placeholder:text-on-surface-variant/70 focus:border-black focus:ring-0 focus:outline-none transition-colors" rows="6" placeholder="Örnek: Bu playbook’u haftaya sahada kullanacağım; itiraz senaryolarını soru-cevapla pekiştirmek istiyorum.&#10;&#10;Örnek: Ekibe 15 dk’lık Slack özeti ve flashcard; önce kartlar, sonra kısa quiz."></textarea>
+      <p class="text-xs text-on-surface-variant mt-2">Ne kadar spesifik yazarsan, akış o kadar hedefe yakın görünür.</p>
+    </div>
+    <p class="text-sm font-bold text-primary mb-4 tracking-tight">Format tercihleri <span class="text-on-surface-variant font-normal">· en az birini seç</span></p>
+    <p class="text-sm text-on-surface-variant mb-6 leading-relaxed">Doküman modüllere ayrıldı; <strong class="text-primary font-semibold">birden fazla yöntemi</strong> birlikte seçebilirsin.</p>
     <div class="grid gap-4">
       <button type="button" class="pref-card pref-card-selected relative w-full text-left rounded-2xl border-2 border-black bg-surface-container-lowest p-6 flex gap-4 items-start" data-pref="card" onclick="selectLearningPref(this)" aria-pressed="true">
         <span class="pref-card-check absolute top-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 1">check</span></span>
@@ -550,6 +565,7 @@ tailwind.config = {
         <div class="flex flex-wrap items-center justify-between gap-2"><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Tam belge</span><span id="doc-pref-banner" class="text-[10px] font-semibold uppercase tracking-wider text-zinc-500 max-w-[220px] md:max-w-none text-right">Kişiselleştirilmiş akış</span></div>
         <h1 class="text-3xl font-bold tracking-tight text-black mt-4">Kurumsal Satış Eğitimi — İtiraz Yönetimi</h1>
         <p class="text-zinc-500 text-sm mt-1 italic">Kaynak: Şirket içi playbook (örnek prototip metin)</p>
+        <p id="doc-intent-snippet" class="hidden text-sm text-zinc-700 mt-4 pl-4 border-l-2 border-black max-w-2xl leading-relaxed" role="note"></p>
       </div>
       <div class="flex-1 overflow-y-auto relative custom-scrollbar">
         <div class="px-12 py-10">
@@ -825,6 +841,7 @@ var tutorialShown = false;
 var learnWizardFromOnboarding = false;
 var selectedPlatform = 'teachfast';
 var userLearningPrefs = ['card', 'qa'];
+var userDocumentIntent = '';
 var practiceMode = 'audio';
 var docPanelOrder = [0, 1];
 var docStepTitlesOrdered = ['Bilgi kartı', 'Soru–cevap'];
@@ -842,9 +859,15 @@ function runOnboardingAnalysis(){
   setTimeout(function(){
     document.getElementById('learn-loading').style.display = 'none';
     userLearningPrefs = ['card', 'qa'];
+    userDocumentIntent = '';
+    var ta = document.getElementById('user-document-intent');
+    if(ta) ta.value = '';
     navigate('learning-prefs');
     syncLearningPrefCards();
     updateLearningPrefsCta();
+    if(ta){
+      setTimeout(function(){ ta.focus(); }, 100);
+    }
   }, 2200);
 }
 
@@ -943,15 +966,32 @@ function applyDocMixSectionVisibility(){
   if(statsBar) statsBar.style.display = (showQuiz || showFc) ? '' : 'none';
 }
 
+function updateDocIntentSnippetInView(){
+  var p = document.getElementById('doc-intent-snippet');
+  if(!p) return;
+  if(userDocumentIntent){
+    p.textContent = 'Senin tarifin: ' + userDocumentIntent;
+    p.classList.remove('hidden');
+  } else {
+    p.textContent = '';
+    p.classList.add('hidden');
+  }
+}
+
 function applyDocPersonalization(){
   var labels = { card: 'Bilgi kartı', qa: 'Soru–cevap', practice: 'Pratik', flashcard: 'Flashcard' };
   var el = document.getElementById('doc-pref-banner');
   var prefs = getPrefsForPlan();
   var textParts = prefs.map(function(p){ return labels[p] || p; });
   if(el){
-    el.textContent = prefs.length > 1
+    var line = prefs.length > 1
       ? ('Seçilenler: ' + textParts.join(' · '))
       : ('Öncelik: ' + textParts[0]);
+    if(userDocumentIntent){
+      var tail = userDocumentIntent.length > 48 ? userDocumentIntent.slice(0, 45) + '…' : userDocumentIntent;
+      line += ' · ' + tail;
+    }
+    el.textContent = line;
   }
   docPanelOrder = buildDocPanelOrder(prefs);
   docStepTitlesOrdered = docPanelOrder.map(function(pi){ return docStepTitleForPanel(pi, prefs); });
@@ -959,6 +999,7 @@ function applyDocPersonalization(){
   docFlowStep = 0;
   resetQuizState();
   showDocFlow();
+  updateDocIntentSnippetInView();
 }
 
 function getPrefsForPlan(){
@@ -976,7 +1017,14 @@ function setLoadingScreenForPlanBuild(){
   var title = document.getElementById('loading-title');
   var sub = document.getElementById('loading-subtitle');
   if(title) title.textContent = 'Öğrenme planınız oluşturuluyor…';
-  if(sub) sub.textContent = 'Seçilen yöntemler: ' + parts + '. Modül sırası ve içerik yoğunluğu seçimlerinize göre ayarlanıyor.';
+  if(sub){
+    var msg = 'Seçilen yöntemler: ' + parts + '. Modül sırası ve içerik yoğunluğu seçimlerinize göre ayarlanıyor.';
+    if(userDocumentIntent){
+      var hint = userDocumentIntent.length > 80 ? userDocumentIntent.slice(0, 77) + '…' : userDocumentIntent;
+      msg += ' Hedefiniz: «' + hint + '».';
+    }
+    sub.textContent = msg;
+  }
 }
 
 function populateDocTutorialFromPrefs(){
@@ -990,7 +1038,12 @@ function populateDocTutorialFromPrefs(){
 
   var intro = document.getElementById('doc-tut-intro');
   if(intro){
-    intro.textContent = 'Seçiminiz: ' + prefDisplayNamesTR(prefs).join(', ') + '. Aşağıdaki bileşenler bu tercihlere göre plana dahil edildi.';
+    var introBody = 'Seçiminiz: ' + prefDisplayNamesTR(prefs).join(', ') + '. Aşağıdaki bileşenler bu tercihlere göre plana dahil edildi.';
+    if(userDocumentIntent){
+      var quote = userDocumentIntent.length > 140 ? userDocumentIntent.slice(0, 137) + '…' : userDocumentIntent;
+      introBody = '«' + quote + '» ifadesine göre uyarlanmış plan. ' + introBody;
+    }
+    intro.textContent = introBody;
   }
 
   var titleEl = document.getElementById('doc-tut-title');
@@ -1084,6 +1137,8 @@ function populateDocTutorialFromPrefs(){
 
 function createPersonalizedFlow(){
   if(!userLearningPrefs.length) return;
+  var ta = document.getElementById('user-document-intent');
+  userDocumentIntent = ta ? ta.value.trim() : '';
   setLoadingScreenForPlanBuild();
   document.getElementById('learn-loading').style.display = 'block';
   setTimeout(function(){
@@ -1217,6 +1272,7 @@ function startAnalysisFlow(){
     document.getElementById('learn-loading').style.display='none';
     showPage('page-document');
     userLearningPrefs = ['card', 'qa'];
+    userDocumentIntent = '';
     applyDocPersonalization();
     startDocTutorial();
   },6000);
@@ -1233,6 +1289,7 @@ function completeSlackIntegration(){
       } else {
         showPage('page-document');
         userLearningPrefs = ['card', 'qa'];
+        userDocumentIntent = '';
         applyDocPersonalization();
         startDocTutorial();
       }
