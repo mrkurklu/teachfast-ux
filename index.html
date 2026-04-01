@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="tr">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -41,6 +41,12 @@ tailwind.config = {
   @keyframes toast-out{from{transform:translateY(0);opacity:1}to{transform:translateY(-20px);opacity:0}}
   .toast-enter{animation:toast-in .4s ease-out forwards;}
   .toast-exit{animation:toast-out .4s ease-in forwards;}
+  .pref-card{cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s;}
+  .pref-card:hover{transform:translateY(-2px);}
+  .pref-card-selected{border-color:#000!important;background:#fff!important;box-shadow:0 12px 40px rgba(0,0,0,.08);}
+  .pref-card-check{opacity:0;transform:scale(.85);transition:opacity .15s ease,transform .15s ease;}
+  .pref-card-selected .pref-card-check{opacity:1;transform:scale(1);}
+  .learning-prefs-cta-disabled{opacity:.45;pointer-events:none;cursor:not-allowed;}
 </style>
 </head>
 <body class="antialiased">
@@ -110,11 +116,100 @@ tailwind.config = {
             <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Password</label>
             <input class="w-full bg-surface-container-high border-none rounded-2xl px-5 py-4 placeholder:text-neutral-400 focus:ring-1 focus:ring-primary" placeholder="••••••••" type="password"/>
           </div>
-          <button onclick="navigate('dashboard')" class="w-full bg-primary text-on-primary font-bold py-5 rounded-full hover:bg-secondary active:scale-[0.98] transition-all flex items-center justify-center gap-2 group">
-            Sign In <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          <button onclick="navigate('onboarding')" class="w-full bg-primary text-on-primary font-bold py-5 rounded-full hover:bg-secondary active:scale-[0.98] transition-all flex items-center justify-center gap-2 group">
+            Giriş yap <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
           </button>
         </div>
       </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== ONBOARDING: İLK YÜKLEME ===================== -->
+<div id="page-onboarding" class="page">
+  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-lg border-b border-outline-variant/20">
+    <div class="flex items-center justify-between px-6 md:px-8 h-16 max-w-screen-2xl mx-auto">
+      <span class="text-lg font-black tracking-tighter text-black cursor-pointer" onclick="navigate('welcome')">teachfast.ai</span>
+      <button type="button" onclick="navigate('login')" class="text-sm font-semibold text-on-surface-variant hover:text-black">Çıkış</button>
+    </div>
+  </header>
+  <main class="min-h-screen pt-24 pb-16 px-6 flex flex-col items-center justify-center bg-surface">
+    <div class="w-full max-w-lg text-center mb-10">
+      <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-3">Adım 1 / 3</p>
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary leading-tight mb-3">Öğrenmek veya öğretmek istediğiniz içeriği yükleyin</h1>
+      <p class="text-on-surface-variant text-sm md:text-base leading-relaxed">Kayıt sonrası ilk adım: materyalinizi ekleyin. PDF, sunum veya metin dosyası (prototip).</p>
+    </div>
+    <div class="w-full max-w-xl bg-surface-container-lowest rounded-2xl border-2 border-dashed border-outline-variant p-10 md:p-12 text-center shadow-sm hover:border-primary/40 transition-colors" id="onb-dropzone">
+      <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mx-auto mb-6">
+        <span class="material-symbols-outlined text-3xl text-primary">cloud_upload</span>
+      </div>
+      <p class="font-bold text-lg text-primary mb-1">Dosyayı buraya bırakın veya seçin</p>
+      <p class="text-sm text-on-surface-variant mb-8">Satış eğitimi, ürün bilgisi veya herhangi bir doküman</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <label class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-primary text-on-primary font-bold text-sm cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all">
+          <span class="material-symbols-outlined text-lg">upload_file</span>
+          Dosya seç
+          <input type="file" class="hidden" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt" onchange="onboardingFilePicked(this)"/>
+        </label>
+        <button type="button" onclick="onboardingDemoDoc()" class="px-8 py-4 rounded-full border-2 border-outline-variant font-bold text-sm hover:bg-surface-container-low transition-all">Demo dokümanı kullan</button>
+      </div>
+    </div>
+    <p class="mt-8 text-xs text-on-surface-variant max-w-md text-center">Bu ekran prototiptir; dosya sunucuya gitmez. Seçim sonrası analiz animasyonu gösterilir.</p>
+  </main>
+</div>
+
+<!-- ===================== ÖĞRENME TERCİHİ ===================== -->
+<div id="page-learning-prefs" class="page">
+  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-lg border-b border-outline-variant/20">
+    <div class="flex items-center justify-between px-6 md:px-8 h-16 max-w-screen-2xl mx-auto">
+      <span class="text-lg font-black tracking-tighter">teachfast.ai</span>
+      <span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Adım 2 / 3</span>
+    </div>
+  </header>
+  <main class="min-h-screen pt-28 pb-20 px-6 max-w-3xl mx-auto">
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3">Nasıl öğrenmek istersiniz?</h1>
+    <p class="text-on-surface-variant mb-10 leading-relaxed">Dokümanınız modüllere ayrıldı. <strong class="text-primary font-semibold">Birden fazla yöntemi</strong> seçebilirsiniz; akış ve öneriler seçimlerinize göre birleştirilir.</p>
+    <div class="grid gap-4">
+      <button type="button" class="pref-card pref-card-selected relative w-full text-left rounded-2xl border-2 border-black bg-surface-container-lowest p-6 flex gap-4 items-start" data-pref="card" onclick="selectLearningPref(this)" aria-pressed="true">
+        <span class="pref-card-check absolute top-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 1">check</span></span>
+        <div class="pref-card-icon w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined">auto_awesome</span></div>
+        <div class="pr-8">
+          <p class="font-bold text-lg">Bilgi kartı</p>
+          <p class="text-sm text-on-surface-variant mt-1">Atomik özet kartları; soru veya flashcard olmadan okuyup pekiştirme.</p>
+        </div>
+      </button>
+      <button type="button" class="pref-card pref-card-selected relative w-full text-left rounded-2xl border-2 border-black bg-surface-container-lowest p-6 flex gap-4 items-start" data-pref="qa" onclick="selectLearningPref(this)" aria-pressed="true">
+        <span class="pref-card-check absolute top-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 1">check</span></span>
+        <div class="pref-card-icon w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined">quiz</span></div>
+        <div class="pr-8">
+          <p class="font-bold text-lg">Soru–cevap</p>
+          <p class="text-sm text-on-surface-variant mt-1">İçerik atomik parçalara bölünür; her parça için kısa sorular ve geri bildirim.</p>
+        </div>
+      </button>
+      <button type="button" class="pref-card relative w-full text-left rounded-2xl border-2 border-outline-variant bg-surface-container-lowest p-6 flex gap-4 items-start" data-pref="practice" onclick="selectLearningPref(this)" aria-pressed="false">
+        <span class="pref-card-check absolute top-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 1">check</span></span>
+        <div class="pref-card-icon w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center flex-shrink-0 text-primary"><span class="material-symbols-outlined">mic</span></div>
+        <div class="pr-8">
+          <p class="font-bold text-lg">Pratik</p>
+          <p class="text-sm text-on-surface-variant mt-1">Senaryo provası; etkinlik ses veya video kaydı ile takip edilir (satış pitch vb.).</p>
+        </div>
+      </button>
+      <button type="button" class="pref-card relative w-full text-left rounded-2xl border-2 border-outline-variant bg-surface-container-lowest p-6 flex gap-4 items-start" data-pref="flashcard" onclick="selectLearningPref(this)" aria-pressed="false">
+        <span class="pref-card-check absolute top-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 1">check</span></span>
+        <div class="pref-card-icon w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center flex-shrink-0 text-primary"><span class="material-symbols-outlined">style</span></div>
+        <div class="pr-8">
+          <p class="font-bold text-lg">Flashcard</p>
+          <p class="text-sm text-on-surface-variant mt-1">Kavram–tanım kartları; hızlı tekrar ve pekiştirme.</p>
+        </div>
+      </button>
+    </div>
+    <p id="learning-prefs-hint" class="mt-4 text-xs text-on-surface-variant hidden" role="status">En az bir yöntem seçmelisiniz.</p>
+    <div class="mt-12 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+      <button type="button" onclick="navigate('onboarding')" class="text-sm font-semibold text-on-surface-variant hover:text-black order-2 sm:order-1">← Yüklemeye dön</button>
+      <button type="button" id="learning-prefs-cta" onclick="createPersonalizedFlow()" class="order-1 sm:order-2 w-full sm:w-auto px-10 py-4 rounded-full bg-primary text-on-primary font-bold text-sm hover:opacity-90 flex items-center justify-center gap-2">
+        Kişisel akışı oluştur
+        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+      </button>
     </div>
   </main>
 </div>
@@ -302,7 +397,98 @@ tailwind.config = {
 </div>
 
 <!-- ===================== MANAGE WORKSPACE, CREATE WORKSPACE, SETTINGS (simplified) ===================== -->
-<div id="page-manage-workspace" class="page"><main class="md:ml-64 flex-1 flex flex-col bg-surface min-h-screen items-center justify-center"><div class="text-center space-y-4"><span class="material-symbols-outlined text-6xl text-neutral-300">engineering</span><h2 class="text-3xl font-bold">Manage Workspace</h2><p class="text-on-surface-variant">Workspace management view.</p><button onclick="navigate('workspaces')" class="mt-4 px-6 py-3 bg-primary text-white rounded-full font-bold">Back to Workspaces</button></div></main></div>
+<div id="page-manage-workspace" class="page">
+  <aside class="hidden md:flex flex-col fixed left-0 top-0 h-full p-4 w-64 border-r border-neutral-100 bg-white z-30">
+    <div class="flex items-center gap-3 px-4 py-6">
+      <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">school</span></div>
+      <div><h1 class="text-lg font-black tracking-tighter text-black cursor-pointer" onclick="navigate('welcome')">teachfast.ai</h1><p class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">The Digital Curator</p></div>
+    </div>
+    <nav class="flex-1 flex flex-col gap-1 mt-4">
+      <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('dashboard')"><span class="material-symbols-outlined">home</span><span class="text-sm">Home</span></a>
+      <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('library')"><span class="material-symbols-outlined">bookmarks</span><span class="text-sm">Library</span></a>
+      <a class="flex items-center gap-3 px-4 py-3 text-black font-bold bg-neutral-100 rounded-full cursor-pointer" onclick="navigate('workspaces')"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">grid_view</span><span class="text-sm">Workspaces</span></a>
+      <a class="flex items-center gap-3 px-4 py-3 text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-full transition-all cursor-pointer" onclick="navigate('settings')"><span class="material-symbols-outlined">settings</span><span class="text-sm">Settings</span></a>
+    </nav>
+    <div class="mt-auto space-y-4 pt-4 border-t border-neutral-50">
+      <button type="button" class="w-full bg-primary text-on-primary py-3 rounded-full font-bold text-xs flex items-center justify-center gap-2 hover:bg-secondary transition-all active:scale-95"><span class="material-symbols-outlined text-sm">add</span>New Project</button>
+      <div class="flex items-center gap-3 px-4 py-3 hover:bg-neutral-50 rounded-xl cursor-pointer transition-colors">
+        <div class="w-9 h-9 rounded-full overflow-hidden bg-surface-container flex-shrink-0"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ4LfJ4TlxLkiHmsEhckEISvQE2RvPXvcEzVGwQCLvtgpxcqeZblCCTCVtBDBBm1_9HPr9Aa1MjQkcZN20si8PBp-pkE1mI60GhoNfXy-nGZO7NWZuq486Zpxp7V74yXAM20zNqO9k2-2t_AwzpThoHLUHMevuMIuOxnV861yJCKtwGtUWHR9ThnxGU6in19L2fI1_GKqrYPOilY--X43fsi9oNMD09eqNL4E8ayuntFKWhZFNuztJUI-gYNjnwiFlNE_Jf4wVil1F"/></div>
+        <div class="flex-1 overflow-hidden"><p class="text-sm font-bold text-black truncate">Alexander Chen</p><p class="text-[10px] text-neutral-500 font-medium">Administrator</p></div>
+        <span class="material-symbols-outlined text-neutral-300 text-xl">unfold_more</span>
+      </div>
+    </div>
+  </aside>
+  <main class="md:ml-64 flex-1 flex flex-col bg-surface min-h-screen">
+    <header class="flex justify-between items-center w-full px-6 md:px-12 py-6 z-40 bg-white/80 backdrop-blur-xl sticky top-0 border-b border-neutral-100/80">
+      <div class="flex items-center gap-4 md:gap-8 min-w-0">
+        <button type="button" onclick="navigate('workspaces')" class="material-symbols-outlined text-neutral-400 hover:text-black transition-colors flex-shrink-0" aria-label="Back to Workspaces">arrow_back</button>
+        <nav class="flex gap-4 md:gap-8 overflow-x-auto">
+          <a class="text-black border-b-2 border-black pb-2 text-sm font-medium whitespace-nowrap" href="#">Overview</a>
+          <a class="text-neutral-400 hover:text-black transition-colors text-sm font-medium whitespace-nowrap" href="#">Analytics</a>
+          <a class="text-neutral-400 hover:text-black transition-colors text-sm font-medium whitespace-nowrap" href="#">Activity</a>
+        </nav>
+      </div>
+      <div class="hidden sm:flex items-center gap-4 md:gap-6 flex-shrink-0">
+        <div class="relative hidden lg:block"><span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-neutral-400 text-lg">search</span><input class="bg-surface-container-high border-none rounded-full pl-10 pr-4 py-2 w-48 xl:w-64 focus:ring-1 focus:ring-primary text-xs" placeholder="Search resources..." type="text"/></div>
+        <div class="flex gap-2 md:gap-4"><button type="button" class="material-symbols-outlined text-neutral-500 hover:text-black transition-colors">notifications</button><button type="button" class="material-symbols-outlined text-neutral-500 hover:text-black transition-colors">apps</button></div>
+        <div class="w-10 h-10 rounded-full overflow-hidden hidden md:block"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ4LfJ4TlxLkiHmsEhckEISvQE2RvPXvcEzVGwQCLvtgpxcqeZblCCTCVtBDBBm1_9HPr9Aa1MjQkcZN20si8PBp-pkE1mI60GhoNfXy-nGZO7NWZuq486Zpxp7V74yXAM20zNqO9k2-2t_AwzpThoHLUHMevuMIuOxnV861yJCKtwGtUWHR9ThnxGU6in19L2fI1_GKqrYPOilY--X43fsi9oNMD09eqNL4E8ayuntFKWhZFNuztJUI-gYNjnwiFlNE_Jf4wVil1F"/></div>
+      </div>
+    </header>
+    <div class="p-6 md:p-12 space-y-12 md:space-y-16">
+      <section class="max-w-4xl mx-auto text-center space-y-8 md:space-y-12">
+        <div class="space-y-4">
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tighter text-primary leading-tight">Fast-track your learning.</h1>
+          <p class="text-on-surface-variant max-w-lg mx-auto leading-relaxed text-sm md:text-base">The Digital Curator transforms your lecture notes and PDFs into structured study guides in seconds.</p>
+        </div>
+        <div class="bg-surface-container-low rounded-lg p-1 space-y-1 shadow-sm">
+          <div class="bg-white rounded-lg p-8 md:p-12 border-2 border-dashed border-neutral-200 hover:border-primary transition-colors cursor-pointer group flex flex-col items-center gap-6">
+            <div class="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all"><span class="material-symbols-outlined text-3xl">upload_file</span></div>
+            <div class="space-y-2"><p class="font-bold text-xl">Upload your documents</p><p class="text-sm text-on-surface-variant">Drag and drop or click to browse files (PDF, DOCX, TXT)</p></div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-1">
+            <button type="button" class="bg-white p-6 flex items-center justify-center gap-3 hover:bg-neutral-50 transition-colors font-medium text-sm"><span class="material-symbols-outlined">link</span>Import via Link</button>
+            <button type="button" class="bg-white p-6 flex items-center justify-center gap-3 hover:bg-neutral-50 transition-colors font-medium text-sm"><span class="material-symbols-outlined">content_paste</span>Paste Content</button>
+          </div>
+        </div>
+      </section>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-8 space-y-8">
+          <div class="flex justify-between items-end"><h2 class="text-2xl font-black tracking-tight">Recent Documents</h2><a class="text-sm font-bold underline underline-offset-4" href="#">View All</a></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-surface-container-lowest rounded-lg p-8 space-y-6 hover:bg-surface-container-low transition-colors group">
+              <div class="flex justify-between items-start"><div class="bg-primary-container p-3 rounded-lg text-white"><span class="material-symbols-outlined">science</span></div><span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">Biology</span></div>
+              <div class="space-y-2"><h3 class="font-bold text-lg leading-snug">Cellular Respiration and ATP Synthesis</h3><p class="text-xs text-on-surface-variant font-medium">Last updated 2 hours ago</p></div>
+              <div class="space-y-3"><div class="flex justify-between items-center text-[10px] font-bold text-on-surface-variant"><span>ANALYZING CONTENT</span><span>85%</span></div><div class="h-1 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary w-[85%]"></div></div></div>
+              <button type="button" class="w-full bg-primary text-white py-3 rounded-full text-sm font-bold flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-transform">Continue <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+            </div>
+            <div class="bg-surface-container-lowest rounded-lg p-8 space-y-6 hover:bg-surface-container-low transition-colors group">
+              <div class="flex justify-between items-start"><div class="bg-neutral-200 p-3 rounded-lg text-black"><span class="material-symbols-outlined">history_edu</span></div><span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">History</span></div>
+              <div class="space-y-2"><h3 class="font-bold text-lg leading-snug">The Industrial Revolution: Part II</h3><p class="text-xs text-on-surface-variant font-medium">Last updated 1 day ago</p></div>
+              <div class="space-y-3"><div class="flex justify-between items-center text-[10px] font-bold text-on-surface-variant"><span>COMPLETED</span><span>100%</span></div><div class="h-1 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary w-full"></div></div></div>
+              <button type="button" class="w-full bg-surface text-black py-3 border border-neutral-200 rounded-full text-sm font-bold flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-transform">Review Study Guide <span class="material-symbols-outlined text-sm">visibility</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-4 space-y-8">
+          <div class="flex justify-between items-end"><h2 class="text-2xl font-black tracking-tight">Members</h2><button type="button" class="material-symbols-outlined text-on-surface-variant hover:text-black">person_add</button></div>
+          <div class="bg-surface-container-low rounded-lg p-6 space-y-6">
+            <div class="flex items-center gap-4"><img alt="" class="w-10 h-10 rounded-full grayscale object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDwDJwT516I9yJKSXmRVrE5g0nP6YcR5wnpNmctLwqlPBTWzDOfUpWFuSZPAAIrFGX6nvB2esvFp6RC-joAXOVW2D7w6QbWa2i4_Pi0qKz4kJfijXK2xTB0CcTfnbE7wRYCkJ8QRbIUGXJT9GWBEk3zBC1d7b5VtECTV7TdLy1MLfXstLwwUcrBffZ9zxU2Vdk2EJqOBw3S7gtIhlWkdQWJ1bIyYevhHyR-H-6oRVLv_nZYen7jdKNiXCR4YJwcKUl-x30elwOzQ"/><div class="flex-1 min-w-0"><p class="text-sm font-bold truncate">Alex Rivard</p><p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Workspace Admin</p></div><span class="w-2 h-2 rounded-full bg-green-500"></span></div>
+            <div class="flex items-center gap-4"><img alt="" class="w-10 h-10 rounded-full grayscale object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoqOHw0Pc1tbBYLiMIAfPzQCVsZkeMl0lL9bvMmha0OhUJt8CQeG7fTKg3LND7QcPQPGFqo2N-H64jpzbrcGJ5ZAkpJrSudzLNl0wug6dRreNvdzaLRFs_fXKQhln3m0AgxX-e8VWxItT3-t5rZ4I58V0iwfmO1zsbkfJK2h-uiU7LFN4jRT0H0-AIi30XFYRAmSR5S2KPyWJiIIY5xGM-VPUHWvC70EQhoHqv7gAsNLa_m5T1T32G7kZJ-tVcd3RMohnkvckrUQ"/><div class="flex-1 min-w-0"><p class="text-sm font-bold truncate">Sarah Jenkins</p><p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Lead Curator</p></div><span class="w-2 h-2 rounded-full bg-neutral-300"></span></div>
+            <div class="flex items-center gap-4"><img alt="" class="w-10 h-10 rounded-full grayscale object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt4S4NYUaSzZL0JHVfsSWWEAscojokK6Ge1JD0sWtz4NSL-FZRbzdl0luUSuuJTE2YUugFHr9wTkZRtlBh3eD480E-7O93ms27IjCTtX77VvMrG5_wwLHC55Abge1XrUfdtfKVBlNp585SFRvILxcVn_ozKAJbM9yt0YGezASOxGAvyHhHN-1L2tKvq3KALnmtyO_QnCDMF0LAYsV5oQVgJKXBqQigOA7_uWO4FBvQxgRthGPUObf82RSoH4JR-Fzcik-p8DK0ig"/><div class="flex-1 min-w-0"><p class="text-sm font-bold truncate">Marcus Chen</p><p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Research Associate</p></div><span class="w-2 h-2 rounded-full bg-green-500"></span></div>
+            <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center font-bold text-xs">EL</div><div class="flex-1 min-w-0"><p class="text-sm font-bold truncate">Elena Lopez</p><p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Guest Member</p></div><span class="w-2 h-2 rounded-full bg-neutral-300"></span></div>
+            <button type="button" class="w-full py-4 border-t border-neutral-200 mt-4 text-xs font-bold text-on-surface-variant hover:text-black transition-colors">Manage All Team Members</button>
+          </div>
+          <div class="bg-primary text-white rounded-lg p-8 space-y-6">
+            <div class="flex justify-between items-center"><span class="text-[10px] font-bold tracking-widest uppercase opacity-70">Workspace Usage</span><span class="material-symbols-outlined text-lg">bolt</span></div>
+            <div class="space-y-1"><p class="text-3xl font-black">74%</p><p class="text-[10px] opacity-60">1.2GB of 1.5GB STORAGE USED</p></div>
+            <div class="h-1 bg-white/20 rounded-full overflow-hidden"><div class="h-full bg-white w-3/4 rounded-full"></div></div>
+            <button type="button" class="text-xs font-bold underline underline-offset-4 w-full text-left">Upgrade Storage Plan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
 
 <div id="page-create-workspace" class="page">
   <aside class="hidden md:flex flex-col fixed left-0 top-0 h-full p-4 w-64 border-r border-neutral-100 bg-white z-30">
@@ -361,19 +547,18 @@ tailwind.config = {
   <main class="pt-16 h-screen flex flex-col md:flex-row overflow-hidden">
     <section class="w-full md:w-1/2 h-full bg-white flex flex-col border-r border-zinc-100 relative overflow-hidden">
       <div class="px-12 py-8 flex-none border-b border-zinc-50 bg-white z-10 relative">
-        <div class="flex items-center justify-between"><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Full Document</span></div>
-        <h1 class="text-3xl font-bold tracking-tight text-black mt-4">The Cognitive Architecture of Learning</h1>
-        <p class="text-zinc-500 text-sm mt-1 italic">Source: MIT Micro-Learning Symposium 2024</p>
+        <div class="flex flex-wrap items-center justify-between gap-2"><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Tam belge</span><span id="doc-pref-banner" class="text-[10px] font-semibold uppercase tracking-wider text-zinc-500 max-w-[220px] md:max-w-none text-right">Kişiselleştirilmiş akış</span></div>
+        <h1 class="text-3xl font-bold tracking-tight text-black mt-4">Kurumsal Satış Eğitimi — İtiraz Yönetimi</h1>
+        <p class="text-zinc-500 text-sm mt-1 italic">Kaynak: Şirket içi playbook (örnek prototip metin)</p>
       </div>
       <div class="flex-1 overflow-y-auto relative custom-scrollbar">
         <div class="px-12 py-10">
           <article class="text-lg leading-relaxed text-zinc-800 max-w-2xl mx-auto" style="font-family:'Lora',serif">
-            <p class="mb-6">Micro-learning is not simply the act of breaking information into smaller pieces. It is a strategic educational architecture designed to align with the brain's limited cognitive load capacity. By presenting information in "bursts" of 2–5 minutes, we bypass the fatigue associated with long-form traditional lecture formats.</p>
-            <p class="mb-6">The primary mechanism involved is the <strong>spaced repetition</strong> cycle. When a concept is introduced and then immediately reinforced through interactive testing, the neural pathways associated with that concept are strengthened through active recall.</p>
-            <p class="mb-6">Research indicates that the "forgetting curve" can be significantly flattened by these intermittent interventions. However, the quality of the intervention determines the depth of encoding.</p>
-            <p class="mb-6">In this session, we explore how TeachFast.ai utilizes semantic mapping to generate questions that don't just test rote memorization, but force the user to synthesize new information with existing mental models.</p>
-            <p class="mb-6">Furthermore, the visual environment plays a crucial role. A minimalist aesthetic reduces "visual noise," allowing the prefrontal cortex to dedicate more resources to information processing.</p>
-            <p class="mb-6">Beyond visual design, the pacing of content delivery must be adaptive. Systems that sense user response latency and adjust question difficulty in real-time demonstrate significantly higher knowledge retention outcomes.</p>
+            <p class="mb-6"><strong>Bölüm 1 — İlk temas.</strong> Görüşmeye değer önerisi ve güven ile başlayın. Fiyat konuşmadan önce ihtiyacı netleştirin; müşteri konuşurken not alın, araya sık sık girmeyin.</p>
+            <p class="mb-6"><strong>Bölüm 2 — İtiraz türleri.</strong> Fiyat, zaman, yetki ve rakip itirazları ayrı ele alınır. Her itirazda önce duyguyu yansıtın (&ldquo;Anlıyorum…&rdquo;), sonra tek bir net soru ile derinleştirin.</p>
+            <p class="mb-6"><strong>Bölüm 3 — SPIN özeti.</strong> Durum, problem, imaç ve ihtiyaç-karar soruları; çözümü müşterinin ağzından duyduğunuzda sunum kapanışa hazırdır.</p>
+            <p class="mb-6"><strong>Bölüm 4 — Kapanış.</strong> Alternatifli kapanış (&ldquo;Salı veya Çarşamba uygun mu?&rdquo;) ve somut sonraki adım. Sözlü özeti e-posta ile pekiştirin.</p>
+            <p class="mb-6">Bu belge tam metin olarak okunur; sağ panelde aynı içerik atomik parçalara bölünerek soru–cevap, kart ve canlı pratik ile desteklenir.</p>
           </article>
         </div>
         <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none z-10"></div>
@@ -390,44 +575,44 @@ tailwind.config = {
         </div>
         <div class="flex items-center gap-3">
           <div class="flex gap-1" id="doc-step-dots"><div class="w-8 h-1 rounded-full bg-black"></div><div class="w-8 h-1 rounded-full bg-zinc-200"></div><div class="w-8 h-1 rounded-full bg-zinc-200"></div></div>
-          <button onclick="docStepNext()" class="bg-black text-white px-8 py-2.5 rounded-full font-bold flex items-center gap-2 hover:bg-zinc-800 active:scale-95" id="doc-next-btn">Next <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+          <button onclick="docStepNext()" class="bg-black text-white px-8 py-2.5 rounded-full font-bold flex items-center gap-2 hover:bg-zinc-800 active:scale-95" id="doc-next-btn">İleri <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
         </div>
       </div>
       <!-- Step 1: Knowledge Card -->
       <div id="doc-flow-step-0" class="flex-1 overflow-y-auto px-10 py-12 custom-scrollbar">
         <div class="space-y-8">
-          <div class="flex items-center gap-2"><span class="material-symbols-outlined text-zinc-400" style="font-variation-settings:'FILL' 1">auto_awesome</span><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Knowledge Card</span></div>
+          <div class="flex items-center gap-2"><span class="material-symbols-outlined text-zinc-400" style="font-variation-settings:'FILL' 1">auto_awesome</span><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Atomik parça — bilgi kartı</span></div>
           <div class="bg-white rounded-2xl p-8 border border-zinc-100 shadow-sm space-y-6">
-            <div class="flex items-center gap-3 pb-4 border-b border-zinc-50"><div class="w-10 h-10 rounded-xl bg-black flex items-center justify-center"><span class="material-symbols-outlined text-white text-lg">neurology</span></div><div><p class="font-bold text-lg">Cognitive Load Theory</p><p class="text-xs text-zinc-400">Core Concept • Day 1</p></div></div>
-            <p class="text-zinc-700 leading-relaxed">The human brain has a <strong>limited working memory capacity</strong>. Micro-learning works by presenting information in short 2–5 minute "bursts" that stay within this capacity.</p>
-            <div class="bg-surface-container-low rounded-xl p-5 space-y-3"><p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Key Takeaways</p><div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Short bursts bypass cognitive fatigue</p></div><div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Working memory processes only 4–7 items at a time</p></div><div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Spacing effect strengthens long-term encoding</p></div></div>
+            <div class="flex items-center gap-3 pb-4 border-b border-zinc-50"><div class="w-10 h-10 rounded-xl bg-black flex items-center justify-center"><span class="material-symbols-outlined text-white text-lg">psychology</span></div><div><p class="font-bold text-lg">İtirazda önce yansıtma</p><p class="text-xs text-zinc-400">Parça 1 / 12 • Satış</p></div></div>
+            <p class="text-zinc-700 leading-relaxed">Müşteri itiraz ettiğinde <strong>önce duyguyu ve içeriği kısa yansıtın</strong>; doğrudan çürütmeye geçmeyin. Güven artınca tek bir net soru ile ilerleyin.</p>
+            <div class="bg-surface-container-low rounded-xl p-5 space-y-3"><p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Özet</p><div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">&ldquo;Anlıyorum, bütçe baskısı hissediyorsunuz…&rdquo; ile açılış</p></div><div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Ardından: &ldquo;Hangi kriter en kritik?&rdquo;</p></div><div class="flex items-start gap-3"><span class="material-symbols-outlined text-black text-base mt-0.5">check_circle</span><p class="text-sm text-zinc-700">Sol panelde tam metin her zaman açık</p></div></div>
           </div>
         </div>
       </div>
-      <!-- Step 2: Quiz + Flashcard -->
+      <!-- Step 2: Quiz + Flashcard (içerik seçimlere göre filtrelenir) -->
       <div id="doc-flow-step-1" class="flex-1 overflow-y-auto px-10 py-12 custom-scrollbar" style="display:none">
         <div class="space-y-10">
-          <div class="space-y-6">
+          <div id="doc-section-quiz" class="space-y-6">
             <div class="flex items-center gap-2"><span class="material-symbols-outlined text-zinc-400">quiz</span><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Quiz — Question 1 of 3</span></div>
-            <h2 class="text-2xl font-bold tracking-tight text-black leading-tight">What is the primary benefit of "bursts" in micro-learning?</h2>
+            <h2 class="text-2xl font-bold tracking-tight text-black leading-tight">Fiyat itirazında ilk adım olarak ne yapmalısınız?</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6" id="quiz-options">
-              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">A</span><span class="text-sm font-medium text-zinc-700">Increases reading speed by 40%</span></button>
-              <button onclick="selectQuiz(this,true)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">B</span><span class="text-sm font-medium text-zinc-700">Bypasses cognitive load fatigue</span></button>
-              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">C</span><span class="text-sm font-medium text-zinc-700">Eliminates visual focus needs</span></button>
-              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">D</span><span class="text-sm font-medium text-zinc-700">Prioritizes rote memorization</span></button>
+              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">A</span><span class="text-sm font-medium text-zinc-700">Hemen indirim teklif edin</span></button>
+              <button onclick="selectQuiz(this,true)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">B</span><span class="text-sm font-medium text-zinc-700">Önce itirazı yansıtıp kriterleri sorun</span></button>
+              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">C</span><span class="text-sm font-medium text-zinc-700">Rakip fiyatını sorgulayın</span></button>
+              <button onclick="selectQuiz(this,false)" class="doc-quiz-opt group flex items-center gap-4 p-5 rounded-xl bg-white border border-transparent hover:border-black transition-all text-left"><span class="w-8 h-8 flex-none rounded-lg bg-zinc-100 group-hover:bg-black group-hover:text-white flex items-center justify-center font-bold transition-colors">D</span><span class="text-sm font-medium text-zinc-700">Sunumu hızlandırıp kapatın</span></button>
             </div>
             <div id="quiz-feedback" style="display:none"></div>
           </div>
-          <div class="pt-4 space-y-6">
+          <div id="doc-section-flashcard" class="pt-4 space-y-6">
             <div class="flex items-center gap-2"><span class="material-symbols-outlined text-zinc-400">style</span><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Flash Card</span></div>
             <div onclick="flipCard(this)" class="bg-black text-white rounded-2xl text-center shadow-2xl relative overflow-hidden cursor-pointer" style="min-height:220px;perspective:1000px">
               <div id="fc-inner" style="transition:transform .6s;transform-style:preserve-3d;position:relative;min-height:220px">
-                <div class="absolute inset-0 flex flex-col items-center justify-center p-10" style="backface-visibility:hidden"><p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Key Concept</p><h3 class="text-4xl font-extrabold tracking-tighter mb-4">Spaced Repetition</h3><p class="text-zinc-500 text-xs">Tap to reveal</p></div>
-                <div class="absolute inset-0 flex flex-col items-center justify-center p-10" style="backface-visibility:hidden;transform:rotateY(180deg)"><p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Definition</p><p class="text-zinc-200 text-lg italic max-w-md leading-relaxed" style="font-family:'Lora',serif">"Systematic reinforcement of neural pathways via active recall at increasing time intervals."</p><p class="text-zinc-500 text-xs mt-4">Tap to flip back</p></div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-10" style="backface-visibility:hidden"><p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Kavram</p><h3 class="text-3xl md:text-4xl font-extrabold tracking-tighter mb-4 text-center px-2">Alternatifli kapanış</h3><p class="text-zinc-500 text-xs">Döndürmek için dokunun</p></div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-10" style="backface-visibility:hidden;transform:rotateY(180deg)"><p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Tanım</p><p class="text-zinc-200 text-lg italic max-w-md leading-relaxed text-center" style="font-family:'Lora',serif">İki somut seçenek sunarak müşterinin karar vermesini kolaylaştıran kapanış tekniği.</p><p class="text-zinc-500 text-xs mt-4">Geri çevirmek için dokunun</p></div>
               </div>
             </div>
           </div>
-          <div class="bg-white rounded-xl flex items-center justify-between px-6 py-5 border border-zinc-100">
+          <div id="doc-mix-stats" class="bg-white rounded-xl flex items-center justify-between px-6 py-5 border border-zinc-100">
             <div class="flex gap-8"><div class="flex flex-col"><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Accuracy</span><span class="font-bold" id="doc-accuracy">—</span></div><div class="flex flex-col"><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Streak</span><span class="font-bold" id="doc-streak">0</span></div></div>
             <div class="flex items-center gap-2 text-zinc-400"><span class="material-symbols-outlined text-sm">auto_awesome</span><span class="text-xs font-medium">AI adapting</span></div>
           </div>
@@ -436,12 +621,18 @@ tailwind.config = {
       <!-- Step 3: Voice Practice -->
       <div id="doc-flow-step-2" class="flex-1 overflow-y-auto px-10 py-12 custom-scrollbar" style="display:none">
         <div class="space-y-8">
-          <div class="flex items-center gap-2"><span class="material-symbols-outlined text-zinc-400" style="font-variation-settings:'FILL' 1">mic</span><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Realtime Voice Practice</span></div>
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center gap-2"><span class="material-symbols-outlined text-zinc-400" id="practice-mode-icon" style="font-variation-settings:'FILL' 1">mic</span><span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Canlı pratik</span></div>
+            <div class="flex rounded-full bg-zinc-100 p-1 border border-zinc-200 self-start sm:self-auto" role="tablist" aria-label="Kayıt modu">
+              <button type="button" id="practice-tab-audio" onclick="setPracticeMode('audio')" class="px-4 py-2 rounded-full text-xs font-bold bg-black text-white transition-all">Ses</button>
+              <button type="button" id="practice-tab-video" onclick="setPracticeMode('video')" class="px-4 py-2 rounded-full text-xs font-bold text-zinc-500 hover:text-black transition-all">Video</button>
+            </div>
+          </div>
           <div class="bg-black rounded-2xl px-6 pt-8 pb-10 text-white relative overflow-hidden" style="min-height:360px">
             <div class="absolute inset-0" style="background:radial-gradient(circle at 50% 45%, #1a1a2e 0%, #0a0a0a 100%)"></div>
             <div class="relative z-10 flex flex-col items-center justify-center h-full">
-              <div class="flex items-center gap-2 mb-1"><div class="w-2 h-2 rounded-full bg-green-400 lw-pulse"></div><span class="text-[10px] text-green-400 font-bold uppercase tracking-widest">Ready</span></div>
-              <p class="text-zinc-500 text-xs mb-10">AI Tutor — Cognitive Load Roleplay</p>
+              <div class="flex items-center gap-2 mb-1"><div class="w-2 h-2 rounded-full bg-green-400 lw-pulse"></div><span class="text-[10px] text-green-400 font-bold uppercase tracking-widest">Hazır</span></div>
+              <p class="text-zinc-500 text-xs mb-10 text-center max-w-xs" id="practice-scenario-label">AI eğitmen — Fiyat itirazı rol provası</p>
               <div class="relative mb-10" style="width:160px;height:160px">
                 <div class="absolute inset-0 rounded-full lw-pulse" style="background:radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)"></div>
                 <div class="absolute rounded-full lw-pulse" style="inset:15px;background:radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);animation-delay:.3s"></div>
@@ -450,16 +641,16 @@ tailwind.config = {
               </div>
               <div class="flex items-center gap-8">
                 <button class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-white/60 text-xl">volume_up</span></button>
-                <button onclick="toggleVoiceDemo(this)" id="voice-mic-btn" class="w-16 h-16 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-white text-2xl">mic</span></button>
+                <button onclick="toggleVoiceDemo(this)" id="voice-mic-btn" class="w-16 h-16 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-white text-2xl" id="voice-mic-icon">mic</span></button>
                 <button class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-white/60 text-xl">call_end</span></button>
               </div>
-              <p class="text-zinc-600 text-xs mt-6" id="voice-status-text">Tap the microphone to start</p>
+              <p class="text-zinc-600 text-xs mt-6 text-center px-4" id="voice-status-text">Kayda başlamak için mikrofon / kamera düğmesine dokunun</p>
             </div>
           </div>
           <div id="voice-complete" style="display:none" class="bg-white rounded-2xl p-8 border border-zinc-100 text-center space-y-4">
             <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto"><span class="material-symbols-outlined text-3xl text-green-600">check_circle</span></div>
-            <h3 class="text-xl font-bold">Day 1 Complete!</h3>
-            <p class="text-sm text-zinc-500 max-w-sm mx-auto">Come back tomorrow for Day 2.</p>
+            <h3 class="text-xl font-bold">Pratik oturumu tamam</h3>
+            <p class="text-sm text-zinc-500 max-w-sm mx-auto">Kayıt özeti eğitmene gönderildi (prototip).</p>
             <div class="flex justify-center gap-6 pt-2"><div class="text-center"><p class="text-2xl font-black">92%</p><p class="text-[10px] text-zinc-400 uppercase tracking-widest">Accuracy</p></div><div class="text-center"><p class="text-2xl font-black">3/3</p><p class="text-[10px] text-zinc-400 uppercase tracking-widest">Steps</p></div><div class="text-center"><p class="text-2xl font-black">4m</p><p class="text-[10px] text-zinc-400 uppercase tracking-widest">Duration</p></div></div>
           </div>
         </div>
@@ -608,33 +799,323 @@ tailwind.config = {
 <div id="doc-tutorial-overlay" class="fixed inset-0 z-[250] items-center justify-center p-6 bg-black/50 backdrop-blur-md" style="display:none">
   <div id="doc-tut-step-0" class="tut-step w-full max-w-lg bg-white rounded-2xl p-10 shadow-2xl items-center text-center relative">
     <div class="mb-8 w-20 h-20 bg-surface-container-low rounded-full flex items-center justify-center mx-auto"><span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings:'FILL' 1">auto_awesome</span></div>
-    <h2 class="text-3xl font-bold text-primary tracking-tight mb-4">Your Learning Plan is Ready!</h2>
-    <p class="text-on-surface-variant leading-relaxed mb-4 max-w-sm mx-auto">We've analyzed your document and created a personalized learning journey.</p>
-    <div class="bg-surface-container-low rounded-xl p-5 mb-10 text-left space-y-3">
-      <div class="flex items-center gap-3"><span class="material-symbols-outlined text-lg text-primary">check_circle</span><span class="text-sm font-medium">7-day personalized study plan</span></div>
-      <div class="flex items-center gap-3"><span class="material-symbols-outlined text-lg text-primary">check_circle</span><span class="text-sm font-medium">18 knowledge cards generated</span></div>
-      <div class="flex items-center gap-3"><span class="material-symbols-outlined text-lg text-primary">check_circle</span><span class="text-sm font-medium">12 quiz questions created</span></div>
-    </div>
-    <button onclick="docTutNext()" class="w-full bg-primary text-white py-4 rounded-full font-bold hover:bg-secondary active:scale-[0.98] transition-all mb-8">Let's Go</button>
+    <h2 id="doc-tut-title" class="text-3xl font-bold text-primary tracking-tight mb-4">Öğrenme planınız hazır</h2>
+    <p id="doc-tut-intro" class="text-on-surface-variant leading-relaxed mb-4 max-w-sm mx-auto text-sm">Seçtiğiniz yöntemlere göre akış oluşturuldu.</p>
+    <p id="doc-tut-flow-order" class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-4 max-w-sm mx-auto"></p>
+    <div id="doc-tut-plan-items" class="bg-surface-container-low rounded-xl p-5 mb-10 text-left space-y-3"></div>
+    <button onclick="docTutNext()" class="w-full bg-primary text-white py-4 rounded-full font-bold hover:bg-secondary active:scale-[0.98] transition-all mb-8">Devam</button>
     <button onclick="docTutClose()" class="absolute top-6 right-6 text-neutral-400 hover:text-primary"><span class="material-symbols-outlined text-xl">close</span></button>
   </div>
   <div id="doc-tut-step-1" class="tut-step w-full max-w-lg bg-white rounded-2xl p-10 shadow-2xl items-center text-center relative">
     <div class="w-14 h-14 bg-surface-container-low rounded-full flex items-center justify-center mx-auto mb-6"><span class="material-symbols-outlined text-2xl text-primary" style="font-variation-settings:'FILL' 1">trending_up</span></div>
-    <h3 class="text-2xl font-bold tracking-tight text-primary mb-2">Track Your Progress</h3>
-    <p class="text-on-surface-variant text-sm max-w-sm mx-auto mb-8">AI adapts question difficulty based on your performance.</p>
+    <h3 id="doc-tut-step1-heading" class="text-2xl font-bold tracking-tight text-primary mb-2">İlerlemenizi takip edin</h3>
+    <p id="doc-tut-step1-desc" class="text-on-surface-variant text-sm max-w-sm mx-auto mb-8">Performansınıza göre soru zorluğu ve içerik önerileri uyarlanır.</p>
     <div class="bg-surface-container-low rounded-xl p-6 mb-8 flex items-center justify-around">
-      <div class="text-center"><p class="text-3xl font-black text-primary">92%</p><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-1">Accuracy</p></div>
+      <div class="text-center"><p id="doc-tut-metric-a" class="text-3xl font-black text-primary">92%</p><p id="doc-tut-metric-a-label" class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-1">Doğruluk</p></div>
       <div class="w-px h-10 bg-outline-variant"></div>
-      <div class="text-center"><p class="text-3xl font-black text-primary">Day 1</p><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-1">of 7</p></div>
+      <div class="text-center"><p id="doc-tut-metric-b" class="text-3xl font-black text-primary">Gün 1</p><p id="doc-tut-metric-b-label" class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-1">/ 7</p></div>
     </div>
-    <button onclick="docTutClose()" class="w-full bg-primary text-white py-4 rounded-full font-bold hover:bg-secondary active:scale-[0.98] transition-all mb-8">Start Learning</button>
+    <button onclick="docTutClose()" class="w-full bg-primary text-white py-4 rounded-full font-bold hover:bg-secondary active:scale-[0.98] transition-all mb-8">Öğrenmeye başla</button>
     <button onclick="docTutClose()" class="absolute top-6 right-6 text-neutral-400 hover:text-primary"><span class="material-symbols-outlined text-xl">close</span></button>
   </div>
 </div>
 
 <script>
 var tutorialShown = false;
+var learnWizardFromOnboarding = false;
 var selectedPlatform = 'teachfast';
+var userLearningPrefs = ['card', 'qa'];
+var practiceMode = 'audio';
+var docPanelOrder = [0, 1];
+var docStepTitlesOrdered = ['Bilgi kartı', 'Soru–cevap'];
+
+function getDocPanelAtStep(step){ return docPanelOrder[step]; }
+
+function onboardingFilePicked(input){
+  if(input.files && input.files.length) openLearnWizardFromOnboarding();
+}
+function onboardingDemoDoc(){ openLearnWizardFromOnboarding(); }
+function runOnboardingAnalysis(){
+  document.getElementById('loading-title').textContent = 'Dokümanınız analiz ediliyor…';
+  document.getElementById('loading-subtitle').textContent = 'Dil, süre ve platform tercihleriniz kaydedildi. İçerik modüllere ayrılıyor (prototip).';
+  document.getElementById('learn-loading').style.display = 'block';
+  setTimeout(function(){
+    document.getElementById('learn-loading').style.display = 'none';
+    userLearningPrefs = ['card', 'qa'];
+    navigate('learning-prefs');
+    syncLearningPrefCards();
+    updateLearningPrefsCta();
+  }, 2200);
+}
+
+function syncLearningPrefCards(){
+  document.querySelectorAll('#page-learning-prefs .pref-card').forEach(function(c){
+    var pref = c.getAttribute('data-pref');
+    var on = userLearningPrefs.indexOf(pref) !== -1;
+    var icon = c.querySelector('.pref-card-icon');
+    c.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if(on){
+      c.classList.add('pref-card-selected', 'border-black');
+      c.classList.remove('border-outline-variant');
+      if(icon){
+        icon.classList.remove('bg-surface-container-high', 'text-primary');
+        icon.classList.add('bg-black', 'text-white');
+      }
+    } else {
+      c.classList.remove('pref-card-selected', 'border-black');
+      c.classList.add('border-outline-variant');
+      if(icon){
+        icon.classList.add('bg-surface-container-high', 'text-primary');
+        icon.classList.remove('bg-black', 'text-white');
+      }
+    }
+  });
+}
+
+function updateLearningPrefsCta(){
+  var btn = document.getElementById('learning-prefs-cta');
+  var hint = document.getElementById('learning-prefs-hint');
+  var ok = userLearningPrefs.length > 0;
+  if(btn){
+    btn.classList.toggle('learning-prefs-cta-disabled', !ok);
+    btn.setAttribute('aria-disabled', ok ? 'false' : 'true');
+  }
+  if(hint) hint.classList.toggle('hidden', ok);
+}
+
+function selectLearningPref(el){
+  var p = el.getAttribute('data-pref');
+  if(!p) return;
+  var i = userLearningPrefs.indexOf(p);
+  if(i === -1) userLearningPrefs.push(p);
+  else userLearningPrefs.splice(i, 1);
+  syncLearningPrefCards();
+  updateLearningPrefsCta();
+}
+
+function buildDocPanelOrder(prefs){
+  var hasCard = prefs.indexOf('card') !== -1;
+  var hasQa = prefs.indexOf('qa') !== -1;
+  var hasFc = prefs.indexOf('flashcard') !== -1;
+  var hasPr = prefs.indexOf('practice') !== -1;
+  var hasKb = hasCard;
+  var hasMix = hasQa || hasFc;
+  var order = [];
+  if(hasPr){
+    order.push(2);
+    if(hasKb) order.push(0);
+    if(hasMix) order.push(1);
+  } else if(hasFc && !hasQa && hasMix){
+    order.push(1);
+    if(hasKb) order.push(0);
+  } else {
+    if(hasKb) order.push(0);
+    if(hasMix) order.push(1);
+  }
+  if(order.length === 0) order.push(0);
+  return order;
+}
+
+function docStepTitleForPanel(panelIdx, prefs){
+  if(panelIdx === 0) return 'Bilgi kartı';
+  if(panelIdx === 2) return 'Canlı pratik';
+  var q = prefs.indexOf('qa') !== -1;
+  var f = prefs.indexOf('flashcard') !== -1;
+  if(q && f) return 'Soru–cevap + kart';
+  if(q) return 'Soru–cevap';
+  if(f) return 'Flashcard';
+  return 'Etkileşim';
+}
+
+function applyDocMixSectionVisibility(){
+  var prefs = getPrefsForPlan();
+  var showQuiz = prefs.indexOf('qa') !== -1;
+  var showFc = prefs.indexOf('flashcard') !== -1;
+  var quizWrap = document.getElementById('doc-section-quiz');
+  var fcWrap = document.getElementById('doc-section-flashcard');
+  var statsBar = document.getElementById('doc-mix-stats');
+  if(quizWrap) quizWrap.style.display = showQuiz ? '' : 'none';
+  if(fcWrap){
+    fcWrap.style.display = showFc ? '' : 'none';
+    if(showQuiz && showFc) fcWrap.classList.add('pt-4');
+    else fcWrap.classList.remove('pt-4');
+  }
+  if(statsBar) statsBar.style.display = (showQuiz || showFc) ? '' : 'none';
+}
+
+function applyDocPersonalization(){
+  var labels = { card: 'Bilgi kartı', qa: 'Soru–cevap', practice: 'Pratik', flashcard: 'Flashcard' };
+  var el = document.getElementById('doc-pref-banner');
+  var prefs = getPrefsForPlan();
+  var textParts = prefs.map(function(p){ return labels[p] || p; });
+  if(el){
+    el.textContent = prefs.length > 1
+      ? ('Seçilenler: ' + textParts.join(' · '))
+      : ('Öncelik: ' + textParts[0]);
+  }
+  docPanelOrder = buildDocPanelOrder(prefs);
+  docStepTitlesOrdered = docPanelOrder.map(function(pi){ return docStepTitleForPanel(pi, prefs); });
+  applyDocMixSectionVisibility();
+  docFlowStep = 0;
+  resetQuizState();
+  showDocFlow();
+}
+
+function getPrefsForPlan(){
+  if(userLearningPrefs && userLearningPrefs.length) return userLearningPrefs.slice();
+  return ['card', 'qa'];
+}
+
+function prefDisplayNamesTR(prefs){
+  var names = {card:'bilgi kartı', qa:'soru–cevap', practice:'canlı pratik', flashcard:'flashcard'};
+  return prefs.map(function(p){ return names[p] || p; });
+}
+
+function setLoadingScreenForPlanBuild(){
+  var parts = prefDisplayNamesTR(getPrefsForPlan()).join(', ');
+  var title = document.getElementById('loading-title');
+  var sub = document.getElementById('loading-subtitle');
+  if(title) title.textContent = 'Öğrenme planınız oluşturuluyor…';
+  if(sub) sub.textContent = 'Seçilen yöntemler: ' + parts + '. Modül sırası ve içerik yoğunluğu seçimlerinize göre ayarlanıyor.';
+}
+
+function populateDocTutorialFromPrefs(){
+  var prefs = getPrefsForPlan();
+  var hasCard = prefs.indexOf('card') !== -1;
+  var hasQa = prefs.indexOf('qa') !== -1;
+  var hasPr = prefs.indexOf('practice') !== -1;
+  var hasFc = prefs.indexOf('flashcard') !== -1;
+  var flowEl = document.getElementById('doc-tut-flow-order');
+  if(flowEl) flowEl.textContent = 'Adım sırası: ' + docStepTitlesOrdered.join(' → ');
+
+  var intro = document.getElementById('doc-tut-intro');
+  if(intro){
+    intro.textContent = 'Seçiminiz: ' + prefDisplayNamesTR(prefs).join(', ') + '. Aşağıdaki bileşenler bu tercihlere göre plana dahil edildi.';
+  }
+
+  var titleEl = document.getElementById('doc-tut-title');
+  if(titleEl){
+    if(hasCard && !hasQa && !hasFc && !hasPr) titleEl.textContent = 'Bilgi kartı planınız hazır';
+    else if(hasPr && !hasQa && !hasFc) titleEl.textContent = 'Pratik odaklı planınız hazır';
+    else if(hasFc && !hasQa && !hasPr) titleEl.textContent = 'Flashcard planınız hazır';
+    else if(hasQa && !hasPr && !hasFc && !hasCard) titleEl.textContent = 'Soru–cevap planınız hazır';
+    else titleEl.textContent = 'Öğrenme planınız hazır';
+  }
+
+  var items = [];
+  if(hasCard) items.push({icon:'auto_awesome', text: 'Atomik bilgi kartları — özet ve anahtar maddeler'});
+  if(hasQa) items.push({icon:'quiz', text: '14 atomik soru–cevap seti ve anlık geri bildirim (tahmini, dokümana göre)'});
+  if(hasFc) items.push({icon:'style', text: '20+ flashcard ve aralıklı tekrar görevleri'});
+  if(hasPr) items.push({icon:'mic', text: '3 canlı pratik oturumu; ses/video kayıtlarından özet geri bildirim'});
+  items.push({icon:'calendar_month', text: 'Önerilen takvim: 7 gün — günlük 15–25 dk'});
+  items.push({icon:'menu_book', text: 'Tam metin paneli her adımda yanınızda'});
+
+  var wrap = document.getElementById('doc-tut-plan-items');
+  if(wrap){
+    wrap.innerHTML = '';
+    items.forEach(function(it){
+      var row = document.createElement('div');
+      row.className = 'flex items-start gap-3';
+      row.innerHTML = '<span class="material-symbols-outlined text-lg text-primary flex-shrink-0">' + it.icon + '</span><span class="text-sm font-medium leading-snug">' + it.text + '</span>';
+      wrap.appendChild(row);
+    });
+  }
+
+  var h = document.getElementById('doc-tut-step1-heading');
+  var d = document.getElementById('doc-tut-step1-desc');
+  var ela = document.getElementById('doc-tut-metric-a');
+  var elal = document.getElementById('doc-tut-metric-a-label');
+  var elb = document.getElementById('doc-tut-metric-b');
+  var elbl = document.getElementById('doc-tut-metric-b-label');
+
+  if(hasPr && !hasQa && !hasFc && !hasCard){
+    if(h) h.textContent = 'Pratik performansınızı takip edin';
+    if(d) d.textContent = 'Kayıtlarınız yapay zeka özetiyle değerlendirilir; tekrar ve senaryo önerileri alırsınız.';
+    if(ela) ela.textContent = '3';
+    if(elal) elal.textContent = 'Pratik oturumu';
+    if(elb) elb.textContent = 'Özet';
+    if(elbl) elbl.textContent = 'Kayıt başına';
+  } else if(hasPr && !hasQa && !hasFc && hasCard){
+    if(h) h.textContent = 'Pratik ve bilgi kartları';
+    if(d) d.textContent = 'Önce canlı prova, ardından atomik özet kartlarıyla pekiştirme.';
+    if(ela) ela.textContent = '3';
+    if(elal) elal.textContent = 'Oturum';
+    if(elb) elb.textContent = '12';
+    if(elbl) elbl.textContent = 'Parça';
+  } else if(hasFc && !hasQa && !hasPr){
+    if(h) h.textContent = 'Kart ve tekrar takibi';
+    if(d) d.textContent = 'Zorlandığınız kartlar otomatik tekrar kuyruğuna alınır.';
+    if(ela) ela.textContent = '24';
+    if(elal) elal.textContent = 'Kart';
+    if(elb) elb.textContent = 'Seri';
+    if(elbl) elbl.textContent = 'gün';
+  } else if(hasPr && hasQa){
+    if(h) h.textContent = 'Soru ve pratik ilerlemeniz';
+    if(d) d.textContent = 'Doğruluk, pratik kayıtları ve günlük hedefler bir arada özetlenir.';
+    if(ela) ela.textContent = '92%';
+    if(elal) elal.textContent = 'Doğruluk';
+    if(elb) elb.textContent = 'Gün 1';
+    if(elbl) elbl.textContent = '/ 7';
+  } else if(hasPr && !hasQa){
+    if(h) h.textContent = 'Pratik ve kart ilerlemeniz';
+    if(d) d.textContent = 'Canlı prova kayıtları ile flashcard tekrarları birlikte izlenir.';
+    if(ela) ela.textContent = '3';
+    if(elal) elal.textContent = 'Oturum';
+    if(elb) elb.textContent = '20+';
+    if(elbl) elbl.textContent = 'Kart';
+  } else if(hasCard && !hasQa && !hasFc && !hasPr){
+    if(h) h.textContent = 'Kartları tamamlama';
+    if(d) d.textContent = 'Parça parça özetleri okuyup işaretledikçe ilerlemeniz kaydedilir.';
+    if(ela) ela.textContent = '12';
+    if(elal) elal.textContent = 'Parça';
+    if(elb) elb.textContent = 'Gün 1';
+    if(elbl) elbl.textContent = '/ 7';
+  } else {
+    if(h) h.textContent = 'İlerlemenizi takip edin';
+    if(d) d.textContent = hasFc
+      ? 'Performansınıza göre soru zorluğu ve kart tekrar sıklığı uyarlanır.'
+      : 'Performansınıza göre soru zorluğu ve içerik önerileri uyarlanır.';
+    if(ela) ela.textContent = '92%';
+    if(elal) elal.textContent = 'Doğruluk';
+    if(elb) elb.textContent = 'Gün 1';
+    if(elbl) elbl.textContent = '/ 7';
+  }
+}
+
+function createPersonalizedFlow(){
+  if(!userLearningPrefs.length) return;
+  setLoadingScreenForPlanBuild();
+  document.getElementById('learn-loading').style.display = 'block';
+  setTimeout(function(){
+    document.getElementById('learn-loading').style.display = 'none';
+    showPage('page-document');
+    applyDocPersonalization();
+    startDocTutorial();
+  }, 1800);
+}
+
+function setPracticeMode(mode){
+  practiceMode = mode === 'video' ? 'video' : 'audio';
+  var ta = document.getElementById('practice-tab-audio');
+  var tv = document.getElementById('practice-tab-video');
+  var icon = document.getElementById('practice-mode-icon');
+  var scenario = document.getElementById('practice-scenario-label');
+  if(ta && tv){
+    if(practiceMode === 'audio'){
+      ta.className = 'px-4 py-2 rounded-full text-xs font-bold bg-black text-white transition-all';
+      tv.className = 'px-4 py-2 rounded-full text-xs font-bold text-zinc-500 hover:text-black transition-all';
+    } else {
+      tv.className = 'px-4 py-2 rounded-full text-xs font-bold bg-black text-white transition-all';
+      ta.className = 'px-4 py-2 rounded-full text-xs font-bold text-zinc-500 hover:text-black transition-all';
+    }
+  }
+  if(icon) icon.textContent = practiceMode === 'video' ? 'videocam' : 'mic';
+  if(scenario) scenario.textContent = practiceMode === 'video'
+    ? 'AI eğitmen — video kayıtlı rol provası (kamera + ses)'
+    : 'AI eğitmen — ses kayıtlı rol provası';
+  var micIcon = document.getElementById('voice-mic-icon');
+  if(micIcon) micIcon.textContent = practiceMode === 'video' ? 'videocam' : 'mic';
+}
 
 function navigate(page) {
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
@@ -642,6 +1123,7 @@ function navigate(page) {
   if(t){t.classList.add('active'); window.scrollTo({top:0});}
   if(page==='dashboard' && !tutorialShown) startTutorial();
   if(page==='create-workspace'){cwStep=0; cwShowStep();}
+  if(page==='learning-prefs'){syncLearningPrefCards(); updateLearningPrefsCta();}
 }
 function showPage(id) {
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
@@ -688,8 +1170,18 @@ function tutClose(){
 
 // Learn Wizard
 var lwStep=0;
-function openLearnWizard(){lwStep=0; selectedPlatform='teachfast'; lwShowStep(0); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML='Start Learning <span class="material-symbols-outlined text-sm">arrow_forward</span>'; document.getElementById('learn-wizard').style.display='flex';}
-function closeLearnWizard(){document.getElementById('learn-wizard').style.display='none';}
+function openLearnWizard(){
+  learnWizardFromOnboarding = false;
+  lwStep=0; selectedPlatform='teachfast'; lwShowStep(0); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML='Start Learning <span class="material-symbols-outlined text-sm">arrow_forward</span>'; document.getElementById('learn-wizard').style.display='flex';
+}
+function openLearnWizardFromOnboarding(){
+  learnWizardFromOnboarding = true;
+  lwStep=0; selectedPlatform='teachfast'; lwShowStep(0); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML='Devam <span class="material-symbols-outlined text-sm">arrow_forward</span>'; document.getElementById('learn-wizard').style.display='flex';
+}
+function closeLearnWizard(){
+  learnWizardFromOnboarding = false;
+  document.getElementById('learn-wizard').style.display='none';
+}
 
 function getSelectedPlatform(){
   var sel = document.querySelector('#lw-step-2 .lw-selected');
@@ -698,39 +1190,52 @@ function getSelectedPlatform(){
 }
 
 function lwNext(){
-  if(lwStep<2){lwStep++; lwShowStep(lwStep); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML=(lwStep===2?'Complete':'Start Learning')+' <span class="material-symbols-outlined text-sm">arrow_forward</span>';}
+  var nextLabel = learnWizardFromOnboarding ? 'Devam' : 'Start Learning';
+  var completeLabel = learnWizardFromOnboarding ? 'Bitir' : 'Complete';
+  if(lwStep<2){lwStep++; lwShowStep(lwStep); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML=(lwStep===2?completeLabel:nextLabel)+' <span class="material-symbols-outlined text-sm">arrow_forward</span>';}
   else{
     selectedPlatform = getSelectedPlatform();
     document.getElementById('learn-wizard').style.display='none';
     if(selectedPlatform === 'slack'){
-      // Show Slack integration page
       document.getElementById('slack-integration-overlay').style.display='flex';
     } else {
-      startAnalysisFlow();
+      if(learnWizardFromOnboarding){
+        learnWizardFromOnboarding = false;
+        runOnboardingAnalysis();
+      } else {
+        startAnalysisFlow();
+      }
     }
   }
 }
 
 function startAnalysisFlow(){
-  document.getElementById('loading-title').textContent='Your learning plan is being created...';
-  document.getElementById('loading-subtitle').textContent='Please wait, our AI is analyzing your document.';
+  document.getElementById('loading-title').textContent = 'Öğrenme planınız oluşturuluyor…';
+  document.getElementById('loading-subtitle').textContent = 'Doküman analiz ediliyor; varsayılan olarak soru–cevap ağırlıklı plan üretilecek.';
   document.getElementById('learn-loading').style.display='block';
   setTimeout(function(){
     document.getElementById('learn-loading').style.display='none';
     showPage('page-document');
+    userLearningPrefs = ['card', 'qa'];
+    applyDocPersonalization();
     startDocTutorial();
   },6000);
 }
 
 function completeSlackIntegration(){
   document.getElementById('slack-integration-overlay').style.display='none';
-  // Show "Slack integrated" toast for 3 seconds
+  var fromOnboarding = learnWizardFromOnboarding;
+  learnWizardFromOnboarding = false;
   showToast('check_circle', '#4A154B', 'Slack successfully integrated!', 'Your workspace is now connected to TeachFast.', 3000, function(){
-    // After that toast disappears, show "Analyzing" toast for 6 seconds
     showToast('smart_toy', '#000000', 'Analyzing your document...', 'AI is creating your personalized learning plan.', 6000, function(){
-      // Then navigate to document page
-      showPage('page-document');
-      startDocTutorial();
+      if(fromOnboarding){
+        runOnboardingAnalysis();
+      } else {
+        showPage('page-document');
+        userLearningPrefs = ['card', 'qa'];
+        applyDocPersonalization();
+        startDocTutorial();
+      }
     });
   });
 }
@@ -743,7 +1248,13 @@ function cancelSlackIntegration(){
   document.getElementById('learn-wizard').style.display='flex';
 }
 
-function lwBack(){if(lwStep>0){lwStep--; lwShowStep(lwStep); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML='Start Learning <span class="material-symbols-outlined text-sm">arrow_forward</span>';} else closeLearnWizard();}
+function lwBack(){
+  var nextLabel = learnWizardFromOnboarding ? 'Devam' : 'Start Learning';
+  if(lwStep>0){
+    lwStep--; lwShowStep(lwStep); lwUpdateProgress();
+    document.getElementById('lw-next-btn').innerHTML=nextLabel+' <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+  } else closeLearnWizard();
+}
 function lwShowStep(n){['lw-step-0','lw-step-1','lw-step-2'].forEach(function(id,i){document.getElementById(id).style.display=i===n?'block':'none';});}
 function lwUpdateProgress(){document.querySelectorAll('#lw-progress-bar div').forEach(function(b,i){b.className=i<=lwStep?'w-8 h-1 rounded-full bg-primary':'w-8 h-1 rounded-full bg-surface-container-highest';}); document.getElementById('lw-counter').textContent=(lwStep+1)+' / 3';}
 function selectLwOption(el){
@@ -761,6 +1272,7 @@ function selectLwOption(el){
 // Document Tutorial
 var docTutStep=0;
 function startDocTutorial(){
+  populateDocTutorialFromPrefs();
   docTutStep=0;
   document.getElementById('doc-tutorial-overlay').style.display='flex';
   showDocTutStep(0);
@@ -784,16 +1296,46 @@ function selectCwCat(el){document.querySelectorAll('.cw-cat').forEach(function(c
 
 // Document Learning Flow
 var docFlowStep=0;
-var docStepTitles=['Knowledge Card','Quiz + Flashcard','Voice Practice'];
-function docStepNext(){if(docFlowStep<2){docFlowStep++; showDocFlow();}}
+function docStepNext(){
+  var n = docPanelOrder.length;
+  if(docFlowStep < n - 1){ docFlowStep++; showDocFlow(); }
+}
 function showDocFlow(){
-  for(var i=0;i<3;i++){var el=document.getElementById('doc-flow-step-'+i); if(el) el.style.display=i===docFlowStep?'':'none';}
+  for(var i=0;i<3;i++){var el=document.getElementById('doc-flow-step-'+i); if(el) el.style.display='none';}
+  var panel = getDocPanelAtStep(docFlowStep);
+  var active = document.getElementById('doc-flow-step-'+panel);
+  if(active){
+    active.style.display='';
+    if(panel === 1) applyDocMixSectionVisibility();
+  }
+  var n = docPanelOrder.length;
   document.getElementById('doc-step-num').textContent=docFlowStep+1;
-  document.getElementById('doc-step-label').textContent='Step '+(docFlowStep+1)+' of 3';
-  document.getElementById('doc-step-title').textContent=docStepTitles[docFlowStep];
+  document.getElementById('doc-step-label').textContent='Adım '+(docFlowStep+1)+' / '+n;
+  document.getElementById('doc-step-title').textContent=docStepTitlesOrdered[docFlowStep] || '';
   var dots=document.getElementById('doc-step-dots'); dots.innerHTML='';
-  for(var j=0;j<3;j++){var d=document.createElement('div'); d.className='w-8 h-1 rounded-full '+(j<=docFlowStep?'bg-black':'bg-zinc-200'); dots.appendChild(d);}
-  document.getElementById('doc-next-btn').style.display=docFlowStep===2?'none':'';
+  for(var j=0;j<n;j++){var d=document.createElement('div'); d.className='w-8 h-1 rounded-full '+(j<=docFlowStep?'bg-black':'bg-zinc-200'); dots.appendChild(d);}
+  document.getElementById('doc-next-btn').style.display=(docFlowStep >= n - 1)?'none':'';
+}
+function resetQuizState(){
+  quizAnswered=false;
+  var opts=document.querySelectorAll('.doc-quiz-opt');
+  opts.forEach(function(o){
+    o.style.pointerEvents='';
+    o.style.border='';
+    o.style.background='';
+    var b=o.querySelector('span:first-child');
+    if(b){b.style.background=''; b.style.color='';}
+  });
+  var fb=document.getElementById('quiz-feedback');
+  if(fb){ fb.style.display='none'; fb.innerHTML=''; }
+  var acc=document.getElementById('doc-accuracy');
+  var st=document.getElementById('doc-streak');
+  if(acc) acc.textContent='—';
+  if(st) st.textContent='0';
+  var vc=document.getElementById('voice-complete');
+  if(vc) vc.style.display='none';
+  var inner=document.getElementById('fc-inner');
+  if(inner) inner.style.transform='rotateY(0deg)';
 }
 
 // Quiz
@@ -802,8 +1344,8 @@ function selectQuiz(el,correct){
   if(quizAnswered) return; quizAnswered=true;
   var opts=document.querySelectorAll('.doc-quiz-opt'); opts.forEach(function(o){o.style.pointerEvents='none';});
   var badge=el.querySelector('span:first-child');
-  if(correct){el.style.border='2px solid #16a34a'; el.style.background='#f0fdf4'; badge.style.background='#16a34a'; badge.style.color='#fff'; document.getElementById('quiz-feedback').style.display='block'; document.getElementById('quiz-feedback').innerHTML='<div class="bg-green-50 border border-green-200 rounded-xl p-5 flex items-start gap-3"><span class="material-symbols-outlined text-green-600 mt-0.5">check_circle</span><div><p class="font-bold text-green-800 text-sm">Correct!</p><p class="text-green-700 text-sm mt-1">Micro-learning bursts bypass cognitive load fatigue.</p></div></div>'; document.getElementById('doc-accuracy').textContent='100%'; document.getElementById('doc-streak').textContent='1';}
-  else{el.style.border='2px solid #dc2626'; el.style.background='#fef2f2'; badge.style.background='#dc2626'; badge.style.color='#fff'; opts[1].style.border='2px solid #16a34a'; opts[1].style.background='#f0fdf4'; opts[1].querySelector('span:first-child').style.background='#16a34a'; opts[1].querySelector('span:first-child').style.color='#fff'; document.getElementById('quiz-feedback').style.display='block'; document.getElementById('quiz-feedback').innerHTML='<div class="bg-red-50 border border-red-200 rounded-xl p-5 flex items-start gap-3"><span class="material-symbols-outlined text-red-600 mt-0.5">cancel</span><div><p class="font-bold text-red-800 text-sm">Not quite!</p><p class="text-red-700 text-sm mt-1">The correct answer is B.</p></div></div>'; document.getElementById('doc-accuracy').textContent='0%'; document.getElementById('doc-streak').textContent='0';}
+  if(correct){el.style.border='2px solid #16a34a'; el.style.background='#f0fdf4'; badge.style.background='#16a34a'; badge.style.color='#fff'; document.getElementById('quiz-feedback').style.display='block'; document.getElementById('quiz-feedback').innerHTML='<div class="bg-green-50 border border-green-200 rounded-xl p-5 flex items-start gap-3"><span class="material-symbols-outlined text-green-600 mt-0.5">check_circle</span><div><p class="font-bold text-green-800 text-sm">Doğru</p><p class="text-green-700 text-sm mt-1">Önce yansıtma, sonra kriter sorusu güveni artırır.</p></div></div>'; document.getElementById('doc-accuracy').textContent='100%'; document.getElementById('doc-streak').textContent='1';}
+  else{el.style.border='2px solid #dc2626'; el.style.background='#fef2f2'; badge.style.background='#dc2626'; badge.style.color='#fff'; opts[1].style.border='2px solid #16a34a'; opts[1].style.background='#f0fdf4'; opts[1].querySelector('span:first-child').style.background='#16a34a'; opts[1].querySelector('span:first-child').style.color='#fff'; document.getElementById('quiz-feedback').style.display='block'; document.getElementById('quiz-feedback').innerHTML='<div class="bg-red-50 border border-red-200 rounded-xl p-5 flex items-start gap-3"><span class="material-symbols-outlined text-red-600 mt-0.5">cancel</span><div><p class="font-bold text-red-800 text-sm">Tekrar deneyin</p><p class="text-red-700 text-sm mt-1">Doğru seçenek B: önce yansıtma.</p></div></div>'; document.getElementById('doc-accuracy').textContent='0%'; document.getElementById('doc-streak').textContent='0';}
 }
 
 function flipCard(el){var inner=document.getElementById('fc-inner'); inner.style.transform=inner.style.transform==='rotateY(180deg)'?'rotateY(0deg)':'rotateY(180deg)';}
@@ -812,9 +1354,12 @@ function flipCard(el){var inner=document.getElementById('fc-inner'); inner.style
 var voiceActive=false;
 function toggleVoiceDemo(btn){
   voiceActive=!voiceActive;
-  if(voiceActive){btn.style.background='#ef4444'; btn.style.borderColor='#ef4444'; document.getElementById('voice-status-text').textContent='Listening... speak now';
-    setTimeout(function(){if(voiceActive){document.getElementById('voice-status-text').textContent='AI is responding...'; setTimeout(function(){document.getElementById('voice-status-text').textContent='Your turn'; btn.style.background='rgba(255,255,255,0.1)'; btn.style.borderColor='rgba(255,255,255,0.2)'; voiceActive=false; setTimeout(function(){document.getElementById('voice-complete').style.display='block'; document.getElementById('voice-complete').scrollIntoView({behavior:'smooth'});},2000);},2500);}},3000);
-  } else {btn.style.background='rgba(255,255,255,0.1)'; btn.style.borderColor='rgba(255,255,255,0.2)'; document.getElementById('voice-status-text').textContent='Tap the microphone to start';}
+  var statusEl=document.getElementById('voice-status-text');
+  var recordingLabel = practiceMode === 'video' ? 'Kayıt: kamera ve ses…' : 'Dinleniyor… konuşun';
+  var idleLabel = practiceMode === 'video' ? 'Kayda başlamak için kamera düğmesine dokunun' : 'Kayda başlamak için mikrofon düğmesine dokunun';
+  if(voiceActive){btn.style.background='#ef4444'; btn.style.borderColor='#ef4444'; if(statusEl) statusEl.textContent=recordingLabel;
+    setTimeout(function(){if(voiceActive){if(statusEl) statusEl.textContent='AI yanıt veriyor…'; setTimeout(function(){if(statusEl) statusEl.textContent='Siz devam edin'; btn.style.background='rgba(255,255,255,0.1)'; btn.style.borderColor='rgba(255,255,255,0.2)'; voiceActive=false; setTimeout(function(){var vc=document.getElementById('voice-complete'); if(vc){ vc.style.display='block'; vc.scrollIntoView({behavior:'smooth'}); }},2000);},2500);}},3000);
+  } else {btn.style.background='rgba(255,255,255,0.1)'; btn.style.borderColor='rgba(255,255,255,0.2)'; if(statusEl) statusEl.textContent=idleLabel;}
 }
 </script>
 </body>
