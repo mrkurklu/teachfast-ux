@@ -96,7 +96,7 @@ tailwind.config = {
       <div class="max-w-6xl mx-auto">
         <p class="text-center text-[11px] font-bold uppercase tracking-[0.22em] text-neutral-500 mb-4">Nasıl çalışır · How it works</p>
         <h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tighter text-black mb-5 max-w-3xl mx-auto leading-[1.1]">Belgenizi yükleyin; gerisini TeachFast halleder</h2>
-        <p class="text-center text-base md:text-lg text-neutral-600 max-w-2xl mx-auto mb-14 md:mb-20 leading-relaxed">PDF, sunum veya metin — içeriği micro-learning parçalarına böler, dil ve hedefinize göre kartlar üretir. Slack, WhatsApp veya uygulama içinde günlük akışa düşürür.</p>
+        <p class="text-center text-base md:text-lg text-neutral-600 max-w-2xl mx-auto mb-14 md:mb-20 leading-relaxed">PDF, sunum veya metin — içeriği micro-learning parçalarına böler, dil ve hedefinize göre kartlar üretir. Slack veya uygulama içinde günlük akışa düşürür.</p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-14 md:mb-20">
           <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 shadow-sm hover:shadow-md transition-shadow">
             <div class="w-11 h-11 rounded-full bg-black text-white flex items-center justify-center mb-4"><span class="material-symbols-outlined text-xl">upload</span></div>
@@ -120,7 +120,7 @@ tailwind.config = {
             <div class="w-11 h-11 rounded-full bg-[#4A154B] text-white flex items-center justify-center mb-4"><span class="material-symbols-outlined text-xl">forum</span></div>
             <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-1">Adım 4</p>
             <p class="font-bold text-lg text-black mb-2">Ekibinize ulaşır</p>
-            <p class="text-sm text-neutral-600 leading-relaxed">Slack, WhatsApp veya TeachFast uygulaması.</p>
+            <p class="text-sm text-neutral-600 leading-relaxed">Slack veya TeachFast uygulaması.</p>
           </div>
         </div>
         <div class="grid md:grid-cols-2 gap-6 md:gap-8 mb-14">
@@ -287,22 +287,6 @@ tailwind.config = {
         </button>
       </div>
     </div>
-    <div id="learning-prefs-step-platform" class="hidden max-w-3xl mx-auto w-full">
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3 text-center">Nerede öğrenmek istersiniz?</h1>
-      <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-8 text-center">Platform seçin</p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="lw-option lw-platform lp-platform-opt p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="whatsapp" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.271.607-1.445c.159-.175.347-.218.463-.218l.332.005c.109.004.258-.041.405.314.159.386.541 1.32.588 1.417.047.097.078.21.014.339-.064.128-.096.21-.191.319-.095.109-.2.243-.285.326-.096.097-.197.202-.085.395.112.193.497.82 1.069 1.328.736.656 1.357.86 1.55.956.193.097.304.081.416-.048.112-.129.476-.554.604-.744.127-.19.255-.159.43-.095.174.064 1.104.52 1.295.617.191.096.318.144.364.225.046.081.046.469-.098.874zM12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11-11-4.925-11-11 4.925-11 11-11zm0 2c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">WhatsApp</h3><p class="text-on-surface-variant text-sm leading-relaxed">Günlük içerik WhatsApp üzerinden gelsin.</p></div>
-        <div class="lw-option lw-platform lp-platform-opt p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="slack" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#4A154B] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">Slack</h3><p class="text-on-surface-variant text-sm leading-relaxed">Bildirimler Slack kanalınıza düşsün.</p></div>
-        <div class="lw-option lw-platform lw-selected lp-platform-opt p-8 rounded-lg bg-primary text-on-primary transition-all cursor-pointer ring-4 ring-primary/10" data-platform="teachfast" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-2xl" style="font-variation-settings:'FILL' 1">school</span></div><div class="w-5 h-5 rounded-full bg-white flex items-center justify-center lw-dot flex-shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div></div><h3 class="font-bold text-xl mb-2">TeachFast</h3><p class="text-white/70 text-sm leading-relaxed">Uygulama içinde öğrenin.</p></div>
-      </div>
-      <div class="mt-12 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-        <button type="button" onclick="learningPrefsBackFromPlatformToGoal()" class="text-sm font-semibold text-on-surface-variant hover:text-black order-2 sm:order-1">← Hedefe dön</button>
-        <button type="button" onclick="learningPrefsRunAnalysisFromPlatform()" class="order-1 sm:order-2 w-full sm:w-auto px-10 py-4 rounded-full bg-primary text-on-primary font-bold text-sm hover:opacity-90 flex items-center justify-center gap-2">
-          Analiz et ve planı oluştur
-          <span class="material-symbols-outlined text-lg">arrow_forward</span>
-        </button>
-      </div>
-    </div>
     <div id="learning-prefs-step-plan" class="hidden max-w-xl mx-auto w-full">
       <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-3 text-center">Plan hazır</p>
       <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3 text-center">5 günlük öğrenme planınız</h1>
@@ -379,34 +363,95 @@ tailwind.config = {
           </div>
         </div>
       </div>
-      <p id="lpp-delivery-label" class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-4 text-center">Gün 1 Slack bildirimi önizlemesi</p>
-      <div class="rounded-2xl border border-neutral-200 bg-white p-4 mb-12 shadow-sm">
-        <div class="flex items-center gap-2 mb-3 pb-3 border-b border-neutral-100">
-          <div class="w-7 h-7 rounded-md bg-[#3f0e40] flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M6 15a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2h2v2zm1 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-5zm2-8a2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2v2H9zm0 1a2 2 0 0 1 2 2 2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5zm8 2a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2h-2v-2zm-1 0a2 2 0 0 1-2 2 2 2 0 0 1-2-2V5a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5zm-2 8a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2h2zm0-1a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-5z"/></svg>
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between pb-8">
+        <button type="button" onclick="learningPrefsBackFromPlanToGoal()" class="text-sm font-semibold text-on-surface-variant hover:text-black order-2 sm:order-1">← Hedefe dön</button>
+        <button type="button" onclick="learningPrefsFromPlanToPlatform()" class="order-1 sm:order-2 w-full sm:w-auto px-10 py-4 rounded-full bg-[#1E633E] text-white font-bold text-sm hover:bg-[#185432] transition-colors flex items-center justify-center gap-2">
+          Devam
+          <span class="material-symbols-outlined text-lg">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+    <div id="learning-prefs-step-platform" class="hidden max-w-3xl mx-auto w-full">
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3 text-center">Nerede öğrenmek istersiniz?</h1>
+      <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-8 text-center">Platform seçin</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto w-full">
+        <div class="lw-option lw-platform lp-platform-opt p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="slack" onclick="selectLearningPrefsPlatform(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#4A154B] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">Slack</h3><p class="text-on-surface-variant text-sm leading-relaxed">Bildirimler Slack kanalınıza düşsün.</p></div>
+        <div class="lw-option lw-platform lw-selected lp-platform-opt p-8 rounded-lg bg-primary text-on-primary transition-all cursor-pointer ring-4 ring-primary/10" data-platform="teachfast" onclick="selectLearningPrefsPlatform(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-2xl" style="font-variation-settings:'FILL' 1">school</span></div><div class="w-5 h-5 rounded-full bg-white flex items-center justify-center lw-dot flex-shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div></div><h3 class="font-bold text-xl mb-2">TeachFast</h3><p class="text-white/70 text-sm leading-relaxed">Uygulama içinde öğrenin.</p></div>
+      </div>
+      <div id="lpp-slack-connect-guide" class="hidden mt-8 rounded-2xl border border-neutral-200 bg-white shadow-sm text-left max-w-3xl mx-auto w-full overflow-hidden border-l-4 border-l-[#4A154B]">
+        <div class="bg-gradient-to-br from-[#4A154B]/[0.06] to-transparent px-5 sm:px-6 pt-6 pb-5 border-b border-neutral-100">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-[#4A154B] flex items-center justify-center shadow-md flex-shrink-0">
+              <svg class="w-8 h-8 fill-white" viewBox="0 0 122.8 122.8" aria-hidden="true"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg>
+            </div>
+            <div class="min-w-0">
+              <p class="text-[10px] font-bold uppercase tracking-widest text-[#4A154B] mb-1">Slack bağlantısı</p>
+              <h2 class="font-bold text-lg sm:text-xl text-primary leading-snug">Workspace’inizi TeachFast’a nasıl bağlarsınız?</h2>
+              <p class="text-sm text-on-surface-variant mt-2 leading-relaxed">Dört kısa adımda Slack tarafını tamamlayın. Alttaki <strong class="text-primary">Başlayalım</strong> ile bir sonraki ekranda Slack oturumu açılır.</p>
+            </div>
           </div>
-          <span class="text-sm font-semibold text-primary">#öğrenme-akışı</span>
-          <span class="text-xs text-on-surface-variant ml-auto">09:00</span>
         </div>
-        <div class="flex gap-3">
-          <div class="w-8 h-8 rounded-md bg-black text-white text-xs font-bold flex items-center justify-center flex-shrink-0">TF</div>
-          <div class="min-w-0 flex-1">
-            <p class="text-sm font-bold text-primary">TeachFast <span class="text-[9px] font-semibold bg-neutral-200 text-neutral-600 px-1.5 py-0.5 rounded ml-1 align-middle">APP</span></p>
-            <p class="text-sm text-on-surface mt-1">Günaydın! Bugün 1. gün başlıyor.</p>
-            <div class="mt-3 bg-surface border-l-[3px] border-black rounded-r-xl pl-3 pr-3 py-2.5">
-              <p class="text-sm font-bold text-primary">İtiraz Yönetimi — Gün 1 / 5</p>
-              <p id="lpp-slack-attachment-sub" class="text-xs text-on-surface-variant mt-1">İlk temas &amp; değer önerisi · 3 kart + 2 soru</p>
-              <div class="flex flex-wrap gap-2 mt-3">
-                <span class="text-xs font-semibold px-3 py-1.5 rounded-md bg-black text-white">Başla →</span>
-                <span class="text-xs font-semibold px-3 py-1.5 rounded-md border border-neutral-300 text-on-surface-variant">Ertele</span>
+        <div class="px-5 sm:px-6 py-6 relative">
+          <div class="absolute left-[2.375rem] top-10 bottom-10 w-0.5 bg-gradient-to-b from-[#4A154B]/25 via-neutral-200 to-neutral-200 hidden sm:block" aria-hidden="true"></div>
+          <div class="space-y-4">
+            <div class="flex gap-4 relative">
+              <div class="flex flex-col items-center flex-shrink-0 w-11 sm:w-12 z-10">
+                <div class="w-11 h-11 rounded-xl bg-[#4A154B] text-white flex items-center justify-center shadow-sm ring-4 ring-white">
+                  <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">open_in_new</span>
+                </div>
+              </div>
+              <div class="min-w-0 flex-1 pb-1 rounded-xl border border-neutral-100 bg-neutral-50/80 px-4 py-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-[#4A154B]">Adım 1</p>
+                <p class="font-bold text-sm text-primary mt-0.5">OAuth ile bağlantıyı başlatın</p>
+                <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed"><strong class="text-primary">Başlayalım</strong> düğmesine basın; güvenli Slack giriş penceresi (OAuth) açılır.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 relative">
+              <div class="flex flex-col items-center flex-shrink-0 w-11 sm:w-12 z-10">
+                <div class="w-11 h-11 rounded-xl bg-white border-2 border-[#4A154B]/30 text-[#4A154B] flex items-center justify-center shadow-sm ring-4 ring-white">
+                  <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">domain</span>
+                </div>
+              </div>
+              <div class="min-w-0 flex-1 pb-1 rounded-xl border border-neutral-100 bg-neutral-50/80 px-4 py-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-[#4A154B]">Adım 2</p>
+                <p class="font-bold text-sm text-primary mt-0.5">Doğru workspace’i seçin</p>
+                <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed">Slack hesabınızla oturum açın; içeriğin dağıtılacağı <strong class="text-primary">çalışma alanını</strong> (workspace) listeden işaretleyin.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 relative">
+              <div class="flex flex-col items-center flex-shrink-0 w-11 sm:w-12 z-10">
+                <div class="w-11 h-11 rounded-xl bg-white border-2 border-[#4A154B]/30 text-[#4A154B] flex items-center justify-center shadow-sm ring-4 ring-white">
+                  <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">verified_user</span>
+                </div>
+              </div>
+              <div class="min-w-0 flex-1 pb-1 rounded-xl border border-neutral-100 bg-neutral-50/80 px-4 py-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-[#4A154B]">Adım 3</p>
+                <p class="font-bold text-sm text-primary mt-0.5">İzinleri onaylayın</p>
+                <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed">TeachFast’ın kanalları görmesi ve bildirim göndermesi için istenen kapsamları <strong class="text-primary">onaylayın</strong>; kurumsal IT politikalarınıza uygundur.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 relative">
+              <div class="flex flex-col items-center flex-shrink-0 w-11 sm:w-12 z-10">
+                <div class="w-11 h-11 rounded-xl bg-white border-2 border-[#4A154B]/30 text-[#4A154B] flex items-center justify-center shadow-sm ring-4 ring-white">
+                  <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">tag</span>
+                </div>
+              </div>
+              <div class="min-w-0 flex-1 rounded-xl border border-neutral-100 bg-neutral-50/80 px-4 py-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-[#4A154B]">Adım 4</p>
+                <p class="font-bold text-sm text-primary mt-0.5">Öğrenme kanalını belirleyin</p>
+                <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed mb-3">Kurulumdan sonra günlük kartların düşeceği <strong class="text-primary">kanalı</strong> seçin veya uygulamayı <code class="text-xs bg-white px-1.5 py-0.5 rounded border border-neutral-200">#öğrenme-akışı</code> gibi bir kanala ekleyin.</p>
+                <div class="flex items-center gap-2 rounded-lg bg-white border border-neutral-200 px-3 py-2 text-xs text-neutral-600">
+                  <span class="material-symbols-outlined text-[#4A154B] text-lg">forum</span>
+                  <span>Örnek: kanalda TeachFast mesajları ve <strong class="text-neutral-800">Başla</strong> düğmesi görünür.</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="mt-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between pb-8">
-        <button type="button" onclick="learningPrefsBackToPlatform()" class="text-sm font-semibold text-on-surface-variant hover:text-black order-2 sm:order-1">← Platforma dön</button>
-        <button type="button" onclick="createPersonalizedFlow()" class="order-1 sm:order-2 w-full sm:w-auto px-10 py-4 rounded-full bg-[#1E633E] text-white font-bold text-sm hover:bg-[#185432] transition-colors flex items-center justify-center gap-2">
+      <div class="mt-12 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+        <button type="button" onclick="learningPrefsBackFromPlatformToPlan()" class="text-sm font-semibold text-on-surface-variant hover:text-black order-2 sm:order-1">← Plana dön</button>
+        <button type="button" onclick="learningPrefsRunAnalysisFromPlatform()" class="order-1 sm:order-2 w-full sm:w-auto px-10 py-4 rounded-full bg-primary text-on-primary font-bold text-sm hover:opacity-90 flex items-center justify-center gap-2">
           Başlayalım
           <span class="material-symbols-outlined text-lg">arrow_forward</span>
         </button>
@@ -892,17 +937,6 @@ tailwind.config = {
   </nav>
   <div class="bg-surface-container-lowest w-full max-w-4xl rounded-lg shadow-[0px_20px_40px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col mt-16">
     <div class="p-8 md:p-12 lg:p-16">
-      <div id="lw-step-0">
-        <div class="mb-12"><p class="font-semibold uppercase text-[10px] tracking-widest text-on-surface-variant mb-4">SELECT LEARNING LANGUAGE</p><h1 class="font-bold text-4xl md:text-5xl tracking-tighter text-primary">In which language would you like to learn this document?</h1></div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇹🇷</span><h3 class="font-semibold text-lg">Türkçe</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
-          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇬🇧</span><h3 class="font-semibold text-lg">English</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
-          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇩🇪</span><h3 class="font-semibold text-lg">Deutsch</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
-          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇫🇷</span><h3 class="font-semibold text-lg">Français</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
-          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇪🇸</span><h3 class="font-semibold text-lg">Español</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
-          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇦🇪</span><h3 class="font-semibold text-lg">العربية</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
-        </div>
-      </div>
       <div id="lw-step-onb-formats" style="display:none">
         <div class="mb-8"><p class="font-semibold uppercase text-[10px] tracking-widest text-on-surface-variant mb-4">NASIL ÖĞRENELİM</p><h1 class="font-bold text-3xl md:text-4xl lg:text-5xl tracking-tighter text-primary leading-tight">Hangi formatlarla ilerleyelim?</h1><p class="text-on-surface-variant text-sm mt-3 max-w-2xl">Bilgi kartı, soru–cevap, flashcard veya pratik — birden fazla seçebilirsiniz.</p></div>
         <div class="grid sm:grid-cols-2 gap-3 md:gap-4">
@@ -941,6 +975,17 @@ tailwind.config = {
         </div>
         <p id="lw-format-hint" class="mt-4 text-xs text-red-600 text-center hidden" role="alert"></p>
       </div>
+      <div id="lw-step-0" style="display:none">
+        <div class="mb-12"><p class="font-semibold uppercase text-[10px] tracking-widest text-on-surface-variant mb-4">SELECT LEARNING LANGUAGE</p><h1 class="font-bold text-4xl md:text-5xl tracking-tighter text-primary">In which language would you like to learn this document?</h1></div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇹🇷</span><h3 class="font-semibold text-lg">Türkçe</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
+          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇬🇧</span><h3 class="font-semibold text-lg">English</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
+          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇩🇪</span><h3 class="font-semibold text-lg">Deutsch</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
+          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇫🇷</span><h3 class="font-semibold text-lg">Français</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
+          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇪🇸</span><h3 class="font-semibold text-lg">Español</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
+          <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇦🇪</span><h3 class="font-semibold text-lg">العربية</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
+        </div>
+      </div>
       <div id="lw-step-1" style="display:none">
         <div class="mb-12"><p class="font-semibold uppercase text-[10px] tracking-widest text-on-surface-variant mb-4">SET DURATION</p><h1 class="font-bold text-4xl md:text-5xl tracking-tighter text-primary">How many days would you like to learn this document?</h1></div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -952,10 +997,80 @@ tailwind.config = {
       </div>
       <div id="lw-step-2" style="display:none">
         <div class="mb-12"><p class="font-semibold uppercase text-[10px] tracking-widest text-on-surface-variant mb-4">SELECT PLATFORM</p><h1 class="font-bold text-4xl md:text-5xl tracking-tighter text-primary">Where would you like to learn this document?</h1></div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="lw-option lw-platform p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="whatsapp" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.271.607-1.445c.159-.175.347-.218.463-.218l.332.005c.109.004.258-.041.405.314.159.386.541 1.32.588 1.417.047.097.078.21.014.339-.064.128-.096.21-.191.319-.095.109-.2.243-.285.326-.096.097-.197.202-.085.395.112.193.497.82 1.069 1.328.736.656 1.357.86 1.55.956.193.097.304.081.416-.048.112-.129.476-.554.604-.744.127-.19.255-.159.43-.095.174.064 1.104.52 1.295.617.191.096.318.144.364.225.046.081.046.469-.098.874zM12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11-11-4.925-11-11 4.925-11 11-11zm0 2c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">WhatsApp</h3><p class="text-on-surface-variant text-sm leading-relaxed">Receive daily learning content via WhatsApp.</p></div>
-          <div class="lw-option lw-platform p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="slack" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#4A154B] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">Slack</h3><p class="text-on-surface-variant text-sm leading-relaxed">Learning content delivered to your Slack channel.</p></div>
-          <div class="lw-option lw-platform lw-selected p-8 rounded-lg bg-primary text-on-primary transition-all cursor-pointer ring-4 ring-primary/10" data-platform="teachfast" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-2xl" style="font-variation-settings:'FILL' 1">school</span></div><div class="w-5 h-5 rounded-full bg-white flex items-center justify-center lw-dot flex-shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div></div><h3 class="font-bold text-xl mb-2">TeachFast</h3><p class="text-white/70 text-sm leading-relaxed">Learn within the platform.</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto w-full">
+          <div class="lw-option lw-platform p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="slack" onclick="selectLearnWizardPlatform(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#4A154B] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">Slack</h3><p class="text-on-surface-variant text-sm leading-relaxed">Learning content delivered to your Slack channel.</p></div>
+          <div class="lw-option lw-platform lw-selected p-8 rounded-lg bg-primary text-on-primary transition-all cursor-pointer ring-4 ring-primary/10" data-platform="teachfast" onclick="selectLearnWizardPlatform(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-2xl" style="font-variation-settings:'FILL' 1">school</span></div><div class="w-5 h-5 rounded-full bg-white flex items-center justify-center lw-dot flex-shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div></div><h3 class="font-bold text-xl mb-2">TeachFast</h3><p class="text-white/70 text-sm leading-relaxed">Learn within the platform.</p></div>
+        </div>
+        <div id="lw-slack-connect-guide" class="hidden mt-8 rounded-2xl border border-neutral-200 bg-white shadow-sm text-left max-w-3xl mx-auto w-full overflow-hidden border-l-4 border-l-[#4A154B]">
+          <div class="bg-gradient-to-br from-[#4A154B]/[0.06] to-transparent px-5 sm:px-6 pt-6 pb-5 border-b border-neutral-100">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+              <div class="w-14 h-14 rounded-2xl bg-[#4A154B] flex items-center justify-center shadow-md flex-shrink-0">
+                <svg class="w-8 h-8 fill-white" viewBox="0 0 122.8 122.8" aria-hidden="true"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-[#4A154B] mb-1">Slack setup</p>
+                <h2 class="font-bold text-lg sm:text-xl text-primary leading-snug">How to connect your Slack workspace</h2>
+                <p class="text-sm text-on-surface-variant mt-2 leading-relaxed">Four quick steps on the Slack side. Tap <strong class="text-primary">Complete</strong> next to open the Slack sign-in window.</p>
+              </div>
+            </div>
+          </div>
+          <div class="px-5 sm:px-6 py-6 relative">
+            <div class="absolute left-[2.375rem] top-10 bottom-10 w-0.5 bg-gradient-to-b from-[#4A154B]/25 via-neutral-200 to-neutral-200 hidden sm:block" aria-hidden="true"></div>
+            <div class="space-y-4">
+              <div class="flex gap-4 relative">
+                <div class="flex flex-col items-center flex-shrink-0 w-11 sm:w-12 z-10">
+                  <div class="w-11 h-11 rounded-xl bg-[#4A154B] text-white flex items-center justify-center shadow-sm ring-4 ring-white">
+                    <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">open_in_new</span>
+                  </div>
+                </div>
+                <div class="min-w-0 flex-1 pb-1 rounded-xl border border-neutral-100 bg-neutral-50/80 px-4 py-3">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-[#4A154B]">Step 1</p>
+                  <p class="font-bold text-sm text-primary mt-0.5">Start OAuth</p>
+                  <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed">Use <strong class="text-primary">Complete</strong> to open Slack’s secure OAuth screen.</p>
+                </div>
+              </div>
+              <div class="flex gap-4 relative">
+                <div class="flex flex-col items-center flex-shrink-0 w-11 sm:w-12 z-10">
+                  <div class="w-11 h-11 rounded-xl bg-white border-2 border-[#4A154B]/30 text-[#4A154B] flex items-center justify-center shadow-sm ring-4 ring-white">
+                    <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">domain</span>
+                  </div>
+                </div>
+                <div class="min-w-0 flex-1 pb-1 rounded-xl border border-neutral-100 bg-neutral-50/80 px-4 py-3">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-[#4A154B]">Step 2</p>
+                  <p class="font-bold text-sm text-primary mt-0.5">Pick your workspace</p>
+                  <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed">Sign in and select the <strong class="text-primary">workspace</strong> where learning should be delivered.</p>
+                </div>
+              </div>
+              <div class="flex gap-4 relative">
+                <div class="flex flex-col items-center flex-shrink-0 w-11 sm:w-12 z-10">
+                  <div class="w-11 h-11 rounded-xl bg-white border-2 border-[#4A154B]/30 text-[#4A154B] flex items-center justify-center shadow-sm ring-4 ring-white">
+                    <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">verified_user</span>
+                  </div>
+                </div>
+                <div class="min-w-0 flex-1 pb-1 rounded-xl border border-neutral-100 bg-neutral-50/80 px-4 py-3">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-[#4A154B]">Step 3</p>
+                  <p class="font-bold text-sm text-primary mt-0.5">Approve permissions</p>
+                  <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed"><strong class="text-primary">Allow</strong> the scopes TeachFast needs to read channels and post messages.</p>
+                </div>
+              </div>
+              <div class="flex gap-4 relative">
+                <div class="flex flex-col items-center flex-shrink-0 w-11 sm:w-12 z-10">
+                  <div class="w-11 h-11 rounded-xl bg-white border-2 border-[#4A154B]/30 text-[#4A154B] flex items-center justify-center shadow-sm ring-4 ring-white">
+                    <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">tag</span>
+                  </div>
+                </div>
+                <div class="min-w-0 flex-1 rounded-xl border border-neutral-100 bg-neutral-50/80 px-4 py-3">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-[#4A154B]">Step 4</p>
+                  <p class="font-bold text-sm text-primary mt-0.5">Choose a channel</p>
+                  <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed mb-3">After install, pick the <strong class="text-primary">channel</strong> for daily cards or invite the app (e.g. <code class="text-xs bg-white px-1.5 py-0.5 rounded border border-neutral-200">#learning-flow</code>).</p>
+                  <div class="flex items-center gap-2 rounded-lg bg-white border border-neutral-200 px-3 py-2 text-xs text-neutral-600">
+                    <span class="material-symbols-outlined text-[#4A154B] text-lg">forum</span>
+                    <span>Members will see TeachFast posts and a <strong class="text-neutral-800">Start</strong> button in that channel.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div id="lw-step-3" style="display:none">
@@ -1171,11 +1286,11 @@ function goToOnboardingUpload(){
 }
 function runOnboardingAnalysisAfterLanguage(){
   document.getElementById('loading-title').textContent = 'Dokümanınız analiz ediliyor…';
-  document.getElementById('loading-subtitle').textContent = 'Seçtiğiniz format ve platforma göre içerik modüllere ayrılıyor (prototip).';
+  document.getElementById('loading-subtitle').textContent = 'Seçtiğiniz formatlara göre içerik modüllere ayrılıyor (prototip).';
   document.getElementById('learn-loading').style.display = 'block';
   setTimeout(function(){
     document.getElementById('learn-loading').style.display = 'none';
-    navigate('learning-prefs', 2);
+    navigate('learning-prefs', 1);
     var ih = document.getElementById('intent-prefs-hint');
     if(ih){ ih.classList.add('hidden'); ih.textContent = ''; }
   }, 2200);
@@ -1256,23 +1371,12 @@ function buildPlanSummarySubline(){
   if(prefs.indexOf('flashcard') !== -1) parts.push('Flashcard');
   if(prefs.indexOf('practice') !== -1) parts.push('Canlı pratik');
   var line = parts.length ? parts.join(' + ') : 'Özet';
-  var plat = selectedPlatform === 'slack' ? 'Slack bildirimi' : (selectedPlatform === 'whatsapp' ? 'WhatsApp' : 'Uygulama içi');
+  var plat = selectedPlatform === 'slack' ? 'Slack bildirimi' : 'Uygulama içi';
   return line + ' · 5 gün · ' + plat;
 }
 function planPlatformTimeLabel(){
   if(selectedPlatform === 'slack') return 'Slack 09:00';
-  if(selectedPlatform === 'whatsapp') return 'WhatsApp 09:00';
   return 'Hatırlatma 09:00';
-}
-function buildDay1SlackSubline(){
-  var prefs = getPrefsForPlan();
-  var tail = [];
-  if(prefs.indexOf('card') !== -1) tail.push('3 kart');
-  if(prefs.indexOf('qa') !== -1) tail.push('2 soru');
-  if(prefs.indexOf('flashcard') !== -1) tail.push('2 flashcard');
-  if(prefs.indexOf('practice') !== -1) tail.push('1 pratik');
-  var t = tail.length ? tail.join(' + ') : 'Özet içerik';
-  return 'İlk temas & değer önerisi · ' + t;
 }
 function renderDayTagsForPlan(containerId, spec){
   var prefs = getPrefsForPlan();
@@ -1291,22 +1395,14 @@ function renderDayTagsForPlan(containerId, spec){
   el.innerHTML = chips.join('');
 }
 function populatePlanPreview(){
+  selectedPlatform = getSelectedPlatform();
   var intro = document.getElementById('lpp-plan-intro');
   if(intro){
     if(selectedPlatform === 'slack') intro.textContent = "Her gün Slack'ten bir bildirim gelecek. Başla'ya basınca o günün içeriği açılır.";
-    else if(selectedPlatform === 'whatsapp') intro.textContent = 'Her gün WhatsApp üzerinden içerik gelir. Başla\'ya basınca o günün içeriği açılır.';
     else intro.textContent = 'Beş günlük plan uygulama içinde ilerler. Başla ile günlük içeriğe geçersiniz.';
-  }
-  var dl = document.getElementById('lpp-delivery-label');
-  if(dl){
-    if(selectedPlatform === 'slack') dl.textContent = 'Gün 1 Slack bildirimi önizlemesi';
-    else if(selectedPlatform === 'whatsapp') dl.textContent = 'Gün 1 WhatsApp önizlemesi';
-    else dl.textContent = 'Gün 1 içerik özeti';
   }
   var sub = document.getElementById('lpp-summary-subline');
   if(sub) sub.textContent = buildPlanSummarySubline();
-  var slackSub = document.getElementById('lpp-slack-attachment-sub');
-  if(slackSub) slackSub.textContent = buildDay1SlackSubline();
   renderDayTagsForPlan('lpp-d1-tags', { card: 3, qa: 2 });
   renderDayTagsForPlan('lpp-d2-tags', { card: 2, qa: 2, fc: 4 });
   renderDayTagsForPlan('lpp-d3-tags', { qa: 4, fc: 2 });
@@ -1320,18 +1416,49 @@ function showLearningPrefsPhase(phase){
   var splan = document.getElementById('learning-prefs-step-plan');
   var badge = document.getElementById('learning-prefs-phase-badge');
   if(sp) sp.classList.toggle('hidden', phase !== 0);
-  if(splat) splat.classList.toggle('hidden', phase !== 1);
-  if(splan) splan.classList.toggle('hidden', phase !== 2);
-  var badges = ['ADIM 1 / 3 — HEDEF', 'ADIM 2 / 3 — PLATFORM', 'ADIM 3 / 3 — PLAN'];
+  if(splan) splan.classList.toggle('hidden', phase !== 1);
+  if(splat) splat.classList.toggle('hidden', phase !== 2);
+  var badges = ['ADIM 1 / 3 — HEDEF', 'ADIM 2 / 3 — PLAN', 'ADIM 3 / 3 — PLATFORM'];
   if(badge) badge.textContent = badges[phase] || badges[0];
   updateLearningPrefsHeaderStep(phase);
-  if(phase === 2) populatePlanPreview();
+  if(phase === 1) populatePlanPreview();
+  if(phase === 2) syncLearningPrefsSlackGuideVisibility();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function learningPrefsBackFromPlatformToGoal(){
+function syncLearningPrefsSlackGuideVisibility(){
+  var card = document.getElementById('lpp-slack-connect-guide');
+  if(!card) return;
+  var sel = document.querySelector('#learning-prefs-step-platform .lw-platform.lw-selected');
+  var show = sel && sel.getAttribute('data-platform') === 'slack';
+  card.classList.toggle('hidden', !show);
+}
+function selectLearningPrefsPlatform(el){
+  selectLwOption(el);
+  syncLearningPrefsSlackGuideVisibility();
+}
+function syncLearnWizardSlackGuideVisibility(){
+  var step2 = document.getElementById('lw-step-2');
+  var card = document.getElementById('lw-slack-connect-guide');
+  if(!card || !step2) return;
+  if(step2.style.display !== 'block'){
+    card.classList.add('hidden');
+    return;
+  }
+  var sel = document.querySelector('#lw-step-2 .lw-platform.lw-selected');
+  var show = sel && sel.getAttribute('data-platform') === 'slack';
+  card.classList.toggle('hidden', !show);
+}
+function selectLearnWizardPlatform(el){
+  selectLwOption(el);
+  syncLearnWizardSlackGuideVisibility();
+}
+function learningPrefsBackFromPlanToGoal(){
   showLearningPrefsPhase(0);
 }
-function learningPrefsBackToPlatform(){
+function learningPrefsFromPlanToPlatform(){
+  showLearningPrefsPhase(2);
+}
+function learningPrefsBackFromPlatformToPlan(){
   showLearningPrefsPhase(1);
 }
 function learningPrefsRunAnalysisFromPlatform(){
@@ -1339,7 +1466,7 @@ function learningPrefsRunAnalysisFromPlatform(){
   if(selectedPlatform === 'slack'){
     document.getElementById('slack-integration-overlay').style.display = 'flex';
   } else {
-    runOnboardingAnalysisAfterLanguage();
+    createPersonalizedFlow();
   }
 }
 function learningPrefsGoToFormats(){
@@ -1593,7 +1720,7 @@ function populateDocTutorialFromPrefs(){
 }
 
 function createPersonalizedFlow(){
-  if(!userLearningPrefs.length) return;
+  if(!userLearningPrefs.length) userLearningPrefs = ['card', 'qa'];
   userDocumentIntent = buildUserDocumentIntentFromUi();
   onboardingPostGoalFlow = false;
   showPage('page-document');
@@ -1769,7 +1896,7 @@ function validateWorkspaceRecipients(){
 }
 function buildWsDistributionSubtitle(){
   var plat = getSelectedPlatform();
-  var platLabel = plat === 'slack' ? 'Slack' : (plat === 'whatsapp' ? 'WhatsApp' : 'TeachFast');
+  var platLabel = plat === 'slack' ? 'Slack' : 'TeachFast';
   if(wsRecipientMode === 'all') return 'Tüm workspace · ' + platLabel;
   if(wsRecipientMode === 'teams'){
     var names = [];
@@ -1802,7 +1929,7 @@ function lwNext(){
   var nextLabel = learnWizardFromOnboarding ? 'Devam' : (workspaceUploadFlow ? 'Devam' : 'Start Learning');
   var completeLabel = learnWizardFromOnboarding ? 'Bitir' : (workspaceUploadFlow ? 'Dağıtımı planla' : 'Complete');
   if(lwStep < maxStep){
-    if(learnWizardFromOnboarding && lwStep === 1){
+    if(learnWizardFromOnboarding && lwStep === 0){
       if(!userLearningPrefs.length){
         var hf = document.getElementById('lw-format-hint');
         if(hf){ hf.textContent = 'En az bir format seçin.'; hf.classList.remove('hidden'); }
@@ -1839,7 +1966,7 @@ function lwNext(){
   document.getElementById('learn-wizard').style.display='none';
   if(learnWizardFromOnboarding){
     learnWizardFromOnboarding = false;
-    navigate('learning-prefs', 1);
+    runOnboardingAnalysisAfterLanguage();
     return;
   }
   if(selectedPlatform === 'slack'){
@@ -1875,18 +2002,18 @@ function completeSlackIntegration(){
   }
   var fromOnboarding = learnWizardFromOnboarding || onboardingPostGoalFlow;
   learnWizardFromOnboarding = false;
-  showToast('check_circle', '#4A154B', 'Slack successfully integrated!', 'Your workspace is now connected to TeachFast.', 3000, function(){
-    showToast('smart_toy', '#000000', 'Analyzing your document...', 'AI is creating your personalized learning plan.', 6000, function(){
-      if(fromOnboarding){
-        runOnboardingAnalysisAfterLanguage();
-      } else {
-        showPage('page-document');
-        userLearningPrefs = ['card', 'qa'];
-        userDocumentIntent = '';
-        applyDocPersonalization();
-        startDocTutorial();
-      }
-    });
+  showToast('check_circle', '#4A154B', 'Slack bağlandı', 'Öğrenme dokümanı ekranına yönlendiriliyorsunuz.', 2500, function(){
+    if(fromOnboarding){
+      if(!userLearningPrefs.length) userLearningPrefs = ['card', 'qa'];
+      userDocumentIntent = buildUserDocumentIntentFromUi();
+    } else {
+      userLearningPrefs = ['card', 'qa'];
+      userDocumentIntent = '';
+    }
+    onboardingPostGoalFlow = false;
+    showPage('page-document');
+    applyDocPersonalization();
+    startDocTutorial();
   });
 }
 
@@ -1898,7 +2025,7 @@ function cancelSlackIntegration(){
     return;
   }
   if(onboardingPostGoalFlow){
-    navigate('learning-prefs', 1);
+    navigate('learning-prefs', 2);
     return;
   }
   lwStep=2; lwShowStep(2); lwUpdateProgress();
@@ -1925,33 +2052,37 @@ function lwShowStep(n){
       if(el) el.style.display = 'none';
     });
   }
-  if(workspaceUploadFlow){
+  try {
+    if(workspaceUploadFlow){
+      hideAllStandard();
+      if(onbFmt) onbFmt.style.display = 'none';
+      var wsteps = ['lw-step-0','lw-step-1','lw-step-2','lw-step-3'];
+      wsteps.forEach(function(id,i){
+        var el = document.getElementById(id);
+        if(el) el.style.display = i === n ? 'block' : 'none';
+      });
+      return;
+    }
+    if(learnWizardFromOnboarding){
+      hideAllStandard();
+      var map = ['lw-step-onb-formats','lw-step-0','lw-step-1'];
+      map.forEach(function(id, i){
+        var el = document.getElementById(id);
+        if(el) el.style.display = i === n ? 'block' : 'none';
+      });
+      if(el3) el3.style.display = 'none';
+      return;
+    }
     hideAllStandard();
     if(onbFmt) onbFmt.style.display = 'none';
-    var wsteps = ['lw-step-0','lw-step-1','lw-step-2','lw-step-3'];
-    wsteps.forEach(function(id,i){
-      var el = document.getElementById(id);
-      if(el) el.style.display = i === n ? 'block' : 'none';
-    });
-    return;
-  }
-  if(learnWizardFromOnboarding){
-    hideAllStandard();
-    var map = ['lw-step-0','lw-step-onb-formats','lw-step-1'];
-    map.forEach(function(id, i){
+    ['lw-step-0','lw-step-1','lw-step-2'].forEach(function(id,i){
       var el = document.getElementById(id);
       if(el) el.style.display = i === n ? 'block' : 'none';
     });
     if(el3) el3.style.display = 'none';
-    return;
+  } finally {
+    syncLearnWizardSlackGuideVisibility();
   }
-  hideAllStandard();
-  if(onbFmt) onbFmt.style.display = 'none';
-  ['lw-step-0','lw-step-1','lw-step-2'].forEach(function(id,i){
-    var el = document.getElementById(id);
-    if(el) el.style.display = i === n ? 'block' : 'none';
-  });
-  if(el3) el3.style.display = 'none';
 }
 function lwUpdateProgress(){
   var bar = document.getElementById('lw-progress-bar');
