@@ -56,60 +56,6 @@ tailwind.config = {
   .ws-team-acc summary::-webkit-details-marker{display:none;}
   .ws-team-acc summary .material-symbols-outlined{transition:transform .2s ease;}
   .ws-team-acc[open] summary .material-symbols-outlined{transform:rotate(180deg);}
-  /* Onboarding “Nasıl çalışır” (teachfast_onboarding_how_it_works) */
-  .ohw-root,.ohw-root *{box-sizing:border-box;}
-  .ohw-root .ohw-inner{background:#f7f7f5;min-height:100%;padding:0;width:100%;border-radius:0 0 1rem 1rem;}
-  .ohw-root .ohw-content{max-width:780px;margin:0 auto;padding:32px 24px 64px;}
-  .ohw-root .ohw-eyebrow{text-align:center;font-size:11px;font-weight:600;letter-spacing:1.2px;color:#888;margin-bottom:14px;text-transform:uppercase;}
-  .ohw-root .ohw-headline{text-align:center;font-size:clamp(1.75rem,4vw,2.25rem);font-weight:800;color:#0a0a0a;line-height:1.15;margin-bottom:12px;letter-spacing:-1px;}
-  .ohw-root .ohw-subline{text-align:center;font-size:15px;color:#666;line-height:1.6;margin-bottom:40px;}
-  .ohw-root .ohw-flow{display:flex;align-items:flex-start;gap:0;margin-bottom:40px;position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;}
-  .ohw-root .ohw-flow-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;min-width:76px;}
-  .ohw-root .ohw-flow-connector{width:28px;display:flex;align-items:center;justify-content:center;padding-top:22px;flex-shrink:0;}
-  .ohw-root .ohw-flow-connector-line{height:1.5px;width:24px;background:#ccc;}
-  .ohw-root .ohw-step-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:18px;border:1.5px solid #e0e0e0;background:#fff;}
-  .ohw-root .ohw-step-icon--active{background:#0a0a0a;border-color:#0a0a0a;}
-  .ohw-root .ohw-step-num{font-size:10px;font-weight:700;letter-spacing:.5px;color:#bbb;margin-bottom:4px;text-transform:uppercase;}
-  .ohw-root .ohw-step-title{font-size:13px;font-weight:600;color:#0a0a0a;text-align:center;margin-bottom:3px;}
-  .ohw-root .ohw-step-desc{font-size:11.5px;color:#888;text-align:center;line-height:1.5;padding:0 4px;}
-  .ohw-root .ohw-cards-row{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:16px;}
-  @media (min-width:640px){.ohw-root .ohw-cards-row{grid-template-columns:1fr 1fr;}}
-  .ohw-root .ohw-card{background:#fff;border-radius:16px;border:1px solid #e8e8e8;padding:20px;}
-  .ohw-root .ohw-card-label{font-size:10px;font-weight:700;letter-spacing:.8px;color:#aaa;text-transform:uppercase;margin-bottom:10px;}
-  .ohw-root .ohw-example-card{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:14px;}
-  .ohw-root .ohw-example-badge{display:inline-block;font-size:10px;font-weight:600;background:#f0f0f0;color:#555;padding:3px 8px;border-radius:20px;margin-bottom:8px;}
-  .ohw-root .ohw-example-q{font-size:13px;font-weight:600;color:#111;margin-bottom:8px;line-height:1.4;}
-  .ohw-root .ohw-example-opts{display:flex;flex-direction:column;gap:5px;}
-  .ohw-root .ohw-opt{font-size:12px;color:#555;padding:6px 10px;border-radius:8px;border:1px solid #e8e8e8;cursor:default;}
-  .ohw-root .ohw-opt--correct{background:#f0faf4;border-color:#7dc99a;color:#1a6b3c;}
-  .ohw-root .ohw-slack-card{background:#fff;border-radius:14px;border:1px solid #e8e8e8;padding:16px;}
-  .ohw-root .ohw-slack-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
-  .ohw-root .ohw-slack-icon{width:28px;height:28px;background:#3f0e40;border-radius:6px;display:flex;align-items:center;justify-content:center;}
-  .ohw-root .ohw-slack-icon svg{width:16px;height:16px;}
-  .ohw-root .ohw-slack-channel{font-size:13px;font-weight:600;color:#0a0a0a;}
-  .ohw-root .ohw-slack-time{font-size:11px;color:#aaa;margin-left:auto;}
-  .ohw-root .ohw-slack-msg{display:flex;gap:8px;align-items:flex-start;}
-  .ohw-root .ohw-slack-avatar{width:30px;height:30px;background:#0a0a0a;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
-  .ohw-root .ohw-slack-bubble{flex:1;min-width:0;}
-  .ohw-root .ohw-slack-bot{font-size:12px;font-weight:700;color:#0a0a0a;margin-bottom:3px;}
-  .ohw-root .ohw-slack-app{font-size:9px;font-weight:600;background:#e0e0e0;color:#666;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle;}
-  .ohw-root .ohw-slack-text{font-size:12.5px;color:#333;line-height:1.5;}
-  .ohw-root .ohw-slack-attachment{background:#f7f7f5;border-left:3px solid #0a0a0a;border-radius:0 8px 8px 0;padding:10px 12px;margin-top:8px;}
-  .ohw-root .ohw-slack-att-title{font-size:12px;font-weight:700;color:#0a0a0a;margin-bottom:3px;}
-  .ohw-root .ohw-slack-att-body{font-size:11.5px;color:#555;line-height:1.5;margin-bottom:8px;}
-  .ohw-root .ohw-slack-actions{display:flex;gap:6px;flex-wrap:wrap;}
-  .ohw-root .ohw-slack-btn{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:6px;border:1.5px solid #d0d0d0;color:#333;background:#fff;cursor:default;}
-  .ohw-root .ohw-slack-btn--primary{background:#0a0a0a;color:#fff;border-color:#0a0a0a;}
-  .ohw-root .ohw-stat-row{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:32px;}
-  @media (min-width:480px){.ohw-root .ohw-stat-row{grid-template-columns:repeat(3,1fr);}}
-  .ohw-root .ohw-stat{background:#fff;border:1px solid #e8e8e8;border-radius:12px;padding:14px;text-align:center;}
-  .ohw-root .ohw-stat-num{font-size:22px;font-weight:800;color:#0a0a0a;margin-bottom:2px;}
-  .ohw-root .ohw-stat-lbl{font-size:11px;color:#888;}
-  .ohw-root .ohw-cta-block{text-align:center;}
-  .ohw-root .ohw-cta-btn{display:inline-block;background:#0a0a0a;color:#fff;font-size:15px;font-weight:700;padding:16px 40px;border-radius:50px;border:none;cursor:pointer;letter-spacing:-0.2px;margin-bottom:12px;}
-  .ohw-root .ohw-cta-btn:hover{opacity:.92;}
-  .ohw-root .ohw-cta-back{font-size:13px;color:#888;cursor:pointer;background:none;border:none;display:block;margin:0 auto;}
-  .ohw-root .ohw-cta-back:hover{color:#333;}
 </style>
 </head>
 <body class="antialiased">
@@ -123,7 +69,7 @@ tailwind.config = {
     <div class="flex justify-between items-center h-20 px-8 max-w-[1440px] mx-auto w-full">
       <div class="text-2xl font-bold tracking-tighter text-black cursor-pointer" onclick="navigate('welcome')">teachfast.ai</div>
       <div class="hidden md:flex items-center gap-8">
-        <a class="text-black font-semibold border-b-2 border-black pb-1">Product</a>
+        <a class="text-black font-semibold border-b-2 border-black pb-1" href="#welcome-how">Product</a>
         <a class="text-neutral-500 hover:text-black transition-colors" href="#">Solutions</a>
         <a class="text-neutral-500 hover:text-black transition-colors" href="#">Pricing</a>
         <a class="text-neutral-500 hover:text-black transition-colors" href="#">Resources</a>
@@ -142,7 +88,93 @@ tailwind.config = {
         <p class="text-xl md:text-2xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed mb-12">Stop passive scrolling. Teachfast.ai uses AI to turn videos, articles, and podcasts into active skill-building journeys.</p>
         <div class="flex flex-col md:flex-row items-center justify-center gap-4">
           <button onclick="navigate('login')" class="bg-black text-white px-10 py-5 rounded-full text-lg font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-black/10">Start Learning Free</button>
-          <button class="px-10 py-5 rounded-full text-lg font-bold border border-outline-variant hover:bg-surface-container-low transition-colors">Watch Demo</button>
+          <button type="button" onclick="document.getElementById('welcome-how').scrollIntoView({behavior:'smooth'})" class="px-10 py-5 rounded-full text-lg font-bold border border-outline-variant hover:bg-surface-container-low transition-colors">Watch Demo</button>
+        </div>
+      </div>
+    </section>
+    <section id="welcome-how" class="scroll-mt-24 py-24 md:py-32 px-6 bg-neutral-50 border-t border-neutral-200/80">
+      <div class="max-w-6xl mx-auto">
+        <p class="text-center text-[11px] font-bold uppercase tracking-[0.22em] text-neutral-500 mb-4">Nasıl çalışır · How it works</p>
+        <h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tighter text-black mb-5 max-w-3xl mx-auto leading-[1.1]">Belgenizi yükleyin; gerisini TeachFast halleder</h2>
+        <p class="text-center text-base md:text-lg text-neutral-600 max-w-2xl mx-auto mb-14 md:mb-20 leading-relaxed">PDF, sunum veya metin — içeriği micro-learning parçalarına böler, dil ve hedefinize göre kartlar üretir. Slack, WhatsApp veya uygulama içinde günlük akışa düşürür.</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-14 md:mb-20">
+          <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="w-11 h-11 rounded-full bg-black text-white flex items-center justify-center mb-4"><span class="material-symbols-outlined text-xl">upload</span></div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-1">Adım 1</p>
+            <p class="font-bold text-lg text-black mb-2">Belge yükle</p>
+            <p class="text-sm text-neutral-600 leading-relaxed">PDF, sunum veya metin — tek tıkla başlayın.</p>
+          </div>
+          <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="w-11 h-11 rounded-full bg-neutral-100 text-black flex items-center justify-center mb-4 border border-neutral-200"><span class="material-symbols-outlined text-xl">auto_awesome</span></div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-1">Adım 2</p>
+            <p class="font-bold text-lg text-black mb-2">AI analiz eder</p>
+            <p class="text-sm text-neutral-600 leading-relaxed">Dil, süre ve hedefe göre modüller üretir.</p>
+          </div>
+          <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="w-11 h-11 rounded-full bg-neutral-100 text-black flex items-center justify-center mb-4 border border-neutral-200"><span class="material-symbols-outlined text-xl">style</span></div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-1">Adım 3</p>
+            <p class="font-bold text-lg text-black mb-2">Kartlar oluşur</p>
+            <p class="text-sm text-neutral-600 leading-relaxed">Kart, quiz ve canlı pratik senaryoları.</p>
+          </div>
+          <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="w-11 h-11 rounded-full bg-[#4A154B] text-white flex items-center justify-center mb-4"><span class="material-symbols-outlined text-xl">forum</span></div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-1">Adım 4</p>
+            <p class="font-bold text-lg text-black mb-2">Ekibinize ulaşır</p>
+            <p class="text-sm text-neutral-600 leading-relaxed">Slack, WhatsApp veya TeachFast uygulaması.</p>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8 mb-14">
+          <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 md:p-8 shadow-sm">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-4">Örnek kart</p>
+            <span class="inline-block text-[10px] font-semibold bg-neutral-100 text-neutral-700 px-2.5 py-1 rounded-full mb-3">Günlük kart · 2 dk</span>
+            <p class="font-bold text-base text-black mb-4 leading-snug">Bir müşteri itiraz ettiğinde ilk yapılması gereken nedir?</p>
+            <div class="space-y-2">
+              <div class="text-sm text-neutral-600 px-3 py-2 rounded-lg border border-neutral-200">Hemen indirim teklif et</div>
+              <div class="text-sm text-emerald-900 px-3 py-2 rounded-lg border border-emerald-200 bg-emerald-50 font-medium">✓ Önce dinle, itirazı özetle</div>
+              <div class="text-sm text-neutral-600 px-3 py-2 rounded-lg border border-neutral-200">Konuyu değiştir</div>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 md:p-8 shadow-sm">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-4">Slack'te önizleme</p>
+            <div class="rounded-xl border border-neutral-200 bg-neutral-50/80 p-4">
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-7 h-7 rounded-md bg-[#4A154B] flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M6 15a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2h2v2zm1 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-5zm2-8a2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2v2H9zm0 1a2 2 0 0 1 2 2 2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5zm8 2a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2h-2v-2zm-1 0a2 2 0 0 1-2 2 2 2 0 0 1-2-2V5a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5zm-2 8a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2h2zm0-1a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-5z"/></svg>
+                </div>
+                <span class="font-semibold text-sm text-black">#öğrenme-akışı</span>
+                <span class="text-xs text-neutral-400 ml-auto">09:00</span>
+              </div>
+              <div class="flex gap-2">
+                <div class="w-8 h-8 rounded-md bg-black text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">TF</div>
+                <div class="min-w-0 flex-1">
+                  <p class="text-xs font-bold text-black">TeachFast <span class="text-[9px] font-semibold bg-neutral-200 text-neutral-600 px-1.5 py-0.5 rounded ml-1 align-middle">APP</span></p>
+                  <p class="text-sm text-neutral-700 mt-1">Günaydın! Bugünkü konun hazır.</p>
+                  <div class="mt-2 rounded-lg border-l-2 border-black bg-white pl-3 pr-2 py-2">
+                    <p class="text-xs font-bold text-black">Satış Eğitimi — Gün 3</p>
+                    <p class="text-[11px] text-neutral-600 mt-0.5">İtiraz yönetimi: 3 kart + 1 mini quiz</p>
+                    <div class="flex gap-2 mt-2">
+                      <span class="text-[11px] font-semibold px-2.5 py-1 rounded-md bg-black text-white">Başla →</span>
+                      <span class="text-[11px] font-semibold px-2.5 py-1 rounded-md border border-neutral-300 text-neutral-700">Ertele</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 text-center">
+            <p class="text-2xl md:text-3xl font-extrabold text-black mb-1">45 sn</p>
+            <p class="text-xs text-neutral-600">Ortalama hazırlık süresi</p>
+          </div>
+          <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 text-center">
+            <p class="text-2xl md:text-3xl font-extrabold text-black mb-1">5–7 dk</p>
+            <p class="text-xs text-neutral-600">Günlük öğrenme süresi</p>
+          </div>
+          <div class="rounded-2xl bg-white border border-neutral-200/90 p-6 text-center">
+            <p class="text-2xl md:text-3xl font-extrabold text-black mb-1">%89</p>
+            <p class="text-xs text-neutral-600">Slack tamamlama oranı</p>
+          </div>
         </div>
       </div>
     </section>
@@ -197,114 +229,7 @@ tailwind.config = {
     </div>
   </header>
   <main class="min-h-screen pt-24 pb-16 px-6 flex flex-col items-center bg-surface">
-    <div id="onboarding-intro-panel" class="w-full flex flex-col items-center">
-      <div class="ohw-root w-full max-w-4xl">
-        <div class="ohw-inner">
-          <div class="ohw-content">
-            <div class="ohw-eyebrow">Nasıl çalışır?</div>
-            <h1 class="ohw-headline">Belgeniz yükleyin;<br/>TeachFast gerisini halleder</h1>
-            <p class="ohw-subline">PDF, sunum veya metin — içeriğinizi micro-learning kartlarına dönüştürür,<br class="hidden sm:inline"/> öğrenim Slack'e doğrudan düşer.</p>
-            <div class="ohw-flow">
-              <div class="ohw-flow-step">
-                <div class="ohw-step-icon ohw-step-icon--active">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                </div>
-                <div class="ohw-step-num">Adım 1</div>
-                <div class="ohw-step-title">Belge yükle</div>
-                <div class="ohw-step-desc">PDF, sunum veya metin dosyası</div>
-              </div>
-              <div class="ohw-flow-connector"><div class="ohw-flow-connector-line"></div></div>
-              <div class="ohw-flow-step">
-                <div class="ohw-step-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-                </div>
-                <div class="ohw-step-num">Adım 2</div>
-                <div class="ohw-step-title">AI analiz eder</div>
-                <div class="ohw-step-desc">Dil, süre ve platforma göre</div>
-              </div>
-              <div class="ohw-flow-connector"><div class="ohw-flow-connector-line"></div></div>
-              <div class="ohw-flow-step">
-                <div class="ohw-step-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                </div>
-                <div class="ohw-step-num">Adım 3</div>
-                <div class="ohw-step-title">Kartlar oluşur</div>
-                <div class="ohw-step-desc">Kart, quiz ve canlı pratik</div>
-              </div>
-              <div class="ohw-flow-connector"><div class="ohw-flow-connector-line"></div></div>
-              <div class="ohw-flow-step">
-                <div class="ohw-step-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3f0e40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.27 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.18 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.1a16 16 0 0 0 6 6l.62-.62a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.28 16z"/></svg>
-                </div>
-                <div class="ohw-step-num">Adım 4</div>
-                <div class="ohw-step-title">Slack'e düşer</div>
-                <div class="ohw-step-desc">Her gün, doğru saatte</div>
-              </div>
-            </div>
-            <div class="ohw-cards-row">
-              <div class="ohw-card">
-                <div class="ohw-card-label">Örnek kart önizlemesi</div>
-                <div class="ohw-example-card">
-                  <span class="ohw-example-badge">Günlük Kart · 2 dk</span>
-                  <div class="ohw-example-q">Bir müşteri itiraz ettiğinde ilk yapılması gereken nedir?</div>
-                  <div class="ohw-example-opts">
-                    <div class="ohw-opt">Hemen indirim teklif et</div>
-                    <div class="ohw-opt ohw-opt--correct">✓ Önce dinle, itirazı özetle</div>
-                    <div class="ohw-opt">Konuyu değiştir</div>
-                  </div>
-                </div>
-              </div>
-              <div class="ohw-card">
-                <div class="ohw-card-label">Slack'te nasıl görünür?</div>
-                <div class="ohw-slack-card">
-                  <div class="ohw-slack-header">
-                    <div class="ohw-slack-icon">
-                      <svg viewBox="0 0 24 24" fill="#fff"><path d="M6 15a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2h2v2zm1 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-5zm2-8a2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2v2H9zm0 1a2 2 0 0 1 2 2 2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5zm8 2a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2h-2v-2zm-1 0a2 2 0 0 1-2 2 2 2 0 0 1-2-2V5a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5zm-2 8a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2h2zm0-1a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-5z"/></svg>
-                    </div>
-                    <span class="ohw-slack-channel">#öğrenme-akışı</span>
-                    <span class="ohw-slack-time">09:00</span>
-                  </div>
-                  <div class="ohw-slack-msg">
-                    <div class="ohw-slack-avatar">TF</div>
-                    <div class="ohw-slack-bubble">
-                      <div><span class="ohw-slack-bot">TeachFast</span><span class="ohw-slack-app">APP</span></div>
-                      <div class="ohw-slack-text">Günaydın! 🎯 Bugünkü konun hazır.</div>
-                      <div class="ohw-slack-attachment">
-                        <div class="ohw-slack-att-title">Satış Eğitimi — Gün 3</div>
-                        <div class="ohw-slack-att-body">İtiraz yönetimi: 3 kart + 1 mini quiz</div>
-                        <div class="ohw-slack-actions">
-                          <span class="ohw-slack-btn ohw-slack-btn--primary">Başla →</span>
-                          <span class="ohw-slack-btn">Ertele</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="ohw-stat-row">
-              <div class="ohw-stat">
-                <div class="ohw-stat-num">45 sn</div>
-                <div class="ohw-stat-lbl">Ortalama hazırlık süresi</div>
-              </div>
-              <div class="ohw-stat">
-                <div class="ohw-stat-num">5–7 dk</div>
-                <div class="ohw-stat-lbl">Günlük öğrenme süresi</div>
-              </div>
-              <div class="ohw-stat">
-                <div class="ohw-stat-num">%89</div>
-                <div class="ohw-stat-lbl">Slack tamamlama oranı</div>
-              </div>
-            </div>
-            <div class="ohw-cta-block">
-              <button type="button" class="ohw-cta-btn" onclick="onboardingGoToUpload()">Anladım, belgeyi yükle →</button>
-              <button type="button" class="ohw-cta-back" onclick="navigate('welcome')">← Ana sayfaya dön</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="onboarding-upload-panel" class="hidden w-full max-w-xl flex flex-col items-center">
+    <div id="onboarding-upload-panel" class="w-full max-w-xl flex flex-col items-center">
       <p id="onboarding-header-step" class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-6 text-center w-full">Adım 1 / 3</p>
       <div class="w-full max-w-lg text-center mb-10">
         <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary leading-tight mb-3">Öğrenmek veya öğretmek istediğiniz içeriği yükleyin</h1>
@@ -325,8 +250,8 @@ tailwind.config = {
           <button type="button" onclick="onboardingDemoDoc()" class="px-8 py-4 rounded-full border-2 border-outline-variant font-bold text-sm hover:bg-surface-container-low transition-all">Demo dokümanı kullan</button>
         </div>
       </div>
-      <p class="mt-8 text-xs text-on-surface-variant max-w-md text-center">Bu ekran prototiptir; dosya sunucuya gitmez. Seçim sonrası analiz animasyonu gösterilir.</p>
-      <button type="button" onclick="onboardingBackToIntro()" class="mt-6 text-sm font-semibold text-on-surface-variant hover:text-black">Nasıl çalışır? özetini tekrar göster</button>
+      <p class="mt-8 text-xs text-on-surface-variant max-w-md text-center">Bu ekran prototiptir; dosya sunucuya gitmez. Seçim sonrası hedef ve dil adımlarına geçilir.</p>
+      <button type="button" onclick="navigate('welcome')" class="mt-6 text-sm font-semibold text-on-surface-variant hover:text-black">← Ana sayfaya dön</button>
     </div>
   </main>
 </div>
@@ -336,7 +261,7 @@ tailwind.config = {
   <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-lg border-b border-outline-variant/20">
     <div class="flex items-center justify-between px-6 md:px-8 h-16 max-w-screen-2xl mx-auto">
       <span class="text-lg font-black tracking-tighter">teachfast.ai</span>
-      <span id="learning-prefs-header-step" class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Adım 2 / 3</span>
+      <span id="learning-prefs-header-step" class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Adım 1 / 3</span>
     </div>
   </header>
   <main class="min-h-screen pt-28 pb-20 px-6 max-w-3xl mx-auto">
@@ -362,54 +287,25 @@ tailwind.config = {
         </button>
       </div>
     </div>
-    <div id="learning-prefs-step-formats" class="hidden">
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3 text-center">Hangi formatlarla ilerleyelim?</h1>
-      <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-8 text-center">Format seçin (birden fazla olabilir)</p>
-      <div class="grid gap-4">
-        <button type="button" class="pref-card pref-card-selected relative w-full text-left rounded-2xl border-2 border-black bg-surface-container-lowest p-6 flex gap-4 items-start" data-pref="card" onclick="selectLearningPref(this)" aria-pressed="true">
-          <span class="pref-card-check absolute top-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 1">check</span></span>
-          <div class="pref-card-icon w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined">auto_awesome</span></div>
-          <div class="pr-8">
-            <p class="font-bold text-lg">Bilgi kartı</p>
-            <p class="text-sm text-on-surface-variant mt-1">Atomik özet kartları; soru veya flashcard olmadan okuyup pekiştirme.</p>
-          </div>
-        </button>
-        <button type="button" class="pref-card pref-card-selected relative w-full text-left rounded-2xl border-2 border-black bg-surface-container-lowest p-6 flex gap-4 items-start" data-pref="qa" onclick="selectLearningPref(this)" aria-pressed="true">
-          <span class="pref-card-check absolute top-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 1">check</span></span>
-          <div class="pref-card-icon w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined">quiz</span></div>
-          <div class="pr-8">
-            <p class="font-bold text-lg">Soru–cevap</p>
-            <p class="text-sm text-on-surface-variant mt-1">İçerik atomik parçalara bölünür; her parça için kısa sorular ve geri bildirim.</p>
-          </div>
-        </button>
-        <button type="button" class="pref-card relative w-full text-left rounded-2xl border-2 border-outline-variant bg-surface-container-lowest p-6 flex gap-4 items-start" data-pref="practice" onclick="selectLearningPref(this)" aria-pressed="false">
-          <span class="pref-card-check absolute top-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 1">check</span></span>
-          <div class="pref-card-icon w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center flex-shrink-0 text-primary"><span class="material-symbols-outlined">mic</span></div>
-          <div class="pr-8">
-            <p class="font-bold text-lg">Pratik</p>
-            <p class="text-sm text-on-surface-variant mt-1">Senaryo provası; etkinlik ses veya video kaydı ile takip edilir (satış pitch vb.).</p>
-          </div>
-        </button>
-        <button type="button" class="pref-card relative w-full text-left rounded-2xl border-2 border-outline-variant bg-surface-container-lowest p-6 flex gap-4 items-start" data-pref="flashcard" onclick="selectLearningPref(this)" aria-pressed="false">
-          <span class="pref-card-check absolute top-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 1">check</span></span>
-          <div class="pref-card-icon w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center flex-shrink-0 text-primary"><span class="material-symbols-outlined">style</span></div>
-          <div class="pr-8">
-            <p class="font-bold text-lg">Flashcard</p>
-            <p class="text-sm text-on-surface-variant mt-1">Kavram–tanım kartları; hızlı tekrar ve pekiştirme.</p>
-          </div>
-        </button>
+    <div id="learning-prefs-step-platform" class="hidden max-w-3xl mx-auto w-full">
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3 text-center">Nerede öğrenmek istersiniz?</h1>
+      <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-8 text-center">Platform seçin</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="lw-option lw-platform lp-platform-opt p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="whatsapp" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.271.607-1.445c.159-.175.347-.218.463-.218l.332.005c.109.004.258-.041.405.314.159.386.541 1.32.588 1.417.047.097.078.21.014.339-.064.128-.096.21-.191.319-.095.109-.2.243-.285.326-.096.097-.197.202-.085.395.112.193.497.82 1.069 1.328.736.656 1.357.86 1.55.956.193.097.304.081.416-.048.112-.129.476-.554.604-.744.127-.19.255-.159.43-.095.174.064 1.104.52 1.295.617.191.096.318.144.364.225.046.081.046.469-.098.874zM12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11-11-4.925-11-11 4.925-11 11-11zm0 2c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">WhatsApp</h3><p class="text-on-surface-variant text-sm leading-relaxed">Günlük içerik WhatsApp üzerinden gelsin.</p></div>
+        <div class="lw-option lw-platform lp-platform-opt p-8 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer" data-platform="slack" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-[#4A154B] flex items-center justify-center shadow-sm"><svg class="w-8 h-8 fill-white" viewBox="0 0 122.8 122.8"><path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.4 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6zM45.1 25.8c-7.1 0-12.9-5.8-12.9-12.9S38 0 45.1 0s12.9 5.8 12.9 12.9v12.9H45.1zm0 6.4c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.1s5.8-12.9 12.9-12.9h32.2zm51.9 12.9c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.1zm-6.4 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C77.7 5.8 83.5 0 90.6 0s12.9 5.8 12.9 12.9v32.2zm-12.9 51.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.7z"/></svg></div><div class="w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div><h3 class="font-bold text-xl mb-2">Slack</h3><p class="text-on-surface-variant text-sm leading-relaxed">Bildirimler Slack kanalınıza düşsün.</p></div>
+        <div class="lw-option lw-platform lw-selected lp-platform-opt p-8 rounded-lg bg-primary text-on-primary transition-all cursor-pointer ring-4 ring-primary/10" data-platform="teachfast" onclick="selectLwOption(this)"><div class="flex items-start justify-between mb-6"><div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-2xl" style="font-variation-settings:'FILL' 1">school</span></div><div class="w-5 h-5 rounded-full bg-white flex items-center justify-center lw-dot flex-shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-primary"></div></div></div><h3 class="font-bold text-xl mb-2">TeachFast</h3><p class="text-white/70 text-sm leading-relaxed">Uygulama içinde öğrenin.</p></div>
       </div>
-      <p id="learning-prefs-hint" class="mt-4 text-xs text-on-surface-variant hidden" role="status">En az bir yöntem seçmelisiniz.</p>
       <div class="mt-12 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-        <button type="button" onclick="learningPrefsGoToPrompt()" class="text-sm font-semibold text-on-surface-variant hover:text-black order-2 sm:order-1">← Prompta dön</button>
-        <button type="button" id="learning-prefs-cta" onclick="learningPrefsGoToPlanPreview()" class="order-1 sm:order-2 w-full sm:w-auto px-10 py-4 rounded-full bg-primary text-on-primary font-bold text-sm hover:opacity-90 flex items-center justify-center gap-2">
-          Plan önizlemesi
+        <button type="button" onclick="learningPrefsBackFromPlatformToGoal()" class="text-sm font-semibold text-on-surface-variant hover:text-black order-2 sm:order-1">← Hedefe dön</button>
+        <button type="button" onclick="learningPrefsRunAnalysisFromPlatform()" class="order-1 sm:order-2 w-full sm:w-auto px-10 py-4 rounded-full bg-primary text-on-primary font-bold text-sm hover:opacity-90 flex items-center justify-center gap-2">
+          Analiz et ve planı oluştur
           <span class="material-symbols-outlined text-lg">arrow_forward</span>
         </button>
       </div>
     </div>
     <div id="learning-prefs-step-plan" class="hidden max-w-xl mx-auto w-full">
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3 text-center">5 günlük öğrenme planı</h1>
+      <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-3 text-center">Plan hazır</p>
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-primary mb-3 text-center">5 günlük öğrenme planınız</h1>
       <p id="lpp-plan-intro" class="text-on-surface-variant text-sm text-center mb-8 leading-relaxed max-w-md mx-auto">Her gün Slack'ten bir bildirim gelecek. Başla'ya basınca o günün içeriği açılır.</p>
       <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm flex gap-4 items-start mb-10">
         <div class="w-12 h-12 rounded-full bg-neutral-200 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-neutral-600">auto_awesome</span></div>
@@ -509,9 +405,9 @@ tailwind.config = {
         </div>
       </div>
       <div class="mt-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between pb-8">
-        <button type="button" onclick="learningPrefsBackToFormats()" class="text-sm font-semibold text-on-surface-variant hover:text-black order-2 sm:order-1">← Geri</button>
+        <button type="button" onclick="learningPrefsBackToPlatform()" class="text-sm font-semibold text-on-surface-variant hover:text-black order-2 sm:order-1">← Platforma dön</button>
         <button type="button" onclick="createPersonalizedFlow()" class="order-1 sm:order-2 w-full sm:w-auto px-10 py-4 rounded-full bg-[#1E633E] text-white font-bold text-sm hover:bg-[#185432] transition-colors flex items-center justify-center gap-2">
-          Öğrenmeye başla
+          Başlayalım
           <span class="material-symbols-outlined text-lg">arrow_forward</span>
         </button>
       </div>
@@ -1007,6 +903,44 @@ tailwind.config = {
           <div class="lw-option p-6 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-4" onclick="selectLwOption(this)"><span class="text-2xl">🇦🇪</span><h3 class="font-semibold text-lg">العربية</h3><div class="ml-auto w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0"></div></div>
         </div>
       </div>
+      <div id="lw-step-onb-formats" style="display:none">
+        <div class="mb-8"><p class="font-semibold uppercase text-[10px] tracking-widest text-on-surface-variant mb-4">NASIL ÖĞRENELİM</p><h1 class="font-bold text-3xl md:text-4xl lg:text-5xl tracking-tighter text-primary leading-tight">Hangi formatlarla ilerleyelim?</h1><p class="text-on-surface-variant text-sm mt-3 max-w-2xl">Bilgi kartı, soru–cevap, flashcard veya pratik — birden fazla seçebilirsiniz.</p></div>
+        <div class="grid sm:grid-cols-2 gap-3 md:gap-4">
+          <button type="button" class="pref-card pref-card-selected relative w-full text-left rounded-2xl border-2 border-black bg-surface-container-lowest p-4 md:p-5 flex gap-3 items-start" data-pref="card" onclick="selectLearningPref(this)" aria-pressed="true">
+            <span class="pref-card-check absolute top-4 right-4 w-7 h-7 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">check</span></span>
+            <div class="pref-card-icon w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-xl">auto_awesome</span></div>
+            <div class="pr-7 min-w-0">
+              <p class="font-bold text-base">Bilgi kartı</p>
+              <p class="text-xs text-on-surface-variant mt-1 leading-snug">Özet parçalar; hızlı okuma.</p>
+            </div>
+          </button>
+          <button type="button" class="pref-card pref-card-selected relative w-full text-left rounded-2xl border-2 border-black bg-surface-container-lowest p-4 md:p-5 flex gap-3 items-start" data-pref="qa" onclick="selectLearningPref(this)" aria-pressed="true">
+            <span class="pref-card-check absolute top-4 right-4 w-7 h-7 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">check</span></span>
+            <div class="pref-card-icon w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-xl">quiz</span></div>
+            <div class="pr-7 min-w-0">
+              <p class="font-bold text-base">Soru–cevap</p>
+              <p class="text-xs text-on-surface-variant mt-1 leading-snug">Quiz tarzı pekiştirme.</p>
+            </div>
+          </button>
+          <button type="button" class="pref-card relative w-full text-left rounded-2xl border-2 border-outline-variant bg-surface-container-lowest p-4 md:p-5 flex gap-3 items-start" data-pref="flashcard" onclick="selectLearningPref(this)" aria-pressed="false">
+            <span class="pref-card-check absolute top-4 right-4 w-7 h-7 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">check</span></span>
+            <div class="pref-card-icon w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center flex-shrink-0 text-primary"><span class="material-symbols-outlined text-xl">style</span></div>
+            <div class="pr-7 min-w-0">
+              <p class="font-bold text-base">Flashcard</p>
+              <p class="text-xs text-on-surface-variant mt-1 leading-snug">Kavram–tanım tekrarı.</p>
+            </div>
+          </button>
+          <button type="button" class="pref-card relative w-full text-left rounded-2xl border-2 border-outline-variant bg-surface-container-lowest p-4 md:p-5 flex gap-3 items-start" data-pref="practice" onclick="selectLearningPref(this)" aria-pressed="false">
+            <span class="pref-card-check absolute top-4 right-4 w-7 h-7 rounded-full bg-black text-white flex items-center justify-center pointer-events-none" aria-hidden="true"><span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">check</span></span>
+            <div class="pref-card-icon w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center flex-shrink-0 text-primary"><span class="material-symbols-outlined text-xl">mic</span></div>
+            <div class="pr-7 min-w-0">
+              <p class="font-bold text-base">Pratik</p>
+              <p class="text-xs text-on-surface-variant mt-1 leading-snug">Ses / video rol provası.</p>
+            </div>
+          </button>
+        </div>
+        <p id="lw-format-hint" class="mt-4 text-xs text-red-600 text-center hidden" role="alert"></p>
+      </div>
       <div id="lw-step-1" style="display:none">
         <div class="mb-12"><p class="font-semibold uppercase text-[10px] tracking-widest text-on-surface-variant mb-4">SET DURATION</p><h1 class="font-bold text-4xl md:text-5xl tracking-tighter text-primary">How many days would you like to learn this document?</h1></div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -1192,6 +1126,7 @@ tailwind.config = {
 <script>
 var tutorialShown = false;
 var learnWizardFromOnboarding = false;
+var onboardingPostGoalFlow = false;
 var workspaceUploadFlow = false;
 var pendingWorkspaceDistribution = null;
 var slackOpenedFromWorkspaceUpload = false;
@@ -1205,52 +1140,49 @@ var docStepTitlesOrdered = ['Bilgi kartı', 'Soru–cevap'];
 
 function getDocPanelAtStep(step){ return docPanelOrder[step]; }
 
-function onboardingFilePicked(input){
-  if(input.files && input.files.length) openLearnWizardFromOnboarding();
+function onboardingAfterUploadResetGoalForm(){
+  resetIntentChipsToDefault();
+  var ta = document.getElementById('user-document-intent');
+  if(ta) ta.value = '';
+  userDocumentIntent = '';
+  var ih = document.getElementById('intent-prefs-hint');
+  if(ih){ ih.classList.add('hidden'); ih.textContent = ''; }
 }
-function onboardingDemoDoc(){ openLearnWizardFromOnboarding(); }
-function showOnboardingIntro(){
-  var intro = document.getElementById('onboarding-intro-panel');
-  var up = document.getElementById('onboarding-upload-panel');
-  if(intro) intro.classList.remove('hidden');
-  if(up) up.classList.add('hidden');
+function onboardingFilePicked(input){
+  if(input.files && input.files.length){
+    onboardingAfterUploadResetGoalForm();
+    onboardingPostGoalFlow = true;
+    navigate('learning-prefs');
+  }
+}
+function onboardingDemoDoc(){
+  onboardingAfterUploadResetGoalForm();
+  onboardingPostGoalFlow = true;
+  navigate('learning-prefs');
 }
 function onboardingGoToUpload(){
-  var intro = document.getElementById('onboarding-intro-panel');
-  var up = document.getElementById('onboarding-upload-panel');
   var step = document.getElementById('onboarding-header-step');
-  if(intro) intro.classList.add('hidden');
-  if(up) up.classList.remove('hidden');
   if(step) step.textContent = 'Adım 1 / 3';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-function onboardingBackToIntro(){
-  showOnboardingIntro();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function goToOnboardingUpload(){
   navigate('onboarding');
   onboardingGoToUpload();
 }
-function runOnboardingAnalysis(){
+function runOnboardingAnalysisAfterLanguage(){
   document.getElementById('loading-title').textContent = 'Dokümanınız analiz ediliyor…';
-  document.getElementById('loading-subtitle').textContent = 'Dil, süre ve platform tercihleriniz kaydedildi. İçerik modüllere ayrılıyor (prototip).';
+  document.getElementById('loading-subtitle').textContent = 'Seçtiğiniz format ve platforma göre içerik modüllere ayrılıyor (prototip).';
   document.getElementById('learn-loading').style.display = 'block';
   setTimeout(function(){
     document.getElementById('learn-loading').style.display = 'none';
-    userLearningPrefs = ['card', 'qa'];
-    userDocumentIntent = '';
-    var ta = document.getElementById('user-document-intent');
-    if(ta) ta.value = '';
-    navigate('learning-prefs');
-    resetIntentChipsToDefault();
+    navigate('learning-prefs', 2);
     var ih = document.getElementById('intent-prefs-hint');
     if(ih){ ih.classList.add('hidden'); ih.textContent = ''; }
   }, 2200);
 }
 
 function syncLearningPrefCards(){
-  document.querySelectorAll('#page-learning-prefs .pref-card').forEach(function(c){
+  document.querySelectorAll('#page-learning-prefs .pref-card, #lw-step-onb-formats .pref-card').forEach(function(c){
     var pref = c.getAttribute('data-pref');
     var on = userLearningPrefs.indexOf(pref) !== -1;
     var icon = c.querySelector('.pref-card-icon');
@@ -1314,7 +1246,7 @@ function resetIntentChipsToDefault(){
 function updateLearningPrefsHeaderStep(phase){
   var el = document.getElementById('learning-prefs-header-step');
   if(!el) return;
-  el.textContent = phase === 2 ? 'Adım 3 / 3' : 'Adım 2 / 3';
+  el.textContent = 'Adım ' + (phase + 1) + ' / 3';
 }
 function buildPlanSummarySubline(){
   var prefs = getPrefsForPlan();
@@ -1384,30 +1316,31 @@ function populatePlanPreview(){
 function showLearningPrefsPhase(phase){
   learningPrefsPhase = phase;
   var sp = document.getElementById('learning-prefs-step-prompt');
-  var sf = document.getElementById('learning-prefs-step-formats');
+  var splat = document.getElementById('learning-prefs-step-platform');
   var splan = document.getElementById('learning-prefs-step-plan');
   var badge = document.getElementById('learning-prefs-phase-badge');
   if(sp) sp.classList.toggle('hidden', phase !== 0);
-  if(sf) sf.classList.toggle('hidden', phase !== 1);
+  if(splat) splat.classList.toggle('hidden', phase !== 1);
   if(splan) splan.classList.toggle('hidden', phase !== 2);
-  var badges = ['ADIM 1 / 3 — HEDEF', 'ADIM 2 / 3 — FORMAT', 'ADIM 3 / 3 — PLAN'];
+  var badges = ['ADIM 1 / 3 — HEDEF', 'ADIM 2 / 3 — PLATFORM', 'ADIM 3 / 3 — PLAN'];
   if(badge) badge.textContent = badges[phase] || badges[0];
   updateLearningPrefsHeaderStep(phase);
-  if(phase === 1){
-    syncLearningPrefCards();
-    updateLearningPrefsCta();
-    var hi = document.getElementById('intent-prefs-hint');
-    if(hi) hi.classList.add('hidden');
-  }
   if(phase === 2) populatePlanPreview();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function learningPrefsGoToPlanPreview(){
-  if(!userLearningPrefs.length) return;
-  showLearningPrefsPhase(2);
+function learningPrefsBackFromPlatformToGoal(){
+  showLearningPrefsPhase(0);
 }
-function learningPrefsBackToFormats(){
+function learningPrefsBackToPlatform(){
   showLearningPrefsPhase(1);
+}
+function learningPrefsRunAnalysisFromPlatform(){
+  selectedPlatform = getSelectedPlatform();
+  if(selectedPlatform === 'slack'){
+    document.getElementById('slack-integration-overlay').style.display = 'flex';
+  } else {
+    runOnboardingAnalysisAfterLanguage();
+  }
 }
 function learningPrefsGoToFormats(){
   var nChip = document.querySelectorAll('#learning-prefs-step-prompt .intent-chip.intent-chip-selected').length;
@@ -1423,7 +1356,8 @@ function learningPrefsGoToFormats(){
   }
   var h2 = document.getElementById('intent-prefs-hint');
   if(h2) h2.classList.add('hidden');
-  showLearningPrefsPhase(1);
+  userDocumentIntent = buildUserDocumentIntentFromUi();
+  openLearnWizardFromOnboarding();
 }
 function learningPrefsGoToPrompt(){
   showLearningPrefsPhase(0);
@@ -1661,14 +1595,10 @@ function populateDocTutorialFromPrefs(){
 function createPersonalizedFlow(){
   if(!userLearningPrefs.length) return;
   userDocumentIntent = buildUserDocumentIntentFromUi();
-  setLoadingScreenForPlanBuild();
-  document.getElementById('learn-loading').style.display = 'block';
-  setTimeout(function(){
-    document.getElementById('learn-loading').style.display = 'none';
-    showPage('page-document');
-    applyDocPersonalization();
-    startDocTutorial();
-  }, 1800);
+  onboardingPostGoalFlow = false;
+  showPage('page-document');
+  applyDocPersonalization();
+  startDocTutorial();
 }
 
 function setPracticeMode(mode){
@@ -1694,15 +1624,16 @@ function setPracticeMode(mode){
   if(micIcon) micIcon.textContent = practiceMode === 'video' ? 'videocam' : 'mic';
 }
 
-function navigate(page) {
+function navigate(page, learningPrefsPhaseOpt) {
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   var t = document.getElementById('page-'+page);
   if(t){t.classList.add('active'); window.scrollTo({top:0});}
   if(page==='dashboard' && !tutorialShown) startTutorial();
   if(page==='create-workspace'){cwStep=0; cwShowStep();}
-  if(page==='onboarding') showOnboardingIntro();
+  if(page==='onboarding') onboardingGoToUpload();
   if(page==='learning-prefs'){
-    showLearningPrefsPhase(0);
+    var ph = typeof learningPrefsPhaseOpt === 'number' ? learningPrefsPhaseOpt : 0;
+    showLearningPrefsPhase(ph);
     syncLearningPrefCards();
     updateLearningPrefsCta();
   }
@@ -1760,7 +1691,7 @@ function openLearnWizard(){
 function openLearnWizardFromOnboarding(){
   learnWizardFromOnboarding = true;
   workspaceUploadFlow = false;
-  lwStep=0; selectedPlatform='teachfast'; lwShowStep(0); lwUpdateProgress(); document.getElementById('lw-next-btn').innerHTML='Devam <span class="material-symbols-outlined text-sm">arrow_forward</span>'; document.getElementById('learn-wizard').style.display='flex';
+  lwStep=0; selectedPlatform='teachfast'; lwShowStep(0); lwUpdateProgress(); syncLearningPrefCards(); document.getElementById('lw-next-btn').innerHTML='Devam <span class="material-symbols-outlined text-sm">arrow_forward</span>'; document.getElementById('learn-wizard').style.display='flex';
 }
 function openWorkspaceUploadWizard(){
   learnWizardFromOnboarding = false;
@@ -1859,7 +1790,9 @@ function buildWsDistributionSubtitle(){
 }
 
 function getSelectedPlatform(){
-  var sel = document.querySelector('#lw-step-2 .lw-selected');
+  var sel = document.querySelector('#learning-prefs-step-platform .lw-platform.lw-selected');
+  if(sel && sel.dataset.platform) return sel.dataset.platform;
+  sel = document.querySelector('#lw-step-2 .lw-selected');
   if(sel && sel.dataset.platform) return sel.dataset.platform;
   return 'teachfast';
 }
@@ -1869,6 +1802,15 @@ function lwNext(){
   var nextLabel = learnWizardFromOnboarding ? 'Devam' : (workspaceUploadFlow ? 'Devam' : 'Start Learning');
   var completeLabel = learnWizardFromOnboarding ? 'Bitir' : (workspaceUploadFlow ? 'Dağıtımı planla' : 'Complete');
   if(lwStep < maxStep){
+    if(learnWizardFromOnboarding && lwStep === 1){
+      if(!userLearningPrefs.length){
+        var hf = document.getElementById('lw-format-hint');
+        if(hf){ hf.textContent = 'En az bir format seçin.'; hf.classList.remove('hidden'); }
+        return;
+      }
+      var hf2 = document.getElementById('lw-format-hint');
+      if(hf2) hf2.classList.add('hidden');
+    }
     lwStep++;
     lwShowStep(lwStep);
     lwUpdateProgress();
@@ -1895,16 +1837,16 @@ function lwNext(){
     return;
   }
   document.getElementById('learn-wizard').style.display='none';
+  if(learnWizardFromOnboarding){
+    learnWizardFromOnboarding = false;
+    navigate('learning-prefs', 1);
+    return;
+  }
   if(selectedPlatform === 'slack'){
     slackOpenedFromWorkspaceUpload = false;
     document.getElementById('slack-integration-overlay').style.display='flex';
   } else {
-    if(learnWizardFromOnboarding){
-      learnWizardFromOnboarding = false;
-      runOnboardingAnalysis();
-    } else {
-      startAnalysisFlow();
-    }
+    startAnalysisFlow();
   }
 }
 
@@ -1931,12 +1873,12 @@ function completeSlackIntegration(){
     showToast('check_circle', '#4A154B', d.title, d.subtitle, 4000);
     return;
   }
-  var fromOnboarding = learnWizardFromOnboarding;
+  var fromOnboarding = learnWizardFromOnboarding || onboardingPostGoalFlow;
   learnWizardFromOnboarding = false;
   showToast('check_circle', '#4A154B', 'Slack successfully integrated!', 'Your workspace is now connected to TeachFast.', 3000, function(){
     showToast('smart_toy', '#000000', 'Analyzing your document...', 'AI is creating your personalized learning plan.', 6000, function(){
       if(fromOnboarding){
-        runOnboardingAnalysis();
+        runOnboardingAnalysisAfterLanguage();
       } else {
         showPage('page-document');
         userLearningPrefs = ['card', 'qa'];
@@ -1955,8 +1897,13 @@ function cancelSlackIntegration(){
     slackOpenedFromWorkspaceUpload = false;
     return;
   }
+  if(onboardingPostGoalFlow){
+    navigate('learning-prefs', 1);
+    return;
+  }
   lwStep=2; lwShowStep(2); lwUpdateProgress();
-  document.getElementById('lw-next-btn').innerHTML='Complete <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+  var slackCancelComplete = learnWizardFromOnboarding ? 'Bitir' : 'Complete';
+  document.getElementById('lw-next-btn').innerHTML=slackCancelComplete+' <span class="material-symbols-outlined text-sm">arrow_forward</span>';
   document.getElementById('learn-wizard').style.display='flex';
 }
 
@@ -1971,12 +1918,40 @@ function lwBack(){
 }
 function lwShowStep(n){
   var el3 = document.getElementById('lw-step-3');
-  if(!workspaceUploadFlow && el3) el3.style.display = 'none';
-  var steps = workspaceUploadFlow ? ['lw-step-0','lw-step-1','lw-step-2','lw-step-3'] : ['lw-step-0','lw-step-1','lw-step-2'];
-  steps.forEach(function(id,i){
+  var onbFmt = document.getElementById('lw-step-onb-formats');
+  function hideAllStandard(){
+    ['lw-step-0','lw-step-onb-formats','lw-step-1','lw-step-2'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.style.display = 'none';
+    });
+  }
+  if(workspaceUploadFlow){
+    hideAllStandard();
+    if(onbFmt) onbFmt.style.display = 'none';
+    var wsteps = ['lw-step-0','lw-step-1','lw-step-2','lw-step-3'];
+    wsteps.forEach(function(id,i){
+      var el = document.getElementById(id);
+      if(el) el.style.display = i === n ? 'block' : 'none';
+    });
+    return;
+  }
+  if(learnWizardFromOnboarding){
+    hideAllStandard();
+    var map = ['lw-step-0','lw-step-onb-formats','lw-step-1'];
+    map.forEach(function(id, i){
+      var el = document.getElementById(id);
+      if(el) el.style.display = i === n ? 'block' : 'none';
+    });
+    if(el3) el3.style.display = 'none';
+    return;
+  }
+  hideAllStandard();
+  if(onbFmt) onbFmt.style.display = 'none';
+  ['lw-step-0','lw-step-1','lw-step-2'].forEach(function(id,i){
     var el = document.getElementById(id);
     if(el) el.style.display = i === n ? 'block' : 'none';
   });
+  if(el3) el3.style.display = 'none';
 }
 function lwUpdateProgress(){
   var bar = document.getElementById('lw-progress-bar');
@@ -1996,11 +1971,11 @@ function selectLwOption(el){
   var parent=el.parentElement;
   parent.querySelectorAll('.lw-option').forEach(function(c){
     c.classList.remove('bg-primary','text-on-primary','ring-4','ring-primary/10','lw-selected'); c.classList.add('bg-surface-container-low');
-    c.querySelectorAll('p').forEach(function(p){p.style.color='';});
+    c.querySelectorAll('p, h3').forEach(function(p){p.style.color='';});
     var dot=c.querySelector('.lw-dot'); if(dot){dot.className='w-5 h-5 rounded-full border border-outline-variant lw-dot flex-shrink-0'; dot.innerHTML='';}
   });
   el.classList.remove('bg-surface-container-low'); el.classList.add('bg-primary','text-on-primary','ring-4','ring-primary/10','lw-selected');
-  el.querySelectorAll('p').forEach(function(p){p.style.color='rgba(255,255,255,0.7)';});
+  el.querySelectorAll('p, h3').forEach(function(p){p.style.color='rgba(255,255,255,0.7)';});
   var dot=el.querySelector('.lw-dot'); if(dot){dot.className='w-5 h-5 rounded-full bg-white flex items-center justify-center lw-dot flex-shrink-0'; dot.innerHTML='<div style="width:10px;height:10px;border-radius:9999px;background:#000;"></div>';}
 }
 
